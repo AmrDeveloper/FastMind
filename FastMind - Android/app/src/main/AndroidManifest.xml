@@ -16,7 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".SinglePlayActivity"
+            android:label="@string/single_game" />
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/about" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings" />
+        <activity android:name=".MultiPlayActivity" />
+        <activity android:name=".RankActivity"></activity>
     </application>
 
 </manifest>

@@ -72,6 +72,8 @@
                 android:text="@string/login"
                 android:textAllCaps="false"
                 android:onClick="goToMainActivity"
+                android:background="@color/colorPrimary"
+                android:textColor="@android:color/white"
                 />
         </LinearLayout>
     </ScrollView>
