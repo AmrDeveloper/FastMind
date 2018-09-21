@@ -27,7 +27,8 @@
             android:name=".SettingsActivity"
             android:label="@string/settings" />
         <activity android:name=".MultiPlayActivity" />
-        <activity android:name=".RankActivity"></activity>
+        <activity android:name=".RankActivity" />
+        <activity android:name=".SigninActivity"></activity>
     </application>
 
 </manifest>
