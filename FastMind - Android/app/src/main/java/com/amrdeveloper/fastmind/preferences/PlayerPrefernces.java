@@ -58,6 +58,20 @@ public class PlayerPrefernces {
     }
 
     /**
+     * Update Local Player Current Score to use it after any Game
+     * @param newScore : Player new Score
+     * @return : true if edit is done without problem
+     */
+    public boolean updatePlayerScore(int newScore){
+        SharedPreferences playerPreference = context.getSharedPreferences(
+                PLAYER_PREF_KEY
+                , Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = playerPreference.edit();
+        editor.putInt(SCORE,newScore);
+        return editor.commit();
+    }
+
+    /**
      * This method will help when implements : Logout Option
      * Delete this user Share Preference
      * @return : true if this local player deleted from share preferences
