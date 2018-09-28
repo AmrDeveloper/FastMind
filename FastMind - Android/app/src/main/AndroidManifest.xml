@@ -26,10 +26,13 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/settings" />
-        <activity android:name=".MultiPlayActivity" />
+        <activity
+            android:name=".MultiPlayActivity"
+            android:label="@string/multi_player_game" />
         <activity android:name=".RankActivity" />
         <activity android:name=".SigninActivity" />
-        <activity android:name=".ChallengeActivity"></activity>
+        <activity android:name=".ChallengeActivity" />
+        <activity android:name=".FeedActivity"></activity>
     </application>
 
 </manifest>

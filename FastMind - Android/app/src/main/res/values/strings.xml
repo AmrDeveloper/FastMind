@@ -15,7 +15,11 @@
     <string name="signin">Signin</string>
     <string name="start_new_game">Start New Game</string>
     <string name="continues">Continue</string>
+
+
     <string name="single_game">Single Game</string>
+    <string name="multi_player_game">Multi Player Game</string>
+
     <string name="fast_mind_description">Open Source Online RealTime Android Game</string>
     <string name="submit">Submit</string>
 </resources>

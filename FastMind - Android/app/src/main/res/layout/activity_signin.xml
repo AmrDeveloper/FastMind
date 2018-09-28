@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkGrey"
     android:orientation="vertical"
     tools:context=".SigninActivity">
 
@@ -12,9 +13,9 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
     <ScrollView
@@ -31,7 +32,8 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/usernameInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColorHint="@android:color/white">
 
                 <EditText
                     android:id="@+id/usernameEditText"
@@ -42,13 +44,16 @@
                     android:hint="@string/username_hint"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/purple"
+                    android:textColorHint="@color/gray" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/EmailInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColorHint="@android:color/white">
 
                 <EditText
                     android:id="@+id/emailEditText"
@@ -59,13 +64,16 @@
                     android:hint="@string/email_hint"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/purple"
+                    android:textColorHint="@color/gray" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/passWordInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColorHint="@android:color/white">
 
                 <EditText
                     android:id="@+id/passWordEditText"
@@ -77,7 +85,9 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/purple"
+                    android:textColorHint="@color/gray" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -86,11 +96,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:background="@color/black"
                 android:text="@string/signin"
                 android:textAllCaps="false"
-                android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"
-                />
+                android:textColor="@color/purple" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

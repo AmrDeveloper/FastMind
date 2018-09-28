@@ -6,13 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp"
-    app:cardElevation="6dp"
+    app:cardElevation="2dp"
     app:cardUseCompatPadding="true"
     app:elevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/gray"
         android:orientation="vertical">
 
         <TextView
@@ -21,6 +22,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:textSize="20sp"
+            android:textColor="@color/darkPurple"
             android:textStyle="bold|italic"
             tools:text="AmrDeveloper" />
 
@@ -37,6 +39,7 @@
                 android:layout_centerVertical="true"
                 android:padding="5dp"
                 android:textSize="15sp"
+                android:textColor="@color/purple"
                 tools:text="Score : 5000" />
 
             <ImageButton
