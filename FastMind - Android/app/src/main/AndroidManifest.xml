@@ -28,7 +28,8 @@
             android:label="@string/settings" />
         <activity android:name=".MultiPlayActivity" />
         <activity android:name=".RankActivity" />
-        <activity android:name=".SigninActivity"></activity>
+        <activity android:name=".SigninActivity" />
+        <activity android:name=".ChallengeActivity"></activity>
     </application>
 
 </manifest>

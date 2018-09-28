@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkGrey"
     android:orientation="vertical"
     tools:context=".SinglePlayActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -20,6 +20,7 @@
             android:fontFamily="monospace"
             android:gravity="center"
             android:padding="5dp"
+            android:textColor="@color/green"
             tools:text="Level : 1" />
 
         <TextView
@@ -30,6 +31,7 @@
             android:fontFamily="monospace"
             android:gravity="center"
             android:padding="5dp"
+            android:textColor="@color/green"
             tools:text="Score : 0" />
 
         <TextView
@@ -37,10 +39,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:background="@color/black"
             android:fontFamily="monospace"
             android:lines="2"
             android:padding="5dp"
-            android:textSize="20sp"
+            android:textColor="@color/purple"
+            android:textSize="18sp"
             tools:text="What is the Multiplication of 2 and 5?" />
 
         <RadioGroup
@@ -48,37 +52,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <RadioButton
                 android:id="@+id/answerOne"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/colorPrimary"
+                style="@style/AnswerRadioButtonStyle"
+                android:theme="@style/AnswerRadioButtonTheme"
                 tools:text="5" />
 
             <RadioButton
                 android:id="@+id/answerTwo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/colorPrimary"
+                style="@style/AnswerRadioButtonStyle"
+                android:theme="@style/AnswerRadioButtonTheme"
                 tools:text="5" />
 
             <RadioButton
                 android:id="@+id/answerThree"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/colorPrimary"
+                style="@style/AnswerRadioButtonStyle"
+                android:theme="@style/AnswerRadioButtonTheme"
                 tools:text="5" />
 
             <RadioButton
                 android:id="@+id/answerFour"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/colorPrimary"
+                style="@style/AnswerRadioButtonStyle"
+                android:theme="@style/AnswerRadioButtonTheme"
                 tools:text="5" />
         </RadioGroup>
 
@@ -90,16 +85,17 @@
             android:fontFamily="monospace"
             android:gravity="center"
             android:padding="10dp"
-            tools:text="Time : 50 s" />
+            android:textColor="@color/darkYellow"
+            tools:text="Time : 20 s" />
 
         <Button
             android:id="@+id/answerSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
+            android:background="@color/black"
             android:text="@string/submit"
             android:textAllCaps="false"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/purple" />
     </LinearLayout>
 </ScrollView>
