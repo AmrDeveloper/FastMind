@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,8 +33,8 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/EmailInputLayout"
                 android:layout_width="match_parent"
-                android:textColorHint="@android:color/white"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColorHint="@android:color/white">
 
                 <EditText
                     android:id="@+id/emailEditText"
@@ -52,8 +53,9 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/passWordInputLayout"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:textColorHint="@android:color/white"
-                android:layout_height="wrap_content">
+                app:passwordToggleEnabled="true">
 
                 <EditText
                     android:id="@+id/passWordEditText"
@@ -81,6 +83,17 @@
                 android:text="@string/login"
                 android:textAllCaps="false"
                 android:textColor="@color/purple" />
+
+            <TextView
+                android:id="@+id/linkToSingup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:onClick="goToSigninActivity"
+                android:text="@string/no_account_yet_create_one"
+                android:textColor="@color/gray"
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

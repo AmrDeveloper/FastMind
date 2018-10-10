@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -73,7 +74,8 @@
                 android:id="@+id/passWordInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColorHint="@android:color/white">
+                android:textColorHint="@android:color/white"
+                app:passwordToggleEnabled="true">
 
                 <EditText
                     android:id="@+id/passWordEditText"
@@ -100,6 +102,17 @@
                 android:text="@string/signin"
                 android:textAllCaps="false"
                 android:textColor="@color/purple" />
+
+            <TextView
+                android:id="@+id/linkToLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:onClick="goToLoginActivity"
+                android:text="@string/already_a_member_login"
+                android:textColor="@color/gray"
+                android:textSize="16sp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

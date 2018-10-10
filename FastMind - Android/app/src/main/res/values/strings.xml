@@ -3,23 +3,31 @@
     <item name="visible" type="id" />
     <item name="masked" type="id" />
 
-    <string name="login">Login</string>
+    <!--Hints-->
     <string name="email_hint">Enter Your Email</string>
     <string name="username_hint">Enter Your Username</string>
     <string name="action_sign_in_short">Sign in</string>
+
+    <!--Single word for actions-->
+    <string name="login">Login</string>
+    <string name="signin">Signin</string>
+    <string name="submit">Submit</string>
+
+    <!--MainActivity-->
+    <string name="continues">Continue</string>
+    <string name="start_new_game">Start New Game</string>
+    <string name="single_game">Single Game</string>
+    <string name="multi_player_game">Multi Player Game</string>
     <string name="challenge">Challenge</string>
     <string name="rank">Rank</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
     <string name="logout">Logout</string>
-    <string name="signin">Signin</string>
-    <string name="start_new_game">Start New Game</string>
-    <string name="continues">Continue</string>
 
-
-    <string name="single_game">Single Game</string>
-    <string name="multi_player_game">Multi Player Game</string>
-
+    <!--About Activity-->
     <string name="fast_mind_description">Open Source Online RealTime Android Game</string>
-    <string name="submit">Submit</string>
+
+    <!--User Session LogIO-->
+    <string name="no_account_yet_create_one">No account yet? Create one</string>
+    <string name="already_a_member_login">Already a member? Login</string>
 </resources>

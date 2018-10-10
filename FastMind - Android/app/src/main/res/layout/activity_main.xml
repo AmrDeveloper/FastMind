@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkGrey"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -19,6 +20,7 @@
             android:fontFamily="monospace"
             android:gravity="center"
             android:padding="10dp"
+            android:textColor="@color/green"
             android:textSize="15sp"
             tools:text="Username : AmrDeveloper" />
 
@@ -29,6 +31,7 @@
             android:fontFamily="monospace"
             android:gravity="center"
             android:padding="10dp"
+            android:textColor="@color/gray"
             android:textSize="15sp"
             tools:text="Level : 99" />
 
@@ -39,6 +42,7 @@
             android:fontFamily="monospace"
             android:gravity="center"
             android:padding="10dp"
+            android:textColor="@color/gray"
             android:textSize="15sp"
             tools:text="Score : 20.000.000 $" />
 
@@ -49,7 +53,8 @@
             android:fontFamily="monospace"
             android:onClick="continueSingleGame"
             android:text="@string/continues"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/darkPurple" />
 
         <Button
             android:id="@+id/startOption"
@@ -58,7 +63,8 @@
             android:fontFamily="monospace"
             android:onClick="startSingleGame"
             android:text="@string/start_new_game"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/darkPurple" />
 
         <Button
             android:id="@+id/challengeOption"
@@ -66,7 +72,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="@string/challenge"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/darkPurple" />
 
         <Button
             android:id="@+id/rankOption"
@@ -74,7 +81,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="@string/rank"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/darkPurple" />
 
         <Button
             android:id="@+id/settingsOption"
@@ -82,7 +90,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="@string/settings"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/darkPurple" />
 
         <Button
             android:id="@+id/aboutOption"
@@ -91,7 +100,8 @@
             android:fontFamily="monospace"
             android:onClick="aboutActivity"
             android:text="@string/about"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/darkPurple" />
 
         <Button
             android:id="@+id/logoutOption"
@@ -99,6 +109,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:text="@string/logout"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/darkPurple" />
     </LinearLayout>
 </ScrollView>
