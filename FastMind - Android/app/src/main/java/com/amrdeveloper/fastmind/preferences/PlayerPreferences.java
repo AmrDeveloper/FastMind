@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.amrdeveloper.fastmind.model.Player;
 
-public class PlayerPrefernces {
+public class PlayerPreferences {
 
     private Context context;
 
@@ -19,7 +19,7 @@ public class PlayerPrefernces {
     private static final String LEVEL = "LEVEL";
     private static final String SCORE = "SCORE";
 
-    public PlayerPrefernces(Context context) {
+    public PlayerPreferences(Context context) {
         this.context = context;
     }
 
@@ -68,6 +68,20 @@ public class PlayerPrefernces {
                 , Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = playerPreference.edit();
         editor.putInt(SCORE,newScore);
+        return editor.commit();
+    }
+
+    /**
+     * Update Local Player Current level to use it after any Game
+     * @param level : Player new level
+     * @return : true if edit is done without problem
+     */
+    public boolean updatePlayerLevel(int level){
+        SharedPreferences playerPreference = context.getSharedPreferences(
+                PLAYER_PREF_KEY
+                , Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = playerPreference.edit();
+        editor.putInt(LEVEL,level);
         return editor.commit();
     }
 
