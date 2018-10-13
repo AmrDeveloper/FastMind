@@ -6,6 +6,7 @@
     <!--Hints-->
     <string name="email_hint">Enter Your Email</string>
     <string name="username_hint">Enter Your Username</string>
+    <string name="password_hint">Enter Your Password</string>
     <string name="action_sign_in_short">Sign in</string>
 
     <!--Single word for actions-->
