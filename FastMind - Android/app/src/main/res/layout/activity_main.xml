@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/darkGrey"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="@dimen/dimen10dp"
             android:textColor="@color/green"
             android:textSize="15sp"
             tools:text="Username : AmrDeveloper" />
@@ -30,9 +30,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="@dimen/dimen10dp"
             android:textColor="@color/gray"
-            android:textSize="15sp"
+            android:textSize="@dimen/dimen15sp"
             tools:text="Level : 99" />
 
         <TextView
@@ -41,9 +41,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="@dimen/dimen10dp"
             android:textColor="@color/gray"
-            android:textSize="15sp"
+            android:textSize="@dimen/dimen15sp"
             tools:text="Score : 20.000.000 $" />
 
         <Button

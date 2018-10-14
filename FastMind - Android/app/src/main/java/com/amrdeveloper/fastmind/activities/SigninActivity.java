@@ -1,9 +1,11 @@
-package com.amrdeveloper.fastmind;
+package com.amrdeveloper.fastmind.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.amrdeveloper.fastmind.R;
 
 public class SigninActivity extends AppCompatActivity {
 

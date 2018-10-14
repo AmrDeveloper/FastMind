@@ -2,16 +2,13 @@ package com.amrdeveloper.fastmind.preferences;
 
 import android.content.Context;
 
-import com.amrdeveloper.fastmind.model.Player;
-
+import com.amrdeveloper.fastmind.Player;
 
 public class Session {
 
-    private Context mContext;
     private PlayerPreferences mPlayerPref;
 
     public Session(Context context) {
-        mContext = context;
         mPlayerPref = new PlayerPreferences(context);
     }
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/darkGrey"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <!-- Login progress -->
     <ProgressBar
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/dimen8dp"
         android:visibility="gone" />
 
     <ScrollView
@@ -40,7 +40,7 @@
                     android:id="@+id/emailEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:hint="@string/email_hint"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
@@ -61,7 +61,7 @@
                     android:id="@+id/passWordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/dimen10dp"
                     android:hint="@string/password_hint"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
@@ -84,15 +84,15 @@
                 android:textColor="@color/purple" />
 
             <TextView
-                android:id="@+id/linkToSingup"
+                android:id="@+id/linkToSingin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/dimen5dp"
                 android:gravity="center"
                 android:onClick="goToSigninActivity"
                 android:text="@string/no_account_yet_create_one"
                 android:textColor="@color/gray"
-                android:textSize="16sp" />
+                android:textSize="@dimen/dimen16sp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

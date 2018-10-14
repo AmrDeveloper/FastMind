@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--DP-->
+    <dimen name="dimen2dp">2dp</dimen>
+    <dimen name="dimen5dp">5dp</dimen>
+    <dimen name="dimen8dp">8dp</dimen>
+    <dimen name="dimen10dp">10dp</dimen>
 
+    <!--SP-->
+    <dimen name="dimen15sp">15sp</dimen>
+    <dimen name="dimen16sp">16sp</dimen>
+    <dimen name="dimen18sp">18sp</dimen>
+    <dimen name="dimen20sp">20sp</dimen>
+    <dimen name="dimen25sp">25sp</dimen>
 </resources>

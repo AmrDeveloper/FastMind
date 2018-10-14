@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rankCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="3dp"
+    app:cardCornerRadius="@dimen/dimen5dp"
+    app:cardElevation="@dimen/dimen2dp"
     app:cardUseCompatPadding="true"
     app:elevation="0dp">
 
@@ -21,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
-            android:padding="5dp"
+            android:padding="@dimen/dimen5dp"
             android:textStyle="italic|bold"
             tools:text="Username : AmrDeveloper" />
 
@@ -30,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
-            android:padding="5dp"
+            android:padding="@dimen/dimen5dp"
             android:textStyle="italic"
             tools:text="Score : 500" />
     </LinearLayout>

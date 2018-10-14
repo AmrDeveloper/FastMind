@@ -1,4 +1,4 @@
-package com.amrdeveloper.fastmind.model;
+package com.amrdeveloper.fastmind;
 
 import java.util.List;
 

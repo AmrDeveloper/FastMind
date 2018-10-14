@@ -1,13 +1,15 @@
-package com.amrdeveloper.fastmind;
+package com.amrdeveloper.fastmind.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class FeedActivity extends AppCompatActivity {
+import com.amrdeveloper.fastmind.R;
+
+public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feed);
+        setContentView(R.layout.activity_about);
     }
 }

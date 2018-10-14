@@ -3,7 +3,7 @@ package com.amrdeveloper.fastmind.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.amrdeveloper.fastmind.model.Player;
+import com.amrdeveloper.fastmind.Player;
 
 public class PlayerPreferences {
 

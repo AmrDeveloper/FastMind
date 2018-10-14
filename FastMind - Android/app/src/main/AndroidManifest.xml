@@ -11,29 +11,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activities.MainActivity" />
         <activity
-            android:name=".SinglePlayActivity"
+            android:name=".activities.SinglePlayActivity"
             android:label="@string/single_game" />
         <activity
-            android:name=".AboutActivity"
+            android:name=".activities.AboutActivity"
             android:label="@string/about" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:label="@string/settings" />
         <activity
-            android:name=".MultiPlayActivity"
+            android:name=".activities.MultiPlayActivity"
             android:label="@string/multi_player_game" />
-        <activity android:name=".RankActivity" />
-        <activity android:name=".SigninActivity" />
-        <activity android:name=".ChallengeActivity" />
-        <activity android:name=".FeedActivity"></activity>
+        <activity android:name=".activities.RankActivity" />
+        <activity android:name=".activities.SigninActivity" />
+        <activity android:name=".activities.ChallengeActivity" />
+        <activity android:name=".activities.FeedActivity"/>
     </application>
 </manifest>
