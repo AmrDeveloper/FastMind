@@ -31,4 +31,8 @@
     <!--User Session LogIO-->
     <string name="no_account_yet_create_one">No account yet? Create one</string>
     <string name="already_a_member_login">Already a member? Login</string>
+
+    <!--Server Information-->
+    <string name="IP" translatable="false">192.168.1.8</string>
+    <string name="PORT" translatable="false">3000</string>
 </resources>
