@@ -1,12 +1,22 @@
 package com.amrdeveloper.fastmind;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Player {
 
+    @SerializedName("username")
     private String username;
+
+    @SerializedName("email")
     private String email;
+
+    @SerializedName("password")
     private String password;
 
+    @SerializedName("level")
     private int level;
+
+    @SerializedName("score")
     private int score;
 
     public Player(String username, String email, String password, int level, int score) {
