@@ -21,19 +21,19 @@ public class Question {
         this.mQuestionAnswers = mQuestionAnswers;
     }
 
-    public int getmQuestionLevel() {
+    public int getQuestionLevel() {
         return mQuestionLevel;
     }
 
-    public String getmQuestionBody() {
+    public String getQuestionBody() {
         return mQuestionBody;
     }
 
-    public int getmTrueResult() {
+    public int getTrueResult() {
         return mTrueResult;
     }
 
-    public List<String> getmQuestionAnswers() {
+    public List<String> getQuestionAnswers() {
         return mQuestionAnswers;
     }
 }

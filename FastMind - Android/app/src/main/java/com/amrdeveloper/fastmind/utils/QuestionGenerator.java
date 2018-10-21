@@ -3,84 +3,83 @@ package com.amrdeveloper.fastmind.utils;
 import com.amrdeveloper.fastmind.Question;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author AmrDeveloper
+ */
 public class QuestionGenerator {
 
-    //List of Math Operation
-    private final char[] operationList = {'+', '-', '*', '/'};
-
-    //List of Math operation as String
+    private Random random;
     private final String[] operationListStr = {"Addition", "Subtraction", "Division", "Multiplication"};
 
-    //Random Object
-    private final Random random = new Random();
-
     public QuestionGenerator() {
-
+        this.random = new Random();
     }
 
-    public Question generateNewQuestion(int questionLevel) {
-        int operatorIndex = getOperationIndex();
-        int number1 = generateNumInRange(questionLevel, questionLevel * 5);
-        int number2 = generateNumInRange(questionLevel, number1);
-
-        String questionBody = getQuestionBody(number1, number2, operatorIndex);
-        int trueResult = getQuestionTrueAnswer(number1, number2, operatorIndex);
-
-        List<String> answersList = getShuffleAnswersList(trueResult);
-
-        return new Question(questionLevel,questionBody,trueResult,answersList);
-    }
-
-    private int generateNumInRange(int min, int max) {
-        return random.nextInt((max - min) + 1) + min;
+    public Question generateQuestion(int level) {
+        int operationIndex = getOperationIndex();
+        int numberOne = generateNumber(level);
+        int numberTwo = generateNumber(level);
+        //Make sure number one not equal number two
+        while (numberOne == numberTwo) {
+            numberTwo = generateNumber(level);
+        }
+        String questionTitle = getQuestionBody(operationIndex, numberOne, numberTwo);
+        int trueResult = getQuestionResult(operationIndex, numberOne, numberTwo);
+        List<String> answers = generateFakeAnswers(trueResult, level);
+        return new Question(level,questionTitle, trueResult, answers);
     }
 
     private int getOperationIndex() {
-        return generateNumInRange(0, 3);
+        return random.nextInt(3);
     }
 
-    private String getQuestionBody(int num1, int num2, int operator) {
-        if (operator < 2) {
-            return operationListStr[operator] + " " + num1 + " and " + num2;
-        } else {
-            return operationListStr[operator] + " " + num1 + " by " + num2;
-        }
+    private int generateNumber(int level) {
+        return random.nextInt(level * 5) + level;
     }
 
-    private int getQuestionTrueAnswer(int num1, int num2, int operator) {
-        switch (operator) {
-            case 0:
-                return num1 + num2;
-            case 1:
-                return num1 - num2;
-            case 2:
-                return num1 * num2;
-            case 3:
-                while (num1 % num2 != 0) {
-                    num2 = generateNumInRange(1, num1);
-                }
-                return num1 / num2;
-            default:
-                return -1;
-        }
-    }
-
-    private List<String> getShuffleAnswersList(int trueResult) {
-        List<String> answersList = new ArrayList<>();
-        answersList.add(String.valueOf(trueResult));
-
-        while (answersList.size() < 3) {
-            int generateNum = random.nextInt(trueResult) + 1;
-            if (!answersList.contains(String.valueOf(generateNum))) {
-                answersList.add(String.valueOf(generateNum));
+    private List<String> generateFakeAnswers(int trueAnswer, int level) {
+        List<String> answers = new ArrayList();
+        answers.add(String.valueOf(trueAnswer));
+        int wrongResult = 0;
+        while (wrongResult != 3) {
+            int number = generateNumber(level);
+            if (!answers.contains(String.valueOf(number))) {
+                answers.add(String.valueOf(number));
+                wrongResult++;
             }
         }
+        return answers;
+    }
 
-        Collections.shuffle(answersList);
-        return answersList;
+    private int getQuestionResult(int operationIndex, int numOne, int numTwo) {
+        switch (operationIndex) {
+            case 0:
+                return numOne + numTwo;
+            case 1:
+                return numOne - numTwo;
+            case 2:
+                return numOne * numTwo;
+            case 3:
+                return numOne / numTwo;
+        }
+        return -1;
+    }
+
+    private String getQuestionBody(int operationIndex, int numOne, int numTwo) {
+        switch (operationIndex) {
+            case 0:
+                return operationListStr[0] + " " + numOne + " and " + numTwo;
+            case 1:
+                return operationListStr[1] + " " + numOne + " and " + numTwo;
+            case 2:
+                return operationListStr[2] + " " + numOne + " by " + numTwo;
+            case 3:
+                return operationListStr[3] + " " + numOne + " by " + numTwo;
+            default:
+                return "";
+        }
     }
 }
