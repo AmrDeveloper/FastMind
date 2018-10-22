@@ -1,4 +1,5 @@
 <resources>
+    <!--Basic Information-->
     <string name="app_name">FastMind</string>
     <item name="visible" type="id" />
     <item name="masked" type="id" />
@@ -35,4 +36,7 @@
     <!--Server Information-->
     <string name="IP" translatable="false">192.168.1.8</string>
     <string name="PORT" translatable="false">3000</string>
+
+    <!--UI Default Value-->
+    <string name="timer_starter">Timer : 20s</string>
 </resources>

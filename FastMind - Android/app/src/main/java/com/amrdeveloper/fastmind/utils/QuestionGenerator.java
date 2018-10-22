@@ -9,10 +9,14 @@ import java.util.Random;
 /**
  * @author AmrDeveloper
  */
+
 public class QuestionGenerator {
 
     private Random random;
-    private final String[] operationListStr = {"Addition", "Subtraction", "Division", "Multiplication"};
+
+    private final String[] operationListStr = {
+            "Addition", "Subtraction", "Division", "Multiplication"
+    };
 
     public QuestionGenerator() {
         this.random = new Random();
@@ -22,14 +26,18 @@ public class QuestionGenerator {
         int operationIndex = getOperationIndex();
         int numberOne = generateNumber(level);
         int numberTwo = generateNumber(level);
-        //Make sure number one not equal number two
+
+        while (operationIndex == 2 && (numberOne%numberTwo != 0)) {
+            numberTwo = generateNumber(level);
+        }
         while (numberOne == numberTwo) {
             numberTwo = generateNumber(level);
         }
-        String questionTitle = getQuestionBody(operationIndex, numberOne, numberTwo);
+
+        String questionBody = getQuestionBody(operationIndex, numberOne, numberTwo);
         int trueResult = getQuestionResult(operationIndex, numberOne, numberTwo);
         List<String> answers = generateFakeAnswers(trueResult, level);
-        return new Question(level,questionTitle, trueResult, answers);
+        return new Question(level,questionBody, trueResult, answers);
     }
 
     private int getOperationIndex() {
@@ -45,9 +53,9 @@ public class QuestionGenerator {
         answers.add(String.valueOf(trueAnswer));
         int wrongResult = 0;
         while (wrongResult != 3) {
-            int number = generateNumber(level);
-            if (!answers.contains(String.valueOf(number))) {
-                answers.add(String.valueOf(number));
+            String number = String.valueOf(generateNumber(level));
+            if (!answers.contains(number)) {
+                answers.add(number);
                 wrongResult++;
             }
         }
@@ -61,9 +69,9 @@ public class QuestionGenerator {
             case 1:
                 return numOne - numTwo;
             case 2:
-                return numOne * numTwo;
-            case 3:
                 return numOne / numTwo;
+            case 3:
+                return numOne * numTwo;
         }
         return -1;
     }

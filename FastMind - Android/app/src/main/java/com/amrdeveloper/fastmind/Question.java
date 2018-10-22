@@ -2,11 +2,13 @@ package com.amrdeveloper.fastmind;
 
 import java.util.List;
 
+//TODO : Add SerializedName for every var
 public class Question {
 
     private int mQuestionLevel;
 
     private String mQuestionBody;
+
     private int mTrueResult;
 
     private List<String> mQuestionAnswers;
