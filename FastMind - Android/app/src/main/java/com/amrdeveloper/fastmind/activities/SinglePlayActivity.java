@@ -1,5 +1,6 @@
 package com.amrdeveloper.fastmind.activities;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amrdeveloper.fastmind.Question;
 import com.amrdeveloper.fastmind.R;
@@ -88,6 +90,8 @@ public class SinglePlayActivity extends AppCompatActivity {
                 try {
                     if (availableTime[0] > -1) {
                         mGameTimerCounter.setText("Timer : " + availableTime[0]-- + "s");
+                    }else{
+                        isGameEnd = true;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -96,5 +100,25 @@ public class SinglePlayActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable, 1000);
+        if(isGameEnd){handler.removeCallbacks(runnable);}
+    }
+
+    private void onGameLoseState() {
+        Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
+        goToMainActivity();
+        finish();
+    }
+
+    private void goToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(handler != null && runnable != null){
+            handler.removeCallbacks(runnable);
+        }
     }
 }

@@ -46,4 +46,24 @@ public class Player {
     public int getScore() {
         return score;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }
