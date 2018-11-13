@@ -1,16 +1,21 @@
 package com.amrdeveloper.fastmind;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
-//TODO : Add SerializedName for every var
 public class Question {
 
+    @SerializedName("level")
     private int mQuestionLevel;
 
+    @SerializedName("body")
     private String mQuestionBody;
 
+    @SerializedName("trueResult")
     private int mTrueResult;
 
+    @SerializedName("answers")
     private List<String> mQuestionAnswers;
 
     public Question(int mQuestionLevel,
