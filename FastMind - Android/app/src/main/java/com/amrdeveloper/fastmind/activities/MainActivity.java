@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         // TODO : Make User Level = 0 , Score = 0
         Intent intent = new Intent(this,SinglePlayActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void continueSingleGame(View view){

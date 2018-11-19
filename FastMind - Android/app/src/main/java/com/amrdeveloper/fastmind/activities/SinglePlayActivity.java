@@ -84,17 +84,17 @@ public class SinglePlayActivity extends AppCompatActivity {
         }
     }
 
-    private void generateQuestion(){
+    private void generateQuestion() {
         //Generate Question
         final QuestionGenerator mQuestionGenerator = new QuestionGenerator();
         mQuestion = mQuestionGenerator.generateQuestion(currentGameLevel);
     }
 
-    private void onGameActivityStart(Bundle bundle){
-        if(bundle != null){
+    private void onGameActivityStart(Bundle bundle) {
+        if (bundle != null) {
             mQuestion = bundle.getParcelable(QUESTION);
             updateQuestionUI();
-        }else{
+        } else {
             generateQuestion();
             updateQuestionUI();
         }
@@ -109,8 +109,9 @@ public class SinglePlayActivity extends AppCompatActivity {
             public void run() {
                 try {
                     if (availableTime[0] > -1) {
-                        mGameTimerCounter.setText("Timer : " + availableTime[0]-- + "s");
-                    }else{
+                        String newTile = "Timer : " + availableTime[0]-- + "s";
+                        mGameTimerCounter.setText(newTile);
+                    } else {
                         isGameEnd = true;
                     }
                 } catch (Exception e) {
@@ -120,40 +121,55 @@ public class SinglePlayActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable, 1000);
-        if(isGameEnd){handler.removeCallbacks(runnable);}
+        if (isGameEnd) {
+            handler.removeCallbacks(runnable);
+        }
     }
 
-    private void onGameCheckResult(){
+    private void onGameCheckResult() {
         int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
         RadioButton checkedRadioButton = findViewById(checkedId);
         String result = checkedRadioButton.getText().toString();
-        if(result.equals(String.valueOf(mQuestionTrueAnswer))){
-            //TODO : Player Win State
-            //TODO : Create Dialog To Make Player Choose if he want to go to next level or stop
-            Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
-        }else{
-            //TODO : Player Lose State
-            //TODO : Make score = score -  point
-            //TODO : update score and back to main menu
+        if (result.equals(String.valueOf(mQuestionTrueAnswer)))
+            onGameWinState();
+        else
             onGameLoseState();
+    }
+
+    private void onGameWinState() {
+        //TODO : Player Win State
+        //TODO : Create Dialog To Make Player Choose if he want to go to next level or stop
+        Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
+        if (handler != null && runnable != null) {
+            handler.removeCallbacks(runnable);
         }
     }
 
     private void onGameLoseState() {
+        //TODO : Player Lose State
+        //TODO : Make score = score -  point
+        //TODO : update score and back to main menu
         Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
-        goToMainActivity();
+        goToMainMenu();
+    }
+
+    private void goToMainMenu() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
         finish();
     }
 
-    private void goToMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //TODO : Player State Is Loser
+        onGameLoseState();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(handler != null && runnable != null){
+        if (handler != null && runnable != null) {
             handler.removeCallbacks(runnable);
         }
     }
