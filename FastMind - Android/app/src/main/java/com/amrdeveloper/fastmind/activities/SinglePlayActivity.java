@@ -35,6 +35,7 @@ public class SinglePlayActivity extends AppCompatActivity {
 
     private Handler handler;
     private Runnable runnable;
+    private Question currentQuestion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,14 @@ public class SinglePlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_single_play);
         initiateViews();
 
-        updateQuestionUI();
+        if(savedInstanceState != null){
+           currentQuestion = savedInstanceState.getParcelable("Question");
+           updateQuestionUI();
+        }else{
+            generateQuestion();
+            updateQuestionUI();
+        }
+
         onGameTimeCounter();
 
         mPlayerScore.setText("Score : 0");
@@ -61,15 +69,11 @@ public class SinglePlayActivity extends AppCompatActivity {
     }
 
     private void updateQuestionUI() {
-        //Generate Question
-        final QuestionGenerator mQuestionGenerator = new QuestionGenerator();
-        Question question = mQuestionGenerator.generateQuestion(currentGameLevel);
-
         //Update Question
-        mQuestionBody.setText(question.getQuestionBody());
+        mQuestionBody.setText(currentQuestion.getQuestionBody());
 
         //Update Answers
-        List<String> answers = question.getQuestionAnswers();
+        List<String> answers = currentQuestion.getQuestionAnswers();
 
         //Update UI Radio Buttons
         for (int i = 0; i < mGameAnswersGroup.getChildCount(); i++) {
@@ -79,6 +83,12 @@ public class SinglePlayActivity extends AppCompatActivity {
                 answersRadioButton.setText(answers.get(i));
             }
         }
+    }
+
+    private void generateQuestion(){
+        //Generate Question
+        final QuestionGenerator mQuestionGenerator = new QuestionGenerator();
+        currentQuestion = mQuestionGenerator.generateQuestion(currentGameLevel);
     }
 
     public void onGameTimeCounter() {
@@ -120,5 +130,11 @@ public class SinglePlayActivity extends AppCompatActivity {
         if(handler != null && runnable != null){
             handler.removeCallbacks(runnable);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("Question",currentQuestion);
     }
 }

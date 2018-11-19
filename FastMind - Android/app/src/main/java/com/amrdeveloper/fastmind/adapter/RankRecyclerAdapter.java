@@ -45,6 +45,8 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
         return rankedPlayerList.size();
     }
 
+
+
     class RankViewHolder extends RecyclerView.ViewHolder{
 
         private TextView mRankUserName;

@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void rankActivity(View view){
+        Intent intent = new Intent(this,RankActivity.class);
+        startActivity(intent);
+    }
+
     public void aboutActivity(View view){
         Intent intent = new Intent(this,AboutActivity.class);
         startActivity(intent);
