@@ -1,6 +1,6 @@
 package com.amrdeveloper.fastmind.utils;
 
-import com.amrdeveloper.fastmind.Question;
+import com.amrdeveloper.fastmind.objects.Question;
 
 import java.util.ArrayList;
 import java.util.List;

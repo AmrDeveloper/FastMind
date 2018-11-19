@@ -11,7 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amrdeveloper.fastmind.Question;
+import com.amrdeveloper.fastmind.objects.Question;
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.utils.QuestionGenerator;
 
@@ -37,21 +37,16 @@ public class SinglePlayActivity extends AppCompatActivity {
     private Runnable runnable;
     private Question currentQuestion;
 
+    private static final String QUESTION_TAG = "question";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_play);
+
         initiateViews();
 
-        if(savedInstanceState != null){
-           currentQuestion = savedInstanceState.getParcelable("Question");
-           updateQuestionUI();
-        }else{
-            generateQuestion();
-            updateQuestionUI();
-        }
-
-        onGameTimeCounter();
+        onGameActivityStart(savedInstanceState);
 
         mPlayerScore.setText("Score : 0");
         mPlayerLevel.setText("Level : 0");
@@ -91,7 +86,18 @@ public class SinglePlayActivity extends AppCompatActivity {
         currentQuestion = mQuestionGenerator.generateQuestion(currentGameLevel);
     }
 
-    public void onGameTimeCounter() {
+    private void onGameActivityStart(Bundle bundle){
+        if(bundle != null){
+            currentQuestion = bundle.getParcelable(QUESTION_TAG);
+            updateQuestionUI();
+        }else{
+            generateQuestion();
+            updateQuestionUI();
+        }
+        onGameTimeCounter();
+    }
+
+    private void onGameTimeCounter() {
         final int[] availableTime = {GAME_TIME};
         handler = new Handler();
         runnable = new Runnable() {
@@ -135,6 +141,6 @@ public class SinglePlayActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable("Question",currentQuestion);
+        outState.putParcelable(QUESTION_TAG,currentQuestion);
     }
 }

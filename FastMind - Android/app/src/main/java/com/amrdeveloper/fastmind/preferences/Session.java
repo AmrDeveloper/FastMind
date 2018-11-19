@@ -2,7 +2,7 @@ package com.amrdeveloper.fastmind.preferences;
 
 import android.content.Context;
 
-import com.amrdeveloper.fastmind.Player;
+import com.amrdeveloper.fastmind.objects.Player;
 
 public class Session {
 

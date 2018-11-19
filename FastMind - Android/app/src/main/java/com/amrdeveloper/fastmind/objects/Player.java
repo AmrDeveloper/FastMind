@@ -1,4 +1,4 @@
-package com.amrdeveloper.fastmind;
+package com.amrdeveloper.fastmind.objects;
 
 import com.google.gson.annotations.SerializedName;
 
