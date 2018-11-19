@@ -60,6 +60,8 @@ public class SinglePlayActivity extends AppCompatActivity {
 
         mGameAnswersGroup = findViewById(R.id.answersGroup);
         mGameSubmitButton = findViewById(R.id.gameSubmit);
+
+        mGameSubmitButton.setOnClickListener(v -> onGameCheckResult());
     }
 
     private void updateQuestionUI() {
@@ -119,6 +121,22 @@ public class SinglePlayActivity extends AppCompatActivity {
         };
         handler.postDelayed(runnable, 1000);
         if(isGameEnd){handler.removeCallbacks(runnable);}
+    }
+
+    private void onGameCheckResult(){
+        int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
+        RadioButton checkedRadioButton = findViewById(checkedId);
+        String result = checkedRadioButton.getText().toString();
+        if(result.equals(String.valueOf(mQuestionTrueAnswer))){
+            //TODO : Player Win State
+            //TODO : Create Dialog To Make Player Choose if he want to go to next level or stop
+            Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
+        }else{
+            //TODO : Player Lose State
+            //TODO : Make score = score -  point
+            //TODO : update score and back to main menu
+            onGameLoseState();
+        }
     }
 
     private void onGameLoseState() {
