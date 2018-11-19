@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapter.RankViewHolder>{
@@ -45,7 +46,21 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
         return rankedPlayerList.size();
     }
 
+    private void playersFilter(String keyword){
+        List<Player> filterResult = new ArrayList<>();
+        for(Player p : rankedPlayerList)
+            if(p.getUsername().contains(keyword) || p.getEmail().contains(keyword))
+                filterResult.add(p);
+        updateRecyclerData(filterResult);
+    }
 
+    private void updateRecyclerData(List<Player> playerList){
+        if(playerList != null){
+            rankedPlayerList.clear();
+            rankedPlayerList.addAll(playerList);
+            notifyDataSetChanged();
+        }
+    }
 
     class RankViewHolder extends RecyclerView.ViewHolder{
 
