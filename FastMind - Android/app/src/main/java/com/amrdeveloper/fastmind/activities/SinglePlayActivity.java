@@ -27,17 +27,16 @@ public class SinglePlayActivity extends AppCompatActivity {
     private Button mGameSubmitButton;
 
     private boolean isGameEnd;
-
     private int currentGameLevel = 1;
-    private String mQuestionTrueAnswer;
-
-    private final static int GAME_TIME = 20;
+    private int mQuestionTrueAnswer;
 
     private Handler handler;
     private Runnable runnable;
-    private Question currentQuestion;
+    private Question mQuestion;
 
-    private static final String QUESTION_TAG = "question";
+    private final static int GAME_TIME = 20;
+    private static final String QUESTION = "question";
+    private static final String DEBUGGING = SinglePlayActivity.class.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +64,13 @@ public class SinglePlayActivity extends AppCompatActivity {
 
     private void updateQuestionUI() {
         //Update Question
-        mQuestionBody.setText(currentQuestion.getQuestionBody());
+        mQuestionBody.setText(mQuestion.getQuestionBody());
+
+        //Update True Answers
+        mQuestionTrueAnswer = mQuestion.getTrueResult();
 
         //Update Answers
-        List<String> answers = currentQuestion.getQuestionAnswers();
+        List<String> answers = mQuestion.getQuestionAnswers();
 
         //Update UI Radio Buttons
         for (int i = 0; i < mGameAnswersGroup.getChildCount(); i++) {
@@ -83,12 +85,12 @@ public class SinglePlayActivity extends AppCompatActivity {
     private void generateQuestion(){
         //Generate Question
         final QuestionGenerator mQuestionGenerator = new QuestionGenerator();
-        currentQuestion = mQuestionGenerator.generateQuestion(currentGameLevel);
+        mQuestion = mQuestionGenerator.generateQuestion(currentGameLevel);
     }
 
     private void onGameActivityStart(Bundle bundle){
         if(bundle != null){
-            currentQuestion = bundle.getParcelable(QUESTION_TAG);
+            mQuestion = bundle.getParcelable(QUESTION);
             updateQuestionUI();
         }else{
             generateQuestion();
@@ -141,6 +143,6 @@ public class SinglePlayActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(QUESTION_TAG,currentQuestion);
+        outState.putParcelable(QUESTION, mQuestion);
     }
 }

@@ -21,14 +21,14 @@ public class Question implements Parcelable{
     @SerializedName("answers")
     private List<String> mQuestionAnswers;
 
-    public Question(int mQuestionLevel,
-                    String mQuestionBody,
-                    int mTrueResult,
-                    List<String> mQuestionAnswers) {
-        this.mQuestionLevel = mQuestionLevel;
-        this.mQuestionBody = mQuestionBody;
-        this.mTrueResult = mTrueResult;
-        this.mQuestionAnswers = mQuestionAnswers;
+    public Question(int level,
+                    String body,
+                    int trueResult,
+                    List<String> answers) {
+        this.mQuestionLevel = level;
+        this.mQuestionBody = body;
+        this.mTrueResult = trueResult;
+        this.mQuestionAnswers = answers;
     }
 
     private Question(Parcel in) {
