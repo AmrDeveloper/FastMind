@@ -14,6 +14,7 @@
     <string name="login">Login</string>
     <string name="signin">Signin</string>
     <string name="submit">Submit</string>
+    <string name="search">Search</string>
 
     <!--MainActivity-->
     <string name="continues">Continue</string>

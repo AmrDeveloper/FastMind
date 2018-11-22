@@ -67,7 +67,7 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
         private TextView mRankUserName;
         private TextView mRankUserScore;
 
-        public RankViewHolder(View itemView) {
+        private RankViewHolder(View itemView) {
             super(itemView);
             initViews(itemView);
         }

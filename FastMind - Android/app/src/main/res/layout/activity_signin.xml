@@ -50,7 +50,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/EmailInputLayout"
+                android:id="@+id/emailInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@android:color/white">
@@ -90,7 +90,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/loginButton"
+                android:id="@+id/signinButton"
                 style="?android:textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

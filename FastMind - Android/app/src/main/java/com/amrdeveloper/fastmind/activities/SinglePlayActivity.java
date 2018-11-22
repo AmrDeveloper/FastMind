@@ -113,6 +113,8 @@ public class SinglePlayActivity extends AppCompatActivity {
                         mGameTimerCounter.setText(newTile);
                     } else {
                         isGameEnd = true;
+                        handler.removeCallbacks(runnable);
+                        onGameLoseState();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -121,7 +123,10 @@ public class SinglePlayActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable, 1000);
-        if (isGameEnd) {
+    }
+
+    private void onGameStopTimer(){
+        if (handler != null && runnable != null) {
             handler.removeCallbacks(runnable);
         }
     }
@@ -140,15 +145,14 @@ public class SinglePlayActivity extends AppCompatActivity {
         //TODO : Player Win State
         //TODO : Create Dialog To Make Player Choose if he want to go to next level or stop
         Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
-        if (handler != null && runnable != null) {
-            handler.removeCallbacks(runnable);
-        }
+        onGameStopTimer();
     }
 
     private void onGameLoseState() {
         //TODO : Player Lose State
         //TODO : Make score = score -  point
         //TODO : update score and back to main menu
+        onGameStopTimer();
         Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
         goToMainMenu();
     }
