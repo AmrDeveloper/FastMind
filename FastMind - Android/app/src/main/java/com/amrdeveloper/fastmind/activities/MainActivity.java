@@ -26,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,SinglePlayActivity.class);
         startActivity(intent);
     }
+    public void feedActivity(View view){
+        Intent intent = new Intent(this,FeedActivity.class);
+        startActivity(intent);
+    }
 
     public void rankActivity(View view){
         Intent intent = new Intent(this,RankActivity.class);
@@ -34,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void aboutActivity(View view){
         Intent intent = new Intent(this,AboutActivity.class);
+        startActivity(intent);
+    }
+
+    public void logoutAction(View view){
+        //TODO : Update Current User Information
+        //TODO : Delete Current User Data From SharePreferences
+        //TODO : Finish This Activity and back to LoginActivity to reLogin
+        Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
     }
 }

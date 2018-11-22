@@ -76,6 +76,16 @@
             android:textColor="@color/darkPurple" />
 
         <Button
+            android:id="@+id/feedOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:onClick="feedActivity"
+            android:text="@string/feed"
+            android:textAllCaps="false"
+            android:textColor="@color/darkPurple" />
+
+        <Button
             android:id="@+id/rankOption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,6 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
+            android:onClick="logoutAction"
             android:text="@string/logout"
             android:textAllCaps="false"
             android:textColor="@color/darkPurple" />

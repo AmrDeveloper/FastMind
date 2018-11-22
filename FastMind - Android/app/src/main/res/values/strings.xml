@@ -40,4 +40,5 @@
 
     <!--UI Default Value-->
     <string name="timer_starter">Timer : 20s</string>
+    <string name="feed">Feed</string>
 </resources>
