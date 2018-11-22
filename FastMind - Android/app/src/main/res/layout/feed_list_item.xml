@@ -38,7 +38,7 @@
             tools:text="AmrDeveloper" />
 
         <TextView
-            android:id="@+id/gameLastLevel"
+            android:id="@+id/gameLevel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
