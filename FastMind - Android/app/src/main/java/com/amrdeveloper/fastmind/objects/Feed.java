@@ -2,10 +2,6 @@ package com.amrdeveloper.fastmind.objects;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by AmrDeveloper on 11/22/2018.
- */
-
 public class Feed {
 
     @SerializedName("winner")

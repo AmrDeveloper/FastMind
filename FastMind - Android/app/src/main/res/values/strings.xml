@@ -15,6 +15,10 @@
     <string name="signin">Signin</string>
     <string name="submit">Submit</string>
     <string name="search">Search</string>
+    <string name="state">State</string>
+    <string name="next">Next</string>
+    <string name="stop">Stop</string>
+    <string name="ok">Ok</string>
 
     <!--MainActivity-->
     <string name="continues">Continue</string>
@@ -41,4 +45,8 @@
     <!--UI Default Value-->
     <string name="timer_starter">Timer : 20s</string>
     <string name="feed">Feed</string>
+
+    <!--Game State-->
+    <string name="win_state">You Are Winner</string>
+    <string name="lose_state">You Are Loser</string>
 </resources>

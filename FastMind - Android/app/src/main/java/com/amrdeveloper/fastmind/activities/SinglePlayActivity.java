@@ -1,6 +1,10 @@
 package com.amrdeveloper.fastmind.activities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -114,7 +118,7 @@ public class SinglePlayActivity extends AppCompatActivity {
                     } else {
                         isGameEnd = true;
                         handler.removeCallbacks(runnable);
-                        onGameLoseState();
+                        onGameLoseAction();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -125,7 +129,7 @@ public class SinglePlayActivity extends AppCompatActivity {
         handler.postDelayed(runnable, 1000);
     }
 
-    private void onGameStopTimer(){
+    private void onGameStopTimer() {
         if (handler != null && runnable != null) {
             handler.removeCallbacks(runnable);
         }
@@ -135,26 +139,71 @@ public class SinglePlayActivity extends AppCompatActivity {
         int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
         RadioButton checkedRadioButton = findViewById(checkedId);
         String result = checkedRadioButton.getText().toString();
-        if (result.equals(String.valueOf(mQuestionTrueAnswer)))
+        if (result.equals(String.valueOf(mQuestionTrueAnswer))) {
+            checkedRadioButton.setBackgroundColor(Color.GREEN);
             onGameWinState();
-        else
+        }else {
+            checkedRadioButton.setBackgroundColor(Color.RED);
             onGameLoseState();
+        }
     }
 
     private void onGameWinState() {
+        onGameWinDialog();
+    }
+
+    private void onGameLoseState() {
+        onGameLostDialog();
+    }
+
+    private void onGameWinAction() {
         //TODO : Player Win State
         //TODO : Create Dialog To Make Player Choose if he want to go to next level or stop
         Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
         onGameStopTimer();
     }
 
-    private void onGameLoseState() {
+    private void onGameLoseAction() {
         //TODO : Player Lose State
         //TODO : Make score = score -  point
         //TODO : update score and back to main menu
         onGameStopTimer();
         Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
         goToMainMenu();
+    }
+
+    private void onGameWinDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog dialog = builder.create();
+        dialog.setTitle(getString(R.string.state));
+        dialog.setMessage(getString(R.string.win_state));
+        dialog.setButton(Dialog.BUTTON_POSITIVE, getString(R.string.next), (iDialog, which) -> {
+            onGameWinAction();
+            dialog.dismiss();
+        });
+        dialog.setButton(Dialog.BUTTON_NEGATIVE, getString(R.string.stop), (iDialog, which) -> {
+            goToMainMenu();
+            dialog.dismiss();
+        });
+        dialog.setOnDismissListener(iDialog -> {
+            onGameStopTimer();
+        });
+        dialog.show();
+    }
+
+    private void onGameLostDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog dialog = builder.create();
+        dialog.setTitle(getString(R.string.state));
+        dialog.setMessage(getString(R.string.lose_state));
+        dialog.setButton(Dialog.BUTTON_POSITIVE, getString(R.string.ok), (iDialog, which) -> {
+            onGameLoseAction();
+            dialog.dismiss();
+        });
+        dialog.setOnDismissListener(iDialog -> {
+            onGameLoseAction();
+        });
+        dialog.show();
     }
 
     private void goToMainMenu() {
@@ -167,7 +216,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         //TODO : Player State Is Loser
-        onGameLoseState();
+        onGameLoseAction();
     }
 
     @Override
