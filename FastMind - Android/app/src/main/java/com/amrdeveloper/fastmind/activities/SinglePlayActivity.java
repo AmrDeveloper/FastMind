@@ -2,7 +2,6 @@ package com.amrdeveloper.fastmind.activities;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
@@ -31,7 +30,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     private Button mGameSubmitButton;
 
     private boolean isGameEnd;
-    private int currentGameLevel = 1;
+    private int mCurrentGameLevel = 1;
     private int mQuestionTrueAnswer;
 
     private Handler handler;
@@ -91,7 +90,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     private void generateQuestion() {
         //Generate Question
         final QuestionGenerator mQuestionGenerator = new QuestionGenerator();
-        mQuestion = mQuestionGenerator.generateQuestion(currentGameLevel);
+        mQuestion = mQuestionGenerator.generateQuestion(mCurrentGameLevel);
     }
 
     private void onGameActivityStart(Bundle bundle) {
@@ -99,10 +98,14 @@ public class SinglePlayActivity extends AppCompatActivity {
             mQuestion = bundle.getParcelable(QUESTION);
             updateQuestionUI();
         } else {
-            generateQuestion();
-            updateQuestionUI();
+            onGameCreate();
         }
         onGameTimeCounter();
+    }
+
+    private void onGameCreate(){
+        generateQuestion();
+        updateQuestionUI();
     }
 
     private void onGameTimeCounter() {
@@ -139,16 +142,20 @@ public class SinglePlayActivity extends AppCompatActivity {
         int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
         RadioButton checkedRadioButton = findViewById(checkedId);
         String result = checkedRadioButton.getText().toString();
+        onGameStopTimer();
         if (result.equals(String.valueOf(mQuestionTrueAnswer))) {
-            checkedRadioButton.setBackgroundColor(Color.GREEN);
+            //TODO : Change Answer RadioButton background color to green
+            //TODO : Change Answer RadioButton Text to dark color
             onGameWinState();
         }else {
-            checkedRadioButton.setBackgroundColor(Color.RED);
+            //TODO : Change Answer RadioButton background color to Red
+            //TODO : Change Answer RadioButton Text to dark color
             onGameLoseState();
         }
     }
 
     private void onGameWinState() {
+        onGameWinAction();
         onGameWinDialog();
     }
 
@@ -158,16 +165,12 @@ public class SinglePlayActivity extends AppCompatActivity {
 
     private void onGameWinAction() {
         //TODO : Player Win State
-        //TODO : Create Dialog To Make Player Choose if he want to go to next level or stop
         Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
-        onGameStopTimer();
     }
 
     private void onGameLoseAction() {
         //TODO : Player Lose State
         //TODO : Make score = score -  point
-        //TODO : update score and back to main menu
-        onGameStopTimer();
         Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
         goToMainMenu();
     }
@@ -178,7 +181,8 @@ public class SinglePlayActivity extends AppCompatActivity {
         dialog.setTitle(getString(R.string.state));
         dialog.setMessage(getString(R.string.win_state));
         dialog.setButton(Dialog.BUTTON_POSITIVE, getString(R.string.next), (iDialog, which) -> {
-            onGameWinAction();
+            mCurrentGameLevel++;
+            onGameCreate();
             dialog.dismiss();
         });
         dialog.setButton(Dialog.BUTTON_NEGATIVE, getString(R.string.stop), (iDialog, which) -> {

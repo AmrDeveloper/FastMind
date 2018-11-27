@@ -3,6 +3,7 @@ package com.amrdeveloper.fastmind.utils;
 import com.amrdeveloper.fastmind.objects.Question;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -59,6 +60,7 @@ public class QuestionGenerator {
                 wrongResult++;
             }
         }
+        Collections.shuffle(answers);
         return answers;
     }
 
