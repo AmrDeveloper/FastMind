@@ -27,4 +27,15 @@
         <item name="android:textStyle">italic</item>
         <item name="android:fontFamily">monospace</item>
     </style>
+
+    <!--Style Theme for Win and lose Alert Dialog-->
+    <style name="StateDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!--buttons color-->
+        <item name="colorAccent">@color/purple</item>
+        <!--title and message color-->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <!--dialog background-->
+        <item name="android:windowBackground">@color/black</item>
+    </style>
+
 </resources>

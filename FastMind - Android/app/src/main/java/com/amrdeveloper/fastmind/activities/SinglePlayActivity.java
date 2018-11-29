@@ -3,7 +3,6 @@ package com.amrdeveloper.fastmind.activities;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ public class SinglePlayActivity extends AppCompatActivity {
     private RadioGroup mGameAnswersGroup;
     private Button mGameSubmitButton;
 
-    private boolean isGameEnd;
     private int mCurrentGameLevel = 1;
     private int mQuestionTrueAnswer;
 
@@ -119,7 +117,6 @@ public class SinglePlayActivity extends AppCompatActivity {
                         String newTile = "Timer : " + availableTime[0]-- + "s";
                         mGameTimerCounter.setText(newTile);
                     } else {
-                        isGameEnd = true;
                         handler.removeCallbacks(runnable);
                         onGameLoseAction();
                     }
@@ -160,6 +157,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     }
 
     private void onGameLoseState() {
+        mGameSubmitButton.setClickable(false);
         onGameLostDialog();
     }
 
@@ -176,7 +174,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     }
 
     private void onGameWinDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.StateDialogStyle);
         AlertDialog dialog = builder.create();
         dialog.setTitle(getString(R.string.state));
         dialog.setMessage(getString(R.string.win_state));
@@ -196,11 +194,11 @@ public class SinglePlayActivity extends AppCompatActivity {
     }
 
     private void onGameLostDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.StateDialogStyle);
         AlertDialog dialog = builder.create();
         dialog.setTitle(getString(R.string.state));
         dialog.setMessage(getString(R.string.lose_state));
-        dialog.setButton(Dialog.BUTTON_POSITIVE, getString(R.string.ok), (iDialog, which) -> {
+        dialog.setButton(Dialog.BUTTON_POSITIVE, getString(android.R.string.ok), (iDialog, which) -> {
             onGameLoseAction();
             dialog.dismiss();
         });
