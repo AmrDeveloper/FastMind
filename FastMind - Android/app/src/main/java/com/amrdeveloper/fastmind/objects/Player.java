@@ -19,12 +19,16 @@ public class Player {
     @SerializedName("score")
     private int score;
 
-    public Player(String username, String email, String password, int level, int score) {
+    @SerializedName("online")
+    private int state;
+
+    public Player(String username, String email, String password, int level, int score,int state) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.level = level;
         this.score = score;
+        this.state = state;
     }
 
     public String getUsername() {
@@ -47,6 +51,10 @@ public class Player {
         return score;
     }
 
+    public int getState(){
+        return state;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -65,6 +73,10 @@ public class Player {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public void setState(int state){
+        this.state = state;
     }
 
     @Override

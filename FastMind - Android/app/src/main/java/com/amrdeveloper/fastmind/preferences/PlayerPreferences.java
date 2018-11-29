@@ -18,6 +18,7 @@ public class PlayerPreferences {
     private static final String PASSWORD = "PASSWORD";
     private static final String LEVEL = "LEVEL";
     private static final String SCORE = "SCORE";
+    private static final String STATE = "STATE";
 
     public PlayerPreferences(Context context) {
         this.context = context;
@@ -38,6 +39,7 @@ public class PlayerPreferences {
 
         editor.putInt(LEVEL, player.getLevel());
         editor.putInt(SCORE, player.getScore());
+        editor.putInt(STATE, player.getState());
         return editor.commit();
     }
 
@@ -54,7 +56,8 @@ public class PlayerPreferences {
         String password = playerPreference.getString(PASSWORD, "");
         int level = playerPreference.getInt(LEVEL, 0);
         int score = playerPreference.getInt(SCORE, 0);
-        return new Player(username, email, password, level, score);
+        int state = playerPreference.getInt(STATE, 0);
+        return new Player(username, email, password, level, score,state);
     }
 
     /**
