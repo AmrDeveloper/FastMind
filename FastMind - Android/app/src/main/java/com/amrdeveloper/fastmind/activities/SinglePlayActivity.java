@@ -102,6 +102,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     }
 
     private void onGameCreate(){
+        mGameAnswersGroup.clearCheck();
         generateQuestion();
         updateQuestionUI();
     }
