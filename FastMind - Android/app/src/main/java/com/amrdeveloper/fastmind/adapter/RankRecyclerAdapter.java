@@ -66,6 +66,7 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
 
         private TextView mRankUserName;
         private TextView mRankUserScore;
+        private TextView mRankStateTxt;
 
         private RankViewHolder(View itemView) {
             super(itemView);
@@ -75,11 +76,13 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
         private void initViews(View view){
             mRankUserName = view.findViewById(R.id.rankUserTxt);
             mRankUserScore = view.findViewById(R.id.rankScoreTxt);
+            mRankStateTxt = view.findViewById(R.id.rankStateTxt);
         }
 
         private void bindView(Player player){
             mRankUserName.setText(player.getUsername());
             mRankUserScore.setText(String.valueOf(player.getScore()));
+            mRankStateTxt.setText(player.getState());
         }
     }
 }

@@ -51,8 +51,8 @@ public class Player {
         return score;
     }
 
-    public int getState(){
-        return state;
+    public String getState(){
+        return (state == 0)? "Offline" : "Online";
     }
 
     public void setUsername(String username) {
