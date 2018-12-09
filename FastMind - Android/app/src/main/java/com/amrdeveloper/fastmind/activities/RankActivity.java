@@ -47,11 +47,14 @@ public class RankActivity extends AppCompatActivity {
     private final SearchView.OnQueryTextListener mSearchTextListener = new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
+            //TODO : Call Filter From Adapter
+            //TODO : Check if no result and shot no player match keyword
             return false;
         }
 
         @Override
         public boolean onQueryTextChange(String keyword) {
+            //TODO : Call filter from adapter
             return false;
         }
     };

@@ -48,4 +48,5 @@
     <!--Game State-->
     <string name="win_state">You Are Winner</string>
     <string name="lose_state">You Are Loser</string>
+    <string name="play_for_ever">Play For Ever</string>
 </resources>

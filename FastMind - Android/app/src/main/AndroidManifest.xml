@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.amrdeveloper.fastmind">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LoginActivity"
+        <activity
+            android:name=".activities.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,10 +33,13 @@
         <activity
             android:name=".activities.MultiPlayActivity"
             android:label="@string/multi_player_game" />
-
         <activity android:name=".activities.RankActivity" />
-        <activity android:name=".activities.SigninActivity" android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name=".activities.SigninActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".activities.ChallengeActivity" />
-        <activity android:name=".activities.FeedActivity"/>
+        <activity android:name=".activities.FeedActivity" />
+        <activity android:name=".activities.SplashActivity"></activity>
     </application>
+
 </manifest>

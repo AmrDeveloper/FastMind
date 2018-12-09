@@ -48,6 +48,7 @@ public class SinglePlayActivity extends AppCompatActivity {
         keepScreenOn();
         onGameActivityStart(savedInstanceState);
 
+        //TODO : Get Current Score and level then bind them
         mPlayerScore.setText("Score : 0");
         mPlayerLevel.setText("Level : 0");
     }
