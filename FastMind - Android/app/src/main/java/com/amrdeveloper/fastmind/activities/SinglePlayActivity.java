@@ -45,7 +45,7 @@ public class SinglePlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_single_play);
 
         initiateViews();
-
+        keepScreenOn();
         onGameActivityStart(savedInstanceState);
 
         mPlayerScore.setText("Score : 0");
@@ -63,6 +63,10 @@ public class SinglePlayActivity extends AppCompatActivity {
         mGameSubmitButton = findViewById(R.id.gameSubmit);
 
         mGameSubmitButton.setOnClickListener(v -> onGameCheckResult());
+    }
+
+    private void keepScreenOn() {
+        mGameTimerCounter.setKeepScreenOn(true);
     }
 
     private void updateQuestionUI() {
@@ -101,8 +105,9 @@ public class SinglePlayActivity extends AppCompatActivity {
         onGameTimeCounter();
     }
 
-    private void onGameCreate(){
+    private void onGameCreate() {
         mGameAnswersGroup.clearCheck();
+        mGameSubmitButton.setClickable(true);
         generateQuestion();
         updateQuestionUI();
     }
@@ -137,18 +142,37 @@ public class SinglePlayActivity extends AppCompatActivity {
     }
 
     private void onGameCheckResult() {
+        mGameSubmitButton.setClickable(false);
         int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
         RadioButton checkedRadioButton = findViewById(checkedId);
         String result = checkedRadioButton.getText().toString();
         onGameStopTimer();
         if (result.equals(String.valueOf(mQuestionTrueAnswer))) {
-            //TODO : Change Answer RadioButton background color to green
-            //TODO : Change Answer RadioButton Text to dark color
+            onGameWinStyle(checkedRadioButton);
             onGameWinState();
-        }else {
-            //TODO : Change Answer RadioButton background color to Red
-            //TODO : Change Answer RadioButton Text to dark color
+        } else {
+            onGameLoseStyle(checkedRadioButton);
             onGameLoseState();
+        }
+    }
+
+    private void onGameWinStyle(RadioButton radio) {
+        final int greenColor = getResources().getColor(R.color.green);
+        final int darkPurpleColor = getResources().getColor(R.color.darkPurple);
+
+        if (radio.isChecked()) {
+            radio.setBackgroundColor(greenColor);
+            radio.setTextColor(darkPurpleColor);
+        }
+    }
+
+    private void onGameLoseStyle(RadioButton radio) {
+        final int redColor = getResources().getColor(R.color.red);
+        final int darkPurpleColor = getResources().getColor(R.color.darkPurple);
+
+        if (radio.isChecked()) {
+            radio.setBackgroundColor(redColor);
+            radio.setTextColor(darkPurpleColor);
         }
     }
 
@@ -175,7 +199,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     }
 
     private void onGameWinDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.StateDialogStyle);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.StateDialogStyle);
         AlertDialog dialog = builder.create();
         dialog.setTitle(getString(R.string.state));
         dialog.setMessage(getString(R.string.win_state));
@@ -195,7 +219,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     }
 
     private void onGameLostDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.StateDialogStyle);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.StateDialogStyle);
         AlertDialog dialog = builder.create();
         dialog.setTitle(getString(R.string.state));
         dialog.setMessage(getString(R.string.lose_state));

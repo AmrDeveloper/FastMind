@@ -39,7 +39,7 @@ public class PlayerPreferences {
 
         editor.putInt(LEVEL, player.getLevel());
         editor.putInt(SCORE, player.getScore());
-        editor.putInt(STATE, player.getState());
+        editor.putInt(STATE, player.getStateInt());
         return editor.commit();
     }
 

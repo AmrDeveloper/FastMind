@@ -55,6 +55,10 @@ public class Player {
         return (state == 0)? "Offline" : "Online";
     }
 
+    public int getStateInt(){
+        return state;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
