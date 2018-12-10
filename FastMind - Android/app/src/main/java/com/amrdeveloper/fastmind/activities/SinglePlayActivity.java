@@ -107,6 +107,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     }
 
     private void onGameCreate() {
+        onGameDefaultStyle();
         mGameAnswersGroup.clearCheck();
         mGameSubmitButton.setClickable(true);
         generateQuestion();
@@ -154,6 +155,18 @@ public class SinglePlayActivity extends AppCompatActivity {
         } else {
             onGameLoseStyle(checkedRadioButton);
             onGameLoseState();
+        }
+    }
+
+    private void onGameDefaultStyle() {
+        final int black = getResources().getColor(R.color.black);
+        final int gray = getResources().getColor(R.color.gray);
+
+        int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
+        if (checkedId != -1) {
+            RadioButton checkedRadioButton = findViewById(checkedId);
+            checkedRadioButton.setBackgroundColor(black);
+            checkedRadioButton.setTextColor(gray);
         }
     }
 
