@@ -4,15 +4,45 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView mUsernameInfo;
+    private TextView mLevelInfo;
+    private TextView mScoreInfo;
+
+    private Button mContinueOption;
+
+    private int mCurrentLevel;
+    private int mCurrentScore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initiateViews();
+        continueVisibility();
+    }
+
+    private void initiateViews(){
+        mUsernameInfo = findViewById(R.id.usernameInfo);
+        mLevelInfo = findViewById(R.id.levelInfo);
+        mScoreInfo = findViewById(R.id.scoreInfo);
+
+        mContinueOption = findViewById(R.id.continueOption);
+    }
+
+    private void continueVisibility(){
+        if(mCurrentScore == 0 && mCurrentLevel == 0){
+            mContinueOption.setVisibility(View.GONE);
+        }else{
+            mContinueOption.setVisibility(View.VISIBLE);
+        }
     }
 
     public void startSingleGame(View view){
@@ -26,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,SinglePlayActivity.class);
         startActivity(intent);
     }
+
     public void feedActivity(View view){
         Intent intent = new Intent(this,FeedActivity.class);
         startActivity(intent);
