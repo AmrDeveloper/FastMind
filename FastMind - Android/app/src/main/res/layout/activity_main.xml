@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
-            android:onClick="startSingleGame"
+            android:onClick="newSingleGame"
             android:text="@string/start_new_game"
             android:textAllCaps="false"
             android:textColor="@color/darkPurple" />
