@@ -35,7 +35,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     private Runnable runnable;
     private Question mQuestion;
 
-    private final static int GAME_TIME = 20;
+    private final static int GAME_TIME = 10;
     private static final String QUESTION = "question";
     private static final String DEBUGGING = SinglePlayActivity.class.getClass().getSimpleName();
 
