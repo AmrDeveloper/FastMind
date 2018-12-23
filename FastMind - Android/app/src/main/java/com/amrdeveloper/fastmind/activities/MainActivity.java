@@ -57,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void challengeActivity(View view){
+        Intent intent = new Intent(this,ChallengeActivity.class);
+        startActivity(intent);
+    }
+
     public void feedActivity(View view){
         Intent intent = new Intent(this,FeedActivity.class);
         startActivity(intent);

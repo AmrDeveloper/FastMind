@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
-            android:onClick="feedActivity"
+            android:onClick="challengeActivity"
             android:text="@string/feed"
             android:textAllCaps="false"
             android:textColor="@color/darkPurple" />
