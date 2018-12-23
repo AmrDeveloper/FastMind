@@ -73,6 +73,7 @@
             android:fontFamily="monospace"
             android:text="@string/challenge"
             android:textAllCaps="false"
+            android:onClick="challengeActivity"
             android:textColor="@color/darkPurple" />
 
         <Button
@@ -80,7 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
-            android:onClick="challengeActivity"
+            android:onClick="feedActivity"
             android:text="@string/feed"
             android:textAllCaps="false"
             android:textColor="@color/darkPurple" />
