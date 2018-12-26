@@ -171,18 +171,25 @@ public class SinglePlayActivity extends AppCompatActivity {
         handler.postDelayed(runnable, 1000);
     }
 
+    /**
+     * Remove Runnable from Handler to stop game timer
+     */
     private void onGameStopTimer() {
         if (handler != null && runnable != null) {
             handler.removeCallbacks(runnable);
         }
     }
 
+    /**
+     * First make Submit Button un Clickable
+     * Then get Checked RadioButton and check if this answer match question true answer
+     */
     private void onGameCheckResult() {
         mGameSubmitButton.setClickable(false);
+        onGameStopTimer();
         int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
         RadioButton checkedRadioButton = findViewById(checkedId);
         String result = checkedRadioButton.getText().toString();
-        onGameStopTimer();
         if (result.equals(String.valueOf(mQuestionTrueAnswer))) {
             onGameWinStyle(checkedRadioButton);
             onGameWinState();
@@ -192,6 +199,11 @@ public class SinglePlayActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Return Checked RadioButtons to default style
+     * TextColor : Gray
+     * BackgroundColor : Black
+     */
     private void onGameDefaultStyle() {
         final int black = getResources().getColor(R.color.black);
         final int gray = getResources().getColor(R.color.gray);
@@ -204,6 +216,11 @@ public class SinglePlayActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @param radio : The Clicked RadioButton with true answer
+     *              : Change background color to green
+     *              : Change TextColor to Dark Purple to be clear
+     */
     private void onGameWinStyle(RadioButton radio) {
         final int greenColor = getResources().getColor(R.color.green);
         final int darkPurpleColor = getResources().getColor(R.color.darkPurple);
@@ -214,6 +231,11 @@ public class SinglePlayActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * @param radio : The Clicked RadioButton with invalid answer
+     *              : Change background color to Red
+     *              : Change TextColor to Dark Purple to be clear
+     */
     private void onGameLoseStyle(RadioButton radio) {
         final int redColor = getResources().getColor(R.color.red);
         final int darkPurpleColor = getResources().getColor(R.color.darkPurple);
@@ -224,11 +246,17 @@ public class SinglePlayActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method run when player win this game
+     */
     private void onGameWinState() {
         onGameWinAction();
         onGameWinDialog();
     }
 
+    /**
+     * Method run when player lose this game
+     */
     private void onGameLoseState() {
         mGameSubmitButton.setClickable(false);
         onGameLostDialog();
