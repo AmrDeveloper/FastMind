@@ -45,14 +45,14 @@ public class SinglePlayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_single_play);
 
         initiateViews();
+        updatePlayerInformation();
         keepScreenOn();
         onGameActivityStart(savedInstanceState);
-
-        //TODO : Get Current Score and level then bind them
-        mPlayerScore.setText("Score : 0");
-        mPlayerLevel.setText("Level : 0");
     }
 
+    /**
+     * Initializing All Views in This Activity
+     */
     private void initiateViews() {
         mPlayerLevel = findViewById(R.id.levelInfo);
         mPlayerScore = findViewById(R.id.scoreInfo);
@@ -66,10 +66,25 @@ public class SinglePlayActivity extends AppCompatActivity {
         mGameSubmitButton.setOnClickListener(v -> onGameCheckResult());
     }
 
+    /**
+     * Show Current Player Information from SharePreferences like Score and level
+     */
+    private void updatePlayerInformation() {
+        //TODO : Get Current Score and level then bind them
+        mPlayerScore.setText("Score : 0");
+        mPlayerLevel.setText("Level : 0");
+    }
+
+    /**
+     * Keep Current Activity Active
+     */
     private void keepScreenOn() {
         mGameTimerCounter.setKeepScreenOn(true);
     }
 
+    /**
+     * Set Current Question Information on UI
+     */
     private void updateQuestionUI() {
         //Update Question
         mQuestionBody.setText(mQuestion.getQuestionBody());
@@ -90,12 +105,24 @@ public class SinglePlayActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Use QuestionGenerator Class to generate new Random Question for current level
+     * Every Question Object contain :
+     * 1 - Question Body
+     * 2 - Question True Answer
+     * 3 - Question Level
+     * 4 - List with 4 answers one is true and other is false
+     */
     private void generateQuestion() {
-        //Generate Question
         final QuestionGenerator mQuestionGenerator = new QuestionGenerator();
         mQuestion = mQuestionGenerator.generateQuestion(mCurrentGameLevel);
     }
 
+    /**
+     * @param bundle : Bundle to check if this game is first time to launch or not
+     *               : if it not first time get saved question and update UI
+     *               : else create question from scratch
+     */
     private void onGameActivityStart(Bundle bundle) {
         if (bundle != null) {
             mQuestion = bundle.getParcelable(QUESTION);
@@ -106,6 +133,13 @@ public class SinglePlayActivity extends AppCompatActivity {
         onGameTimeCounter();
     }
 
+    /**
+     * Set default settings like default colors
+     * Clear checked answers RadioButton
+     * Make submit button clickable again
+     * <p>
+     * Generate new Question and update UI
+     */
     private void onGameCreate() {
         onGameDefaultStyle();
         mGameAnswersGroup.clearCheck();
@@ -247,12 +281,18 @@ public class SinglePlayActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * back to Main Activity and destroy this activity
+     */
     private void goToMainMenu() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Make user lose game when it back pressed while game is not ended
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -260,6 +300,9 @@ public class SinglePlayActivity extends AppCompatActivity {
         onGameLoseAction();
     }
 
+    /**
+     * Stop handler and runnable when before destroy activity
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -271,6 +314,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        //Save Current Question as Parcelable Type
         outState.putParcelable(QUESTION, mQuestion);
     }
 }

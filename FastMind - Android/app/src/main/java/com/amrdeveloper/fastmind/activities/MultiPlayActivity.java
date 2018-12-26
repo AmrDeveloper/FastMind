@@ -15,7 +15,9 @@ public class MultiPlayActivity extends AppCompatActivity {
 
     private String player;
     private String player2;
+
     private int mGameLevel;
+    private boolean isGameEnd;
 
     private Question mQuestion;
     private Handler mTimerHandler;
@@ -29,6 +31,7 @@ public class MultiPlayActivity extends AppCompatActivity {
     private TextView mGameTimer;
     private Button mSubmitButton;
 
+    private static final String DEBUGGING = SinglePlayActivity.class.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
