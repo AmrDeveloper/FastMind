@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.utils.DataValidation;
 
 public class SigninActivity extends AppCompatActivity {
 
@@ -47,7 +48,7 @@ public class SigninActivity extends AppCompatActivity {
         mLoginProgressBar = findViewById(R.id.loginProgressBar);
 
         mSigninButton = findViewById(R.id.signinButton);
-        mSigninButton.setOnClickListener(onSigninClickListener);
+        mSigninButton.setOnClickListener(onSignInClickListener);
     }
 
     public void goToLoginActivity(View view) {
@@ -56,8 +57,31 @@ public class SigninActivity extends AppCompatActivity {
         finish();
     }
 
+    private void goToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
-    private final View.OnClickListener onSigninClickListener = view -> {
+    private final View.OnClickListener onSignInClickListener = view -> {
+        String username = mUsernameEditText.getText().toString().trim();
+        String email = mEmailEditText.getText().toString().trim();
+        String password = mPassWordEditText.getText().toString().trim();
 
+        boolean isNameValid = DataValidation.isUsernameValid(username);
+        boolean isEmailValid = DataValidation.isEmailValid(email);
+        boolean isPasswordValid = DataValidation.isPasswordValid(password);
+        boolean isSignInValid = isNameValid && isEmailValid && isPasswordValid;
+
+        if (isSignInValid) {
+            goToMainActivity();
+        } else {
+            if (!isNameValid)
+                mUsernameEditText.setError(getString(R.string.invalid_username));
+            if (!isEmailValid)
+                mEmailInputLayout.setError(getString(R.string.invalid_Email));
+            if (!isPasswordValid)
+                mPassWordInputLayout.setError(getString(R.string.invalid_password));
+        }
     };
 }

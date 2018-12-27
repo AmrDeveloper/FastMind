@@ -59,16 +59,15 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean emailValid = DataValidation.isEmailValid(playerEmail);
         boolean passValid = DataValidation.isPasswordValid(playerPassword);
+        boolean isLoginValid = emailValid && passValid;
 
-        if(emailValid && passValid){
+        if (isLoginValid) {
             goToMainActivity();
-        }else{
-            if(!emailValid){
+        } else {
+            if (!emailValid)
                 mEmailInputLayout.setError(getString(R.string.invalid_Email));
-            }
-            if(!passValid){
+            if (!passValid)
                 mPassWordInputLayout.setError(getString(R.string.invalid_password));
-            }
         }
     };
 }
