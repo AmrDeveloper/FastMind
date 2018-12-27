@@ -22,6 +22,9 @@ public class Player {
     @SerializedName("online")
     private int state;
 
+    @SerializedName("playing")
+    private int playing;
+
     public Player(String username, String email, String password, int level, int score,int state) {
         this.username = username;
         this.email = email;
@@ -57,6 +60,14 @@ public class Player {
 
     public int getStateInt(){
         return state;
+    }
+
+    public int getPlayingInt(){
+        return playing;
+    }
+
+    public boolean isPlaying(){
+        return (playing == 1);
     }
 
     public void setUsername(String username) {

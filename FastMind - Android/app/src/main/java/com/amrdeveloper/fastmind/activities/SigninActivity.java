@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.utils.DataValidation;
 
+
 public class SigninActivity extends AppCompatActivity {
 
     private TextInputLayout mUsernameInputLayout;
