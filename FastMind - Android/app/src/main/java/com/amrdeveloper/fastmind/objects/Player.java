@@ -25,13 +25,24 @@ public class Player {
     @SerializedName("playing")
     private int playing;
 
-    public Player(String username, String email, String password, int level, int score,int state) {
+    public Player(String username, String email, String password, int level, int score) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.level = level;
+        this.score = score;
+        this.state = 1;
+        this.playing = 1;
+    }
+
+    public Player(String username, String email, String password, int level, int score, int state, int playing) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.level = level;
         this.score = score;
         this.state = state;
+        this.playing = playing;
     }
 
     public String getUsername() {
@@ -54,19 +65,19 @@ public class Player {
         return score;
     }
 
-    public String getState(){
-        return (state == 0)? "Offline" : "Online";
+    public String getState() {
+        return (state == 0) ? "Offline" : "Online";
     }
 
-    public int getStateInt(){
+    public int getStateInt() {
         return state;
     }
 
-    public int getPlayingInt(){
+    public int getPlayingInt() {
         return playing;
     }
 
-    public boolean isPlaying(){
+    public boolean isPlaying() {
         return (playing == 1);
     }
 
@@ -90,7 +101,7 @@ public class Player {
         this.score = score;
     }
 
-    public void setState(int state){
+    public void setState(int state) {
         this.state = state;
     }
 

@@ -13,19 +13,15 @@ import android.widget.Toast;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.objects.Player;
+import com.amrdeveloper.fastmind.preferences.Session;
 import com.amrdeveloper.fastmind.utils.DataValidation;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
+
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -78,22 +74,24 @@ public class LoginActivity extends AppCompatActivity {
         return uriBuilder.toString();
     }
 
-    private void makeLoginRequest(String url) {
+    private void makeLoginRequest(String requestUrl) {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                url,
+                requestUrl,
                 response -> {
                     if (response.length() == 0) {
-                        //TODO : Create Invalid Message
+                        Toast.makeText(this, "Invalid Login", Toast.LENGTH_SHORT).show();
                     } else {
                         Gson gson = new Gson();
                         Player player = gson.fromJson(response,Player.class);
-                        //TODO : Save This player in local
-                        //TODO : Then Go to main Activity
+
+                        Session session = new Session(getApplicationContext());
+                        session.playerLogIn(player);
+
                         goToMainActivity();
                     }
                 },
-                error -> Toast.makeText(LoginActivity.this, "Field", Toast.LENGTH_SHORT).show()) {
+                error -> Toast.makeText(LoginActivity.this, "Invalid Login", Toast.LENGTH_SHORT).show()) {
         };
         queue.add(stringRequest);
     }
