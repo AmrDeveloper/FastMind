@@ -36,8 +36,8 @@ public class SinglePlayActivity extends AppCompatActivity {
     private Question mQuestion;
 
     private final static int GAME_TIME = 10;
-    private static final String QUESTION = "question";
-    private static final String DEBUGGING = SinglePlayActivity.class.getClass().getSimpleName();
+    private final static String QUESTION = "question";
+    private final static String DEBUGGING = SinglePlayActivity.class.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
