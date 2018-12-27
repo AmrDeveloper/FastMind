@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.amrdeveloper.fastmind.R;
 
@@ -21,6 +22,8 @@ public class SigninActivity extends AppCompatActivity {
     private TextInputLayout mPassWordInputLayout;
     private TextInputEditText mPassWordEditText;
 
+    private ProgressBar mLoginProgressBar;
+    
     private Button mSigninButton;
 
     @Override
@@ -41,7 +44,10 @@ public class SigninActivity extends AppCompatActivity {
         mPassWordInputLayout = findViewById(R.id.passWordInputLayout);
         mPassWordEditText = findViewById(R.id.passWordEditText);
 
+        mLoginProgressBar = findViewById(R.id.loginProgressBar);
+
         mSigninButton = findViewById(R.id.signinButton);
+        mSigninButton.setOnClickListener(onSigninClickListener);
     }
 
     public void goToLoginActivity(View view){
@@ -49,4 +55,9 @@ public class SigninActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
+    private final static View.OnClickListener onSigninClickListener = (view) ->{
+
+    };
 }
