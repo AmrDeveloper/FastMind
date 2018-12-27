@@ -148,6 +148,10 @@ public class SinglePlayActivity extends AppCompatActivity {
         updateQuestionUI();
     }
 
+    /**
+     * Time count down for game from 10s to 0 and update state on UI
+     * when time end the game is end ans user lose
+     */
     private void onGameTimeCounter() {
         final int[] availableTime = {GAME_TIME};
         handler = new Handler();
@@ -262,11 +266,13 @@ public class SinglePlayActivity extends AppCompatActivity {
         onGameLostDialog();
     }
 
+    //TODO : Action When user win a game
     private void onGameWinAction() {
         //TODO : Player Win State
         Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
     }
 
+    //TODO : Action when user lose a game
     private void onGameLoseAction() {
         //TODO : Player Lose State
         //TODO : Make score = score -  point
@@ -274,6 +280,11 @@ public class SinglePlayActivity extends AppCompatActivity {
         goToMainMenu();
     }
 
+    /**
+     * This method run when game ended and  answer is true
+     * it show AlertDialog with Two Buttons : Next to go to next Level
+     *                                      : Stop to back to main Activity
+     */
     private void onGameWinDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.StateDialogStyle);
         AlertDialog dialog = builder.create();
@@ -294,6 +305,10 @@ public class SinglePlayActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * This method run when game ended and  answer is true
+     * it show AlertDialog with One Buttons : OK to back to main Activity
+     */
     private void onGameLostDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.StateDialogStyle);
         AlertDialog dialog = builder.create();
