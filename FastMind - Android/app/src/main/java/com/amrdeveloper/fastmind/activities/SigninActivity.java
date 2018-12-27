@@ -23,7 +23,7 @@ public class SigninActivity extends AppCompatActivity {
     private TextInputEditText mPassWordEditText;
 
     private ProgressBar mLoginProgressBar;
-    
+
     private Button mSigninButton;
 
     @Override
@@ -34,7 +34,7 @@ public class SigninActivity extends AppCompatActivity {
         initializeViews();
     }
 
-    private void initializeViews(){
+    private void initializeViews() {
         mUsernameInputLayout = findViewById(R.id.usernameInputLayout);
         mUsernameEditText = findViewById(R.id.usernameEditText);
 
@@ -50,14 +50,14 @@ public class SigninActivity extends AppCompatActivity {
         mSigninButton.setOnClickListener(onSigninClickListener);
     }
 
-    public void goToLoginActivity(View view){
-        Intent intent = new Intent(SigninActivity.this , LoginActivity.class);
+    public void goToLoginActivity(View view) {
+        Intent intent = new Intent(SigninActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
 
 
-    private final static View.OnClickListener onSigninClickListener = (view) ->{
+    private final View.OnClickListener onSigninClickListener = view -> {
 
     };
 }
