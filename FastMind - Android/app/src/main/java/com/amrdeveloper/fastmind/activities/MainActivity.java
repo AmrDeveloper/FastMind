@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.objects.Player;
+import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,12 +22,15 @@ public class MainActivity extends AppCompatActivity {
     private int mCurrentLevel;
     private int mCurrentScore;
 
+    private Player player;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initiateViews();
+        updateUserInformation();
         continueVisibility();
     }
 
@@ -35,6 +40,15 @@ public class MainActivity extends AppCompatActivity {
         mScoreInfo = findViewById(R.id.scoreInfo);
 
         mContinueOption = findViewById(R.id.continueOption);
+    }
+
+    private void updateUserInformation(){
+        PlayerPreferences playerPreferences = new PlayerPreferences(this);
+        Player player = playerPreferences.queryPlayerInformation();
+        this.player = player;
+        mUsernameInfo.setText(player.getUsername());
+        mLevelInfo.setText("Level : " + player.getLevel());
+        mScoreInfo.setText("Score : " + player.getScore());
     }
 
     private void continueVisibility(){

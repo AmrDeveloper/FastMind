@@ -19,6 +19,7 @@ public class PlayerPreferences {
     private static final String LEVEL = "LEVEL";
     private static final String SCORE = "SCORE";
     private static final String STATE = "STATE";
+    private static final String PLAYING = "PLAY";
 
     public PlayerPreferences(Context context) {
         this.context = context;
@@ -40,6 +41,7 @@ public class PlayerPreferences {
         editor.putInt(LEVEL, player.getLevel());
         editor.putInt(SCORE, player.getScore());
         editor.putInt(STATE, player.getStateInt());
+        editor.putInt(PLAYING, player.getPlayingInt());
         return editor.commit();
     }
 
@@ -57,7 +59,16 @@ public class PlayerPreferences {
         int level = playerPreference.getInt(LEVEL, 0);
         int score = playerPreference.getInt(SCORE, 0);
         int state = playerPreference.getInt(STATE, 0);
-        return new Player(username, email, password, level, score,state);
+        int playing = playerPreference.getInt(PLAYING, 0);
+        return new Player(username, email, password, level, score,state,playing);
+    }
+
+    /**
+     * @return : True if username not equal null that mean there is player here
+     */
+    public boolean isPlayerLogined(){
+        Player player = queryPlayerInformation();
+        return !player.getUsername().equals("");
     }
 
     /**

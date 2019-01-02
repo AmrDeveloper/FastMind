@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.objects.Player;
+import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
 import com.amrdeveloper.fastmind.preferences.Session;
 import com.amrdeveloper.fastmind.utils.DataValidation;
 import com.android.volley.Request;
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        isPlayerLogined();
         initializeViews();
     }
 
@@ -50,6 +52,14 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginButton = findViewById(R.id.loginButton);
         mLoginButton.setOnClickListener(onLoginClickListener);
+    }
+
+    private void isPlayerLogined(){
+        PlayerPreferences preferences = new PlayerPreferences(this);
+        if(preferences.isPlayerLogined()){
+            goToMainActivity();
+            finish();
+        }
     }
 
     public void goToSigninActivity(View view) {
@@ -74,24 +84,30 @@ public class LoginActivity extends AppCompatActivity {
         return uriBuilder.toString();
     }
 
-    private void makeLoginRequest(String requestUrl) {
+    private void sendLoginRequest(String requestUrl) {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 requestUrl,
                 response -> {
                     if (response.length() == 0) {
-                        Toast.makeText(this, "Invalid Login", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Invalid Information", Toast.LENGTH_SHORT).show();
                     } else {
+                        //Get Player Information From Server
                         Gson gson = new Gson();
                         Player player = gson.fromJson(response,Player.class);
 
+                        //Save Current Player Session
                         Session session = new Session(getApplicationContext());
                         session.playerLogIn(player);
 
+                        //Go to Main Activity
                         goToMainActivity();
+
+                        //Destroy this activity after end
+                        finish();
                     }
                 },
-                error -> Toast.makeText(LoginActivity.this, "Invalid Login", Toast.LENGTH_SHORT).show()) {
+                error -> Toast.makeText(LoginActivity.this, "Invalid Request", Toast.LENGTH_SHORT).show()) {
         };
         queue.add(stringRequest);
     }
@@ -106,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (isLoginValid) {
             String requestUrl = generateUrl(playerEmail, playerPassword);
-            makeLoginRequest(requestUrl);
+            sendLoginRequest(requestUrl);
         } else {
             if (!emailValid)
                 mEmailInputLayout.setError(getString(R.string.invalid_Email));
