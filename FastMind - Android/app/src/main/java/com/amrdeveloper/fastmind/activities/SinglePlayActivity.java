@@ -32,6 +32,8 @@ public class SinglePlayActivity extends AppCompatActivity {
 
     private int mCurrentGameLevel = 1;
     private int mQuestionTrueAnswer;
+    private int mPlayerCurrentlevel;
+    private int mPlayerCurrentScore;
 
     private Player mPlayer;
     private Handler handler;
@@ -72,7 +74,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     /**
      * Get Saved Player Information from Share Preferences
      */
-    private void getCurrentPlayer(){
+    private void getCurrentPlayer() {
         PlayerPreferences preferences = new PlayerPreferences(this);
         mPlayer = preferences.queryPlayerInformation();
     }
@@ -82,8 +84,10 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     private void updatePlayerInformation() {
         getCurrentPlayer();
-        mPlayerLevel.setText("Level : " + mPlayer.getLevel());
-        mPlayerScore.setText("Score : " + mPlayer.getScore());
+        mPlayerCurrentlevel = mPlayer.getLevel();
+        mPlayerCurrentScore = mPlayer.getScore();
+        mPlayerLevel.setText("Level : " + mPlayerCurrentlevel);
+        mPlayerScore.setText("Score : " + mPlayerCurrentScore);
     }
 
     /**
@@ -287,7 +291,7 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     private void onGameWinAction() {
         PlayerPreferences preferences = new PlayerPreferences(this);
-        preferences.updatePlayerScore(5);
+        preferences.playerScoreUp(mCurrentGameLevel);
         Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
     }
 
@@ -296,14 +300,14 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     private void onGameLoseAction() {
         PlayerPreferences preferences = new PlayerPreferences(this);
-        preferences.updatePlayerScore(0);
+        preferences.playerScoreUp(mCurrentGameLevel);
         Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
     }
 
     /**
      * This method run when game ended and  answer is true
      * it show AlertDialog with Two Buttons : Next to go to next Level
-     *                                      : Stop to back to main Activity
+     * : Stop to back to main Activity
      */
     private void onGameWinDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.StateDialogStyle);
@@ -313,6 +317,7 @@ public class SinglePlayActivity extends AppCompatActivity {
         dialog.setButton(Dialog.BUTTON_POSITIVE, getString(R.string.next), (iDialog, which) -> {
             mCurrentGameLevel++;
             onGameCreate();
+            updatePlayerInformation();
             dialog.dismiss();
         });
         dialog.setButton(Dialog.BUTTON_NEGATIVE, getString(R.string.stop), (iDialog, which) -> {
