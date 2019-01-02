@@ -43,12 +43,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUserInformation(){
-        PlayerPreferences playerPreferences = new PlayerPreferences(this);
-        Player player = playerPreferences.queryPlayerInformation();
-        this.player = player;
+        getCurrentPlayerInformation();
+        //Update UI
         mUsernameInfo.setText(player.getUsername());
         mLevelInfo.setText("Level : " + player.getLevel());
         mScoreInfo.setText("Score : " + player.getScore());
+        //Update Values
+        mCurrentLevel = player.getLevel();
+        mCurrentScore = player.getScore();
+    }
+
+    private void getCurrentPlayerInformation(){
+        PlayerPreferences playerPreferences = new PlayerPreferences(this);
+        player = playerPreferences.queryPlayerInformation();
     }
 
     private void continueVisibility(){

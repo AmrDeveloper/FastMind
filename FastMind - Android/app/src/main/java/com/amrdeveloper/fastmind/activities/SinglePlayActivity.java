@@ -13,8 +13,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.objects.Question;
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
 import com.amrdeveloper.fastmind.utils.QuestionGenerator;
 
 import java.util.List;
@@ -31,6 +33,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     private int mCurrentGameLevel = 1;
     private int mQuestionTrueAnswer;
 
+    private Player mPlayer;
     private Handler handler;
     private Runnable runnable;
     private Question mQuestion;
@@ -67,12 +70,20 @@ public class SinglePlayActivity extends AppCompatActivity {
     }
 
     /**
+     * Get Saved Player Information from Share Preferences
+     */
+    private void getCurrentPlayer(){
+        PlayerPreferences preferences = new PlayerPreferences(this);
+        mPlayer = preferences.queryPlayerInformation();
+    }
+
+    /**
      * Show Current Player Information from SharePreferences like Score and level
      */
     private void updatePlayerInformation() {
-        //TODO : Get Current Score and level then bind them
-        mPlayerScore.setText("Score : 0");
-        mPlayerLevel.setText("Level : 0");
+        getCurrentPlayer();
+        mPlayerLevel.setText("Level : " + mPlayer.getLevel());
+        mPlayerScore.setText("Score : " + mPlayer.getScore());
     }
 
     /**
@@ -266,16 +277,21 @@ public class SinglePlayActivity extends AppCompatActivity {
         onGameLostDialog();
     }
 
-    //TODO : Action When user win a game
+    /**
+     * Update Player Score and level by add more score because he win
+     */
     private void onGameWinAction() {
-        //TODO : Player Win State
+        PlayerPreferences preferences = new PlayerPreferences(this);
+        preferences.updatePlayerScore(5);
         Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
     }
 
-    //TODO : Action when user lose a game
+    /**
+     * Update Player Score and level by sub more score because he lose
+     */
     private void onGameLoseAction() {
-        //TODO : Player Lose State
-        //TODO : Make score = score -  point
+        PlayerPreferences preferences = new PlayerPreferences(this);
+        preferences.updatePlayerScore(0);
         Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
         goToMainMenu();
     }
