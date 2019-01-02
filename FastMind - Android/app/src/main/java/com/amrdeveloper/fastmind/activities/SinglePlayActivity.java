@@ -155,9 +155,10 @@ public class SinglePlayActivity extends AppCompatActivity {
         onGameDefaultStyle();
         mGameAnswersGroup.clearCheck();
         mGameSubmitButton.setClickable(true);
+        //TODO : Timer BUG
+        onGameTimeCounter();
         generateQuestion();
         updateQuestionUI();
-        onGameTimeCounter();
     }
 
     /**
@@ -172,10 +173,9 @@ public class SinglePlayActivity extends AppCompatActivity {
             public void run() {
                 try {
                     if (availableTime[0] > -1) {
-                        String newTile = "Timer : " + availableTime[0]-- + "s";
+                        final String newTile = "Timer : " + availableTime[0]-- + "s";
                         mGameTimerCounter.setText(newTile);
                     } else {
-                        handler.removeCallbacks(runnable);
                         onStop();
                         onGameLoseAction();
                         goToMainMenu();
@@ -198,6 +198,7 @@ public class SinglePlayActivity extends AppCompatActivity {
             handler.removeCallbacks(runnable);
         }
     }
+
 
     /**
      * First make Submit Button un Clickable

@@ -76,7 +76,7 @@ public class PlayerPreferences {
      * @param newScore : Player new Score
      * @return : true if edit is done without problem
      */
-    public boolean updatePlayerScore(int newScore){
+    public boolean setPlayerScore(int newScore){
         SharedPreferences playerPreference = context.getSharedPreferences(
                 PLAYER_PREF_KEY
                 , Context.MODE_PRIVATE);
@@ -86,11 +86,41 @@ public class PlayerPreferences {
     }
 
     /**
+     * @param score : Add This Score to current Score
+     * @return : True if update is done
+     */
+    public boolean playerScoreUp(int score){
+        SharedPreferences playerPreference = context.getSharedPreferences(
+                PLAYER_PREF_KEY
+                , Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = playerPreference.edit();
+        int currentScore = playerPreference.getInt(SCORE, 0);
+        int netScore = currentScore + score;
+        editor.putInt(SCORE,netScore);
+        return editor.commit();
+    }
+
+    /**
+     * @param score : Sub Score from current score
+     * @return : True if update is Done
+     */
+    public boolean playerScoreDown(int score){
+        SharedPreferences playerPreference = context.getSharedPreferences(
+                PLAYER_PREF_KEY
+                , Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = playerPreference.edit();
+        int currentScore = playerPreference.getInt(SCORE, 0);
+        int netScore = currentScore - score;
+        editor.putInt(SCORE,netScore);
+        return editor.commit();
+    }
+
+    /**
      * Update Local Player Current level to use it after any Game
      * @param level : Player new level
      * @return : true if edit is done without problem
      */
-    public boolean updatePlayerLevel(int level){
+    public boolean setPlayerLevel(int level){
         SharedPreferences playerPreference = context.getSharedPreferences(
                 PLAYER_PREF_KEY
                 , Context.MODE_PRIVATE);
