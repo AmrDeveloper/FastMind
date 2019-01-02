@@ -30,9 +30,8 @@ public class SinglePlayActivity extends AppCompatActivity {
     private RadioGroup mGameAnswersGroup;
     private Button mGameSubmitButton;
 
-    private int mCurrentGameLevel = 1;
     private int mQuestionTrueAnswer;
-    private int mPlayerCurrentlevel;
+    private int mPlayerCurrentLevel;
     private int mPlayerCurrentScore;
 
     private Player mPlayer;
@@ -84,9 +83,9 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     private void updatePlayerInformation() {
         getCurrentPlayer();
-        mPlayerCurrentlevel = mPlayer.getLevel();
+        mPlayerCurrentLevel = mPlayer.getLevel();
         mPlayerCurrentScore = mPlayer.getScore();
-        mPlayerLevel.setText("Level : " + mPlayerCurrentlevel);
+        mPlayerLevel.setText("Level : " + mPlayerCurrentLevel);
         mPlayerScore.setText("Score : " + mPlayerCurrentScore);
     }
 
@@ -130,7 +129,7 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     private void generateQuestion() {
         final QuestionGenerator mQuestionGenerator = new QuestionGenerator();
-        mQuestion = mQuestionGenerator.generateQuestion(mCurrentGameLevel);
+        mQuestion = mQuestionGenerator.generateQuestion(mPlayerCurrentLevel);
     }
 
     /**
@@ -291,7 +290,7 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     private void onGameWinAction() {
         PlayerPreferences preferences = new PlayerPreferences(this);
-        preferences.playerScoreUp(mCurrentGameLevel);
+        preferences.playerScoreUp(mPlayerCurrentLevel);
         Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
     }
 
@@ -300,7 +299,7 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     private void onGameLoseAction() {
         PlayerPreferences preferences = new PlayerPreferences(this);
-        preferences.playerScoreUp(mCurrentGameLevel);
+        preferences.playerScoreUp(mPlayerCurrentLevel);
         Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
     }
 
@@ -315,7 +314,7 @@ public class SinglePlayActivity extends AppCompatActivity {
         dialog.setTitle(getString(R.string.state));
         dialog.setMessage(getString(R.string.win_state));
         dialog.setButton(Dialog.BUTTON_POSITIVE, getString(R.string.next), (iDialog, which) -> {
-            mCurrentGameLevel++;
+            mPlayerCurrentLevel++;
             onGameCreate();
             updatePlayerInformation();
             dialog.dismiss();
@@ -324,9 +323,7 @@ public class SinglePlayActivity extends AppCompatActivity {
             goToMainMenu();
             dialog.dismiss();
         });
-        dialog.setOnDismissListener(iDialog -> {
-            onGameStopTimer();
-        });
+        dialog.setOnDismissListener(iDialog -> onGameStopTimer());
         dialog.show();
     }
 
