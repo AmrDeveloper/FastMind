@@ -157,6 +157,7 @@ public class SinglePlayActivity extends AppCompatActivity {
         mGameSubmitButton.setClickable(true);
         generateQuestion();
         updateQuestionUI();
+        onGameTimeCounter();
     }
 
     /**
@@ -164,7 +165,7 @@ public class SinglePlayActivity extends AppCompatActivity {
      * when time end the game is end ans user lose
      */
     private void onGameTimeCounter() {
-        final int[] availableTime = {GAME_TIME};
+        int[] availableTime = {GAME_TIME};
         handler = new Handler();
         runnable = new Runnable() {
             @Override
@@ -175,7 +176,10 @@ public class SinglePlayActivity extends AppCompatActivity {
                         mGameTimerCounter.setText(newTile);
                     } else {
                         handler.removeCallbacks(runnable);
+                        onStop();
                         onGameLoseAction();
+                        goToMainMenu();
+                        finish();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -293,7 +297,6 @@ public class SinglePlayActivity extends AppCompatActivity {
         PlayerPreferences preferences = new PlayerPreferences(this);
         preferences.updatePlayerScore(0);
         Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
-        goToMainMenu();
     }
 
     /**
@@ -332,10 +335,12 @@ public class SinglePlayActivity extends AppCompatActivity {
         dialog.setMessage(getString(R.string.lose_state));
         dialog.setButton(Dialog.BUTTON_POSITIVE, getString(android.R.string.ok), (iDialog, which) -> {
             onGameLoseAction();
+            goToMainMenu();
             dialog.dismiss();
         });
         dialog.setOnDismissListener(iDialog -> {
             onGameLoseAction();
+            goToMainMenu();
         });
         dialog.show();
     }
