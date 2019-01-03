@@ -30,6 +30,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     private RadioGroup mGameAnswersGroup;
     private Button mGameSubmitButton;
 
+    private int mCurrentTimerValue;
     private int mQuestionTrueAnswer;
     private int mPlayerCurrentLevel;
     private int mPlayerCurrentScore;
@@ -41,6 +42,7 @@ public class SinglePlayActivity extends AppCompatActivity {
 
     private final static int GAME_TIME = 10;
     private final static String QUESTION = "question";
+    private final static String TIMER = "timer";
     private final static String DEBUGGING = SinglePlayActivity.class.getClass().getSimpleName();
 
     @Override
@@ -140,9 +142,11 @@ public class SinglePlayActivity extends AppCompatActivity {
     private void onGameActivityStart(Bundle bundle) {
         if (bundle != null) {
             mQuestion = bundle.getParcelable(QUESTION);
+            mCurrentTimerValue = bundle.getInt(TIMER);
             updateQuestionUI();
         } else {
             onGameCreate();
+            mCurrentTimerValue = GAME_TIME;
         }
         onGameTimeCounter();
     }
@@ -158,7 +162,7 @@ public class SinglePlayActivity extends AppCompatActivity {
         onGameDefaultStyle();
         mGameAnswersGroup.clearCheck();
         mGameSubmitButton.setClickable(true);
-        //TODO : Timer BUG
+        onGameStopTimer();
         onGameTimeCounter();
         generateQuestion();
         updateQuestionUI();
@@ -169,20 +173,17 @@ public class SinglePlayActivity extends AppCompatActivity {
      * when time end the game is end ans user lose
      */
     private void onGameTimeCounter() {
-        int[] availableTime = {GAME_TIME};
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
                 try {
-                    if (availableTime[0] > -1) {
-                        final String newTile = "Timer : " + availableTime[0]-- + "s";
+                    if (mCurrentTimerValue > -1) {
+                        final String newTile = "Timer : " + mCurrentTimerValue-- + "s";
                         mGameTimerCounter.setText(newTile);
                     } else {
-                        onStop();
-                        onGameLoseAction();
-                        goToMainMenu();
-                        finish();
+                        onGameStopTimer();
+                        onGameLoseState();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -199,6 +200,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     private void onGameStopTimer() {
         if (handler != null && runnable != null) {
             handler.removeCallbacks(runnable);
+            mCurrentTimerValue = GAME_TIME;
         }
     }
 
@@ -303,7 +305,7 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     private void onGameLoseAction() {
         PlayerPreferences preferences = new PlayerPreferences(this);
-        preferences.playerScoreUp(mPlayerCurrentLevel);
+        preferences.playerScoreDown(mPlayerCurrentLevel);
         Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
     }
 
@@ -343,11 +345,13 @@ public class SinglePlayActivity extends AppCompatActivity {
         dialog.setButton(Dialog.BUTTON_POSITIVE, getString(android.R.string.ok), (iDialog, which) -> {
             onGameLoseAction();
             goToMainMenu();
+            finish();
             dialog.dismiss();
         });
         dialog.setOnDismissListener(iDialog -> {
             onGameLoseAction();
             goToMainMenu();
+            finish();
         });
         dialog.show();
     }
@@ -366,9 +370,8 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        //TODO : Player State Is Loser
-        onGameLoseAction();
+        //super.onBackPressed();
+        onGameLoseState();
     }
 
     /**
@@ -377,9 +380,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (handler != null && runnable != null) {
-            handler.removeCallbacks(runnable);
-        }
+        onGameStopTimer();
     }
 
     @Override
@@ -387,5 +388,6 @@ public class SinglePlayActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         //Save Current Question as Parcelable Type
         outState.putParcelable(QUESTION, mQuestion);
+        outState.putInt(TIMER,mCurrentTimerValue);
     }
 }
