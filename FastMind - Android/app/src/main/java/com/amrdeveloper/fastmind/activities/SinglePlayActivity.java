@@ -208,17 +208,21 @@ public class SinglePlayActivity extends AppCompatActivity {
      * Then get Checked RadioButton and check if this answer match question true answer
      */
     private void onGameCheckResult() {
-        mGameSubmitButton.setClickable(false);
-        onGameStopTimer();
         int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
-        RadioButton checkedRadioButton = findViewById(checkedId);
-        String result = checkedRadioButton.getText().toString();
-        if (result.equals(String.valueOf(mQuestionTrueAnswer))) {
-            onGameWinStyle(checkedRadioButton);
-            onGameWinState();
-        } else {
-            onGameLoseStyle(checkedRadioButton);
-            onGameLoseState();
+        if (checkedId != -1) {
+            mGameSubmitButton.setClickable(false);
+            onGameStopTimer();
+            RadioButton checkedRadioButton = findViewById(checkedId);
+            String result = checkedRadioButton.getText().toString();
+            if (result.equals(String.valueOf(mQuestionTrueAnswer))) {
+                onGameWinStyle(checkedRadioButton);
+                onGameWinState();
+            } else {
+                onGameLoseStyle(checkedRadioButton);
+                onGameLoseState();
+            }
+        }else{
+            Toast.makeText(this, "Select Answer First", Toast.LENGTH_SHORT).show();
         }
     }
 
