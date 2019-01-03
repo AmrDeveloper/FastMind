@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.objects.Player;
+import com.amrdeveloper.fastmind.preferences.PlayerChanger;
 import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
 
 public class MainActivity extends AppCompatActivity {
@@ -67,7 +68,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void newSingleGame(View view){
-        // TODO : Make User Level = 0 , Score = 0
+        //Reset Score and level to zero
+        PlayerChanger playerChanger = new PlayerChanger(this);
+        playerChanger.newGameMode();
+        //Go to Single Play Activity
         Intent intent = new Intent(this,SinglePlayActivity.class);
         startActivity(intent);
         finish();
@@ -99,10 +103,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logoutAction(View view){
-        //TODO : Update Current User Information
-        //TODO : Delete Current User Data From SharePreferences
-        //TODO : Finish This Activity and back to LoginActivity to reLogin
+        //TODO : Update Current User Information To Server
+        PlayerPreferences preferences = new PlayerPreferences(this);
+        preferences.deletePlayerInformation();
+
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 }

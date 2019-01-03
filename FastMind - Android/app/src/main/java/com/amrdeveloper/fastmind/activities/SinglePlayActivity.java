@@ -142,7 +142,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     private void onGameActivityStart(Bundle bundle) {
         if (bundle != null) {
             mQuestion = bundle.getParcelable(QUESTION);
-            mCurrentTimerValue = bundle.getInt(TIMER);
+            mCurrentTimerValue = bundle.getInt(TIMER,0);
             updateQuestionUI();
         } else {
             onGameCreate();
@@ -297,6 +297,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     private void onGameWinAction() {
         PlayerPreferences preferences = new PlayerPreferences(this);
         preferences.playerScoreUp(mPlayerCurrentLevel);
+        preferences.setPlayerLevel(mPlayerCurrentLevel);
         Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
     }
 
@@ -306,6 +307,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     private void onGameLoseAction() {
         PlayerPreferences preferences = new PlayerPreferences(this);
         preferences.playerScoreDown(mPlayerCurrentLevel);
+        preferences.setPlayerLevel(mPlayerCurrentLevel);
         Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
     }
 
@@ -370,7 +372,6 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         onGameLoseState();
     }
 

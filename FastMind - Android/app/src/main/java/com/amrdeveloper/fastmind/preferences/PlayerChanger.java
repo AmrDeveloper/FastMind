@@ -15,7 +15,7 @@ public class PlayerChanger {
     }
 
     public void newGameMode(){
-        mPlayerPref.setPlayerLevel(0);
+        mPlayerPref.setPlayerLevel(1);
         mPlayerPref.setPlayerScore(0);
     }
 }
