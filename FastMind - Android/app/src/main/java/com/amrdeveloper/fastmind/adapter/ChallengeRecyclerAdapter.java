@@ -1,12 +1,13 @@
 package com.amrdeveloper.fastmind.adapter;
 
-
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,12 +17,19 @@ import com.amrdeveloper.fastmind.objects.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecyclerAdapter.ChallengeViewHolder> {
+public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecyclerAdapter.ChallengeViewHolder> implements Filterable {
 
     private List<Player> mPlayerList;
+    private List<Player> mFilteredPlayerList;
+
+    public ChallengeRecyclerAdapter() {
+        mPlayerList = new ArrayList<>();
+        mFilteredPlayerList = new ArrayList<>();
+    }
 
     public ChallengeRecyclerAdapter(List<Player> players) {
         mPlayerList = players;
+        mFilteredPlayerList = players;
     }
 
     @NonNull
@@ -31,37 +39,58 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         int layoutIdForListItem = R.layout.challenge_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         final boolean shouldAttachToParentImmediately = false;
-
         View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
-
         return new ChallengeRecyclerAdapter.ChallengeViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ChallengeViewHolder holder, int position) {
-        Player player = mPlayerList.get(position);
+        Player player = mFilteredPlayerList.get(position);
         holder.bingView(player);
     }
 
     @Override
     public int getItemCount() {
-        return mPlayerList.size();
+        return mFilteredPlayerList.size();
     }
 
-    private void playersFilter(String keyword) {
-        List<Player> filterResult = new ArrayList<>();
-        for (Player p : mPlayerList)
-            if (p.getUsername().contains(keyword) || p.getEmail().contains(keyword))
-                filterResult.add(p);
-        updateRecyclerData(filterResult);
-    }
 
-    private void updateRecyclerData(List<Player> playerList) {
+    public void updateRecyclerData(List<Player> playerList) {
         if (playerList != null) {
-            mPlayerList.clear();
-            mPlayerList.addAll(playerList);
+            mPlayerList = playerList;
+            mFilteredPlayerList = playerList;
             notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String keyword = constraint.toString();
+                if (keyword.isEmpty()) {
+                    mFilteredPlayerList = mPlayerList;
+                } else {
+                    List<Player> filteredList = new ArrayList<>();
+                    for (Player player : mPlayerList) {
+                       if(player.getUsername().contains(keyword) || player.getEmail().contains(keyword)){
+                           filteredList.add(player);
+                       }
+                    }
+                    mFilteredPlayerList = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mFilteredPlayerList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mFilteredPlayerList = (ArrayList<Player>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     class ChallengeViewHolder extends RecyclerView.ViewHolder {
@@ -70,7 +99,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         private TextView mUserScoreTxt;
         private ImageButton mChallengeAction;
 
-        public ChallengeViewHolder(View itemView) {
+        private ChallengeViewHolder(View itemView) {
             super(itemView);
             initView(itemView);
         }

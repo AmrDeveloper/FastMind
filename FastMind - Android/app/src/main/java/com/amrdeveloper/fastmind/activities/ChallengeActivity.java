@@ -1,30 +1,67 @@
 package com.amrdeveloper.fastmind.activities;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.adapter.ChallengeRecyclerAdapter;
+import com.amrdeveloper.fastmind.objects.Player;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.List;
+
 
 public class ChallengeActivity extends AppCompatActivity {
 
     private ProgressBar mChallengeProgress;
     private RecyclerView mChallengeRecycler;
+    private ChallengeRecyclerAdapter mChallengeRecyclerAdapter;
+
+    private final Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge);
+
+        initiateViews();
+        String requestUrl = generateUrl();
+        getAllPlayerForChallenge(requestUrl);
     }
 
-    private void initiateViews(){
+    private void initiateViews() {
         mChallengeProgress = findViewById(R.id.challengeProgress);
+
+
         mChallengeRecycler = findViewById(R.id.challengeRecycler);
+        recyclerDefaultSettings();
+    }
+
+    private void recyclerDefaultSettings() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mChallengeRecycler.setLayoutManager(layoutManager);
+        mChallengeRecycler.setHasFixedSize(true);
+        mChallengeRecyclerAdapter = new ChallengeRecyclerAdapter();
+        mChallengeRecycler.setAdapter(mChallengeRecyclerAdapter);
     }
 
     @Override
@@ -40,17 +77,50 @@ public class ChallengeActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    private String generateUrl() {
+        String router = "/api/players/challenge";
+        String requestUrl = getString(R.string.LOCALHOST) + getString(R.string.PORT) + router;
+        Uri baseUri = Uri.parse(requestUrl);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        return uriBuilder.toString();
+    }
+
+    private void getAllPlayerForChallenge(String requestUrl) {
+        mChallengeProgress.setVisibility(View.VISIBLE);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET,
+                requestUrl, null,
+                response -> {
+                    try {
+                        JSONObject resultObject = response.getJSONObject("result");
+                        JSONArray playersArray = resultObject.getJSONArray("players");
+
+                        Type listType = new TypeToken<List<Player>>() {
+                        }.getType();
+                        List<Player> playerList = gson.fromJson(playersArray.toString(), listType);
+
+                        mChallengeRecyclerAdapter.updateRecyclerData(playerList);
+                        mChallengeProgress.setVisibility(View.GONE);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                }) {
+        };
+        queue.add(stringRequest);
+    }
+
     private final SearchView.OnQueryTextListener mSearchTextListener = new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
-            //TODO : Call Filter From Adapter
-            //TODO : Check if no result and shot no player match keyword
+            mChallengeRecyclerAdapter.getFilter().filter(query);
             return false;
         }
 
         @Override
         public boolean onQueryTextChange(String keyword) {
-            //TODO : Call filter from adapter
+            mChallengeRecyclerAdapter.getFilter().filter(keyword);
             return false;
         }
     };
