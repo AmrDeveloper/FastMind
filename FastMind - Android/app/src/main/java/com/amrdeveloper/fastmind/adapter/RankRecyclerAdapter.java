@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.objects.Player;
@@ -14,12 +16,19 @@ import com.amrdeveloper.fastmind.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapter.RankViewHolder>{
+public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapter.RankViewHolder> implements Filterable{
 
     private List<Player> rankedPlayerList;
+    private List<Player> rankPlayerFiltered;
+
+    public RankRecyclerAdapter(){
+        this.rankedPlayerList = new ArrayList<>();
+        this.rankPlayerFiltered = new ArrayList<>();
+    }
 
     public RankRecyclerAdapter(List<Player> rankedPlayerList){
         this.rankedPlayerList = rankedPlayerList;
+        this.rankPlayerFiltered = rankedPlayerList;
     }
 
     @NonNull
@@ -37,29 +46,52 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RankViewHolder holder, int position) {
-        Player currentPlayer = rankedPlayerList.get(position);
+        Player currentPlayer = rankPlayerFiltered.get(position);
         holder.bindView(currentPlayer);
     }
 
     @Override
     public int getItemCount() {
-        return rankedPlayerList.size();
+        return rankPlayerFiltered.size();
     }
 
-    private void playersFilter(String keyword){
-        List<Player> filterResult = new ArrayList<>();
-        for(Player p : rankedPlayerList)
-            if(p.getUsername().contains(keyword) || p.getEmail().contains(keyword))
-                filterResult.add(p);
-        updateRecyclerData(filterResult);
-    }
 
-    private void updateRecyclerData(List<Player> playerList){
+    public void updateRecyclerData(List<Player> playerList){
         if(playerList != null){
-            rankedPlayerList.clear();
-            rankedPlayerList.addAll(playerList);
+            rankedPlayerList = playerList;
+            rankPlayerFiltered = playerList;
             notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String keyword = constraint.toString();
+                if (keyword.isEmpty()) {
+                    rankPlayerFiltered = rankedPlayerList;
+                } else {
+                    List<Player> filteredList = new ArrayList<>();
+                    for (Player player : rankedPlayerList) {
+                        if(player.getUsername().contains(keyword) || player.getEmail().contains(keyword)){
+                            filteredList.add(player);
+                        }
+                    }
+                    rankPlayerFiltered = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = rankPlayerFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                rankPlayerFiltered = (ArrayList<Player>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     class RankViewHolder extends RecyclerView.ViewHolder{
