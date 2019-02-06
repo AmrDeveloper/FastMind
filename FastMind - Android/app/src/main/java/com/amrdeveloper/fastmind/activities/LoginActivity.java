@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    private String generateUrl(String email, String pass) {
+    private String generateLoginUrl(String email, String pass) {
         String router = "/api/player/login";
         String requestUrl = getString(R.string.LOCALHOST) + getString(R.string.PORT) + router;
         Uri baseUri = Uri.parse(requestUrl);
@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
         boolean isLoginValid = emailValid && passValid;
 
         if (isLoginValid) {
-            String requestUrl = generateUrl(playerEmail, playerPassword);
+            String requestUrl = generateLoginUrl(playerEmail, playerPassword);
             sendLoginRequest(requestUrl);
         } else {
             if (!emailValid)

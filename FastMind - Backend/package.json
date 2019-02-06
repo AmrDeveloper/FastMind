@@ -12,5 +12,13 @@
     "express": "^4.16.4",
     "mysql": "^2.16.0",
     "socket.io": "^2.1.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AmrDeveloper/FastMind.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AmrDeveloper/FastMind/issues"
+  },
+  "homepage": "https://github.com/AmrDeveloper/FastMind"
 }
