@@ -1,5 +1,6 @@
 package com.amrdeveloper.fastmind.activities;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -148,6 +149,7 @@ public class MultiPlayActivity extends AppCompatActivity {
                         mGameTimerCounter.setText(newTile);
                     } else {
                         onGameStopTimer();
+                        if(mGameWaitDialog != null)mGameWaitDialog.dismiss();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -164,6 +166,7 @@ public class MultiPlayActivity extends AppCompatActivity {
         }
     }
 
+    private Dialog mGameWaitDialog;
     private void onGameSubmitButton() {
         int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
         if (checkedId != -1) {
@@ -173,6 +176,7 @@ public class MultiPlayActivity extends AppCompatActivity {
             String result = checkedRadioButton.getText().toString();
             if (result.equals(String.valueOf(mQuestionTrueAnswer))) {
                 if (isOtherPlayerSubmit) {
+                    if(mGameWaitDialog != null)mGameWaitDialog.dismiss();
                     if (isOtherPlayerTrue) {
                         mGameLevel++;
                         //Return Settings to Default
@@ -194,9 +198,11 @@ public class MultiPlayActivity extends AppCompatActivity {
                 } else {
                     mGameSocket.emit(Game.PLAY, Game.ANSWER, username, player, Result.VALID_RESULT);
                     Toast.makeText(this, "Wait", Toast.LENGTH_SHORT).show();
+                    mGameWaitDialog = GameDialog.showWaitDialog(this);
                 }
             } else {
                 if (isOtherPlayerSubmit) {
+                    if(mGameWaitDialog != null)mGameWaitDialog.dismiss();
                     if (isOtherPlayerTrue) {
                         mGameSocket.emit(Game.PLAY, Game.END, username, player, Result.RECEIVER_PLAYER_WINNER);
                         GameDialog.showLoserDialog(this, mGameLevel, this::backToMainMenu);
@@ -207,6 +213,7 @@ public class MultiPlayActivity extends AppCompatActivity {
                 } else {
                     mGameSocket.emit(Game.PLAY, Game.ANSWER, username, player, Result.INVALID_RESULT);
                     Toast.makeText(this, "Wait", Toast.LENGTH_SHORT).show();
+                    mGameWaitDialog = GameDialog.showWaitDialog(this);
                 }
             }
         } else {
@@ -247,6 +254,7 @@ public class MultiPlayActivity extends AppCompatActivity {
         String message = args[3].toString();
 
         if (receiver.equals(username)) {
+            if(mGameWaitDialog != null)mGameWaitDialog.dismiss();
             switch (state) {
                 case Game.ANSWER: {
                     //Update Booleans

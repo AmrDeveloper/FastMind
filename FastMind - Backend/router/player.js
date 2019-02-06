@@ -22,9 +22,9 @@ router.get('/api/player/login', (req, res) => {
         let playersArray = JSON.stringify(result)
         playersArray = JSON.parse(playersArray)
 
-        if(playersArray){
+        if (playersArray) {
             res.status(200).json(playersArray[0])
-        }else{
+        } else {
             res.status(404).end()
         }
     })
@@ -338,13 +338,56 @@ router.post("/api/player/insert", (req, res) => {
     let playing = 0
 
     let player = [
-        [username, email, password, score, level, online,playing]
+        [username, email, password, score, level, online, playing]
     ]
 
     let sqlQuery = "INSERT INTO  player(username,email,password,score,level,online,playing) VALUES ?"
 
     database.query(sqlQuery, [player], (err, results, rows) => {
         if (err) { throw err }
+        res.status(200).end()
+    })
+})
+
+/**
+ * Request Type : POST
+ * Update Player Score and level on database
+ */
+router.post("/api/player/sync", (req, res) => {
+    let email = req.query.email
+    let score = req.query.score
+    let level = req.query.level
+
+    let sqlQuery = "UPDATE player SET score = " + score + ", level = " + level + " WHERE email = ?"
+
+    database.query(sqlQuery, email, (err, results, rows) => {
+        if (err) {
+            throw err
+        }
+        if(results.changedRows === 0){
+            res.status(404).end()
+        }
+        res.status(200).end()
+    })
+})
+
+/**
+ * Request Type : POST
+ * Update Player Password on database
+ */
+router.post("/api/player/update/pass", (req, res) => {
+    let email = req.query.email
+    let password = req.query.password
+
+    let sqlQuery = "UPDATE player SET password = " + password + " WHERE email = ?"
+
+    database.query(sqlQuery, email, (err, results, rows) => {
+        if (err) {
+            throw err
+        }
+        if(results.changedRows === 0){
+            res.status(404).end()
+        }
         res.status(200).end()
     })
 })
