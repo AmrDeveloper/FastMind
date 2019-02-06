@@ -10,9 +10,11 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.objects.Player;
+import com.amrdeveloper.fastmind.socket.Challenge;
 import com.amrdeveloper.fastmind.socket.GameSocket;
 import com.github.nkzawa.socketio.client.Socket;
 
@@ -34,7 +36,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         connectToServer(context);
     }
 
-    public ChallengeRecyclerAdapter(Context context,List<Player> players) {
+    public ChallengeRecyclerAdapter(Context context, List<Player> players) {
         mPlayerList = players;
         mFilteredPlayerList = players;
         connectToServer(context);
@@ -73,7 +75,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
                 } else {
                     List<Player> filteredList = new ArrayList<>();
                     for (Player player : mPlayerList) {
-                        if(player.getUsername().contains(keyword) || player.getEmail().contains(keyword)){
+                        if (player.getUsername().contains(keyword) || player.getEmail().contains(keyword)) {
                             filteredList.add(player);
                         }
                     }
@@ -100,7 +102,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         }
     }
 
-    private void connectToServer(Context context){
+    private void connectToServer(Context context) {
         mGameSocket = GameSocket.getSocket(context);
     }
 
@@ -113,6 +115,7 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         private ChallengeViewHolder(View itemView) {
             super(itemView);
             initView(itemView);
+            itemView.setOnClickListener(onClickListener);
         }
 
         private void initView(View view) {
@@ -128,10 +131,15 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         }
 
         private View.OnClickListener onChallengeRequest = view -> {
-            if(!mGameSocket.connected()){
+            if (!mGameSocket.connected()) {
                 mGameSocket.connect();
             }
-            mGameSocket.emit("request", "send", mUsernameTxt.getText().toString());
+            mGameSocket.emit(Challenge.REQUEST, Challenge.SEND, mUsernameTxt.getText().toString());
+        };
+
+        private final View.OnClickListener onClickListener = view -> {
+            //TODO : Open Profile Activity for this username
+            final String username = mUsernameTxt.getText().toString();
         };
     }
 }

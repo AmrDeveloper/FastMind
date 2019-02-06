@@ -103,6 +103,7 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
         private RankViewHolder(View itemView) {
             super(itemView);
             initViews(itemView);
+            itemView.setOnClickListener(onClickListener);
         }
 
         private void initViews(View view){
@@ -116,5 +117,10 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
             mRankUserScore.setText(String.valueOf(player.getScore()));
             mRankStateTxt.setText(player.getState());
         }
+
+        private final View.OnClickListener onClickListener = view -> {
+            //TODO : Open Profile Activity for this username
+            final String username = mRankUserName.getText().toString();
+        };
     }
 }
