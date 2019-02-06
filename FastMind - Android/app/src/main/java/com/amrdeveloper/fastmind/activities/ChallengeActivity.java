@@ -44,40 +44,30 @@ public class ChallengeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_challenge);
 
         initiateViews();
-        String requestUrl = generateUrl();
-        getAllPlayerForChallenge(requestUrl);
+        loadPlayerList();
     }
 
     private void initiateViews() {
         mChallengeProgress = findViewById(R.id.challengeProgress);
 
-
         mChallengeRecycler = findViewById(R.id.challengeRecycler);
         recyclerDefaultSettings();
+    }
+
+    private void loadPlayerList(){
+        String requestUrl = generateUrlRequest();
+        getAllPlayerForChallenge(requestUrl);
     }
 
     private void recyclerDefaultSettings() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mChallengeRecycler.setLayoutManager(layoutManager);
         mChallengeRecycler.setHasFixedSize(true);
-        mChallengeRecyclerAdapter = new ChallengeRecyclerAdapter();
+        mChallengeRecyclerAdapter = new ChallengeRecyclerAdapter(this);
         mChallengeRecycler.setAdapter(mChallengeRecyclerAdapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
-
-        MenuItem searchViewItem = menu.findItem(R.id.search_action);
-
-        final SearchView searchView = (SearchView) searchViewItem.getActionView();
-        searchView.setOnQueryTextListener(mSearchTextListener);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    private String generateUrl() {
+    private String generateUrlRequest() {
         String router = "/api/players/challenge";
         String requestUrl = getString(R.string.LOCALHOST) + getString(R.string.PORT) + router;
         Uri baseUri = Uri.parse(requestUrl);
@@ -95,8 +85,7 @@ public class ChallengeActivity extends AppCompatActivity {
                         JSONObject resultObject = response.getJSONObject("result");
                         JSONArray playersArray = resultObject.getJSONArray("players");
 
-                        Type listType = new TypeToken<List<Player>>() {
-                        }.getType();
+                        Type listType = new TypeToken<List<Player>>(){}.getType();
                         List<Player> playerList = gson.fromJson(playersArray.toString(), listType);
 
                         mChallengeRecyclerAdapter.updateRecyclerData(playerList);
@@ -109,6 +98,30 @@ public class ChallengeActivity extends AppCompatActivity {
                 }) {
         };
         queue.add(stringRequest);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
+
+        MenuItem searchViewItem = menu.findItem(R.id.search_action);
+
+        final SearchView searchView = (SearchView) searchViewItem.getActionView();
+        searchView.setOnQueryTextListener(mSearchTextListener);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private final SearchView.OnQueryTextListener mSearchTextListener = new SearchView.OnQueryTextListener() {

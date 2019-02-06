@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     }
                 },
-                error -> Toast.makeText(LoginActivity.this, "Invalid Request", Toast.LENGTH_SHORT).show()) {
+                error -> Toast.makeText(LoginActivity.this, "Invalid Challenge", Toast.LENGTH_SHORT).show()) {
         };
         queue.add(stringRequest);
     }

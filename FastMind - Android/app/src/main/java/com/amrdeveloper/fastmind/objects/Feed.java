@@ -27,7 +27,7 @@ public class Feed {
         return mLoserUser;
     }
 
-    public String getGamelevel(){
+    public String getGameLevel(){
         return mGameLevel;
     }
 }

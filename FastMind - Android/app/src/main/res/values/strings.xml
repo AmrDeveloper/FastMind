@@ -21,6 +21,10 @@
     <string name="submit">Submit</string>
     <string name="search">Search</string>
     <string name="state">State</string>
+    <string name="result">Result</string>
+    <string name="score">Score</string>
+    <string name="accept">Accept</string>
+    <string name="refuse">Refuse</string>
     <string name="next">Next</string>
     <string name="stop">Stop</string>
 
@@ -51,7 +55,10 @@
     <string name="timer_starter">Timer : 10s</string>
 
     <!--Game State-->
-    <string name="win_state">You Are Winner</string>
-    <string name="lose_state">You Are Loser</string>
+    <string name="win_state">Yes! You Are The Winner</string>
+    <string name="lose_state">Ops You Lose this Challenge</string>
     <string name="play_for_ever">Play For Ever</string>
+    <string name="challenge_request">Challenge Request</string>
+    <string name="go_next_level">Go to next Level ?</string>
+    <string name="waiting">Waiting....</string>
 </resources>

@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.objects.Player;
+import com.amrdeveloper.fastmind.socket.GameSocket;
+import com.github.nkzawa.socketio.client.Socket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +24,20 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
     private List<Player> mPlayerList;
     private List<Player> mFilteredPlayerList;
 
-    public ChallengeRecyclerAdapter() {
+    private Socket mGameSocket;
+
+    private Player mCurrentPlayer;
+
+    public ChallengeRecyclerAdapter(Context context) {
         mPlayerList = new ArrayList<>();
         mFilteredPlayerList = new ArrayList<>();
+        connectToServer(context);
     }
 
-    public ChallengeRecyclerAdapter(List<Player> players) {
+    public ChallengeRecyclerAdapter(Context context,List<Player> players) {
         mPlayerList = players;
         mFilteredPlayerList = players;
+        connectToServer(context);
     }
 
     @NonNull
@@ -54,15 +62,6 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
         return mFilteredPlayerList.size();
     }
 
-
-    public void updateRecyclerData(List<Player> playerList) {
-        if (playerList != null) {
-            mPlayerList = playerList;
-            mFilteredPlayerList = playerList;
-            notifyDataSetChanged();
-        }
-    }
-
     @Override
     public Filter getFilter() {
         return new Filter() {
@@ -74,9 +73,9 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
                 } else {
                     List<Player> filteredList = new ArrayList<>();
                     for (Player player : mPlayerList) {
-                       if(player.getUsername().contains(keyword) || player.getEmail().contains(keyword)){
-                           filteredList.add(player);
-                       }
+                        if(player.getUsername().contains(keyword) || player.getEmail().contains(keyword)){
+                            filteredList.add(player);
+                        }
                     }
                     mFilteredPlayerList = filteredList;
                 }
@@ -91,6 +90,18 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
                 notifyDataSetChanged();
             }
         };
+    }
+
+    public void updateRecyclerData(List<Player> playerList) {
+        if (playerList != null) {
+            mPlayerList = playerList;
+            mFilteredPlayerList = playerList;
+            notifyDataSetChanged();
+        }
+    }
+
+    private void connectToServer(Context context){
+        mGameSocket = GameSocket.getSocket(context);
     }
 
     class ChallengeViewHolder extends RecyclerView.ViewHolder {
@@ -108,11 +119,19 @@ public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecy
             mUsernameTxt = view.findViewById(R.id.usernameTxt);
             mUserScoreTxt = view.findViewById(R.id.userScoreTxt);
             mChallengeAction = view.findViewById(R.id.challengeImgButton);
+            mChallengeAction.setOnClickListener(onChallengeRequest);
         }
 
         private void bingView(Player player) {
             mUsernameTxt.setText(player.getUsername());
             mUserScoreTxt.setText(player.getState());
         }
+
+        private View.OnClickListener onChallengeRequest = view -> {
+            if(!mGameSocket.connected()){
+                mGameSocket.connect();
+            }
+            mGameSocket.emit("request", "send", mUsernameTxt.getText().toString());
+        };
     }
 }

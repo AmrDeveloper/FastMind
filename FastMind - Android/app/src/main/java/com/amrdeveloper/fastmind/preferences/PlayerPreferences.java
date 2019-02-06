@@ -86,32 +86,32 @@ public class PlayerPreferences {
     }
 
     /**
-     * @param score : Add This Score to current Score
+     * @param points : Add This Score to current Score
      * @return : True if update is done
      */
-    public boolean playerScoreUp(int score){
+    public boolean playerScoreUp(int points){
         SharedPreferences playerPreference = context.getSharedPreferences(
                 PLAYER_PREF_KEY
                 , Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = playerPreference.edit();
         int currentScore = playerPreference.getInt(SCORE, 0);
-        int netScore = currentScore + score;
+        int netScore = currentScore + points;
         editor.putInt(SCORE,netScore);
         return editor.commit();
     }
 
     /**
-     * @param score : Sub Score from current score
+     * @param points : Sub Score from current score
      * @return : True if update is Done
      */
-    public boolean playerScoreDown(int score){
+    public boolean playerScoreDown(int points){
         SharedPreferences playerPreference = context.getSharedPreferences(
                 PLAYER_PREF_KEY
                 , Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = playerPreference.edit();
         int currentScore = playerPreference.getInt(SCORE, 0);
-        int netScore = currentScore - score;
-        editor.putInt(SCORE,netScore);
+        int newScore = currentScore - points;
+        editor.putInt(SCORE,newScore);
         return editor.commit();
     }
 

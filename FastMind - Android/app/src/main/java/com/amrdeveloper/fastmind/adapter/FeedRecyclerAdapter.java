@@ -67,7 +67,7 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
         private void bindView(Feed feedBack){
             mWinnerUser.setText(feedBack.getWinnerName());
             mLoserUser.setText(feedBack.getLoserName());
-            mGameLevel.setText(feedBack.getGamelevel());
+            mGameLevel.setText(feedBack.getGameLevel());
         }
     }
 }

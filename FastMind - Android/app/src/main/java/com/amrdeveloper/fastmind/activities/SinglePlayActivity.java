@@ -17,6 +17,7 @@ import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.objects.Question;
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
+import com.amrdeveloper.fastmind.utils.GameDialog;
 import com.amrdeveloper.fastmind.utils.QuestionGenerator;
 
 import java.util.List;
@@ -142,7 +143,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     private void onGameActivityStart(Bundle bundle) {
         if (bundle != null) {
             mQuestion = bundle.getParcelable(QUESTION);
-            mCurrentTimerValue = bundle.getInt(TIMER,0);
+            mCurrentTimerValue = bundle.getInt(TIMER, 0);
             updateQuestionUI();
         } else {
             onGameCreate();
@@ -162,6 +163,8 @@ public class SinglePlayActivity extends AppCompatActivity {
         onGameDefaultStyle();
         mGameAnswersGroup.clearCheck();
         mGameSubmitButton.setClickable(true);
+        mCurrentTimerValue = GAME_TIME;
+        updatePlayerInformation();
         onGameStopTimer();
         onGameTimeCounter();
         generateQuestion();
@@ -182,6 +185,7 @@ public class SinglePlayActivity extends AppCompatActivity {
                         final String newTile = "Timer : " + mCurrentTimerValue-- + "s";
                         mGameTimerCounter.setText(newTile);
                     } else {
+                        onStop();
                         onGameStopTimer();
                         onGameLoseState();
                     }
@@ -200,7 +204,6 @@ public class SinglePlayActivity extends AppCompatActivity {
     private void onGameStopTimer() {
         if (handler != null && runnable != null) {
             handler.removeCallbacks(runnable);
-            mCurrentTimerValue = GAME_TIME;
         }
     }
 
@@ -223,7 +226,7 @@ public class SinglePlayActivity extends AppCompatActivity {
                 onGameLoseStyle(checkedRadioButton);
                 onGameLoseState();
             }
-        }else{
+        } else {
             Toast.makeText(this, "Select Answer First", Toast.LENGTH_SHORT).show();
         }
     }
@@ -298,7 +301,6 @@ public class SinglePlayActivity extends AppCompatActivity {
         PlayerPreferences preferences = new PlayerPreferences(this);
         preferences.playerScoreUp(mPlayerCurrentLevel);
         preferences.setPlayerLevel(mPlayerCurrentLevel);
-        Toast.makeText(this, "GoodPlayer", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -308,7 +310,6 @@ public class SinglePlayActivity extends AppCompatActivity {
         PlayerPreferences preferences = new PlayerPreferences(this);
         preferences.playerScoreDown(mPlayerCurrentLevel);
         preferences.setPlayerLevel(mPlayerCurrentLevel);
-        Toast.makeText(this, "You Lose Bro Back To Main Menu", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -317,22 +318,14 @@ public class SinglePlayActivity extends AppCompatActivity {
      * : Stop to back to main Activity
      */
     private void onGameWinDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.StateDialogStyle);
-        AlertDialog dialog = builder.create();
-        dialog.setTitle(getString(R.string.state));
-        dialog.setMessage(getString(R.string.win_state));
-        dialog.setButton(Dialog.BUTTON_POSITIVE, getString(R.string.next), (iDialog, which) -> {
-            mPlayerCurrentLevel++;
-            onGameCreate();
-            updatePlayerInformation();
-            dialog.dismiss();
-        });
-        dialog.setButton(Dialog.BUTTON_NEGATIVE, getString(R.string.stop), (iDialog, which) -> {
-            goToMainMenu();
-            dialog.dismiss();
-        });
-        dialog.setOnDismissListener(iDialog -> onGameStopTimer());
-        dialog.show();
+        GameDialog.showSingleWinnerDialog(
+                this
+                , () -> {
+                    mPlayerCurrentLevel++;
+                    onGameCreate();
+                    updatePlayerInformation();
+                }
+                , this::goToMainMenu);
     }
 
     /**
@@ -340,22 +333,11 @@ public class SinglePlayActivity extends AppCompatActivity {
      * it show AlertDialog with One Buttons : OK to back to main Activity
      */
     private void onGameLostDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.StateDialogStyle);
-        AlertDialog dialog = builder.create();
-        dialog.setTitle(getString(R.string.state));
-        dialog.setMessage(getString(R.string.lose_state));
-        dialog.setButton(Dialog.BUTTON_POSITIVE, getString(android.R.string.ok), (iDialog, which) -> {
-            onGameLoseAction();
-            goToMainMenu();
-            finish();
-            dialog.dismiss();
-        });
-        dialog.setOnDismissListener(iDialog -> {
+        GameDialog.showLoserDialog(this, mPlayerCurrentScore - mPlayerCurrentLevel, () -> {
             onGameLoseAction();
             goToMainMenu();
             finish();
         });
-        dialog.show();
     }
 
     /**
@@ -389,6 +371,6 @@ public class SinglePlayActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         //Save Current Question as Parcelable Type
         outState.putParcelable(QUESTION, mQuestion);
-        outState.putInt(TIMER,mCurrentTimerValue);
+        outState.putInt(TIMER, mCurrentTimerValue);
     }
 }
