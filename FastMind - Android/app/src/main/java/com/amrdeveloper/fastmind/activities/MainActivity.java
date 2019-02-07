@@ -1,6 +1,5 @@
 package com.amrdeveloper.fastmind.activities;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,9 +12,12 @@ import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.objects.Question;
 import com.amrdeveloper.fastmind.preferences.PlayerChanger;
 import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
+import com.amrdeveloper.fastmind.socket.Challenge;
+import com.amrdeveloper.fastmind.socket.Game;
 import com.amrdeveloper.fastmind.socket.GameSocket;
 import com.amrdeveloper.fastmind.utils.GameDialog;
 import com.amrdeveloper.fastmind.utils.QuestionGenerator;
+import com.amrdeveloper.fastmind.utils.SynchronizeUtils;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
@@ -53,16 +55,15 @@ public class MainActivity extends AppCompatActivity {
         mUsernameInfo = findViewById(R.id.usernameInfo);
         mLevelInfo = findViewById(R.id.levelInfo);
         mScoreInfo = findViewById(R.id.scoreInfo);
-
         mContinueOption = findViewById(R.id.continueOption);
     }
 
     private void connectToServer() {
         mGameSocket = GameSocket.getSocket(this);
         mGameSocket.connect();
-        mGameSocket.emit("username", player.getUsername());
-        mGameSocket.on("request", onRequestListener);
-        mGameSocket.on("play", onPlayListener);
+        mGameSocket.emit(Game.USERNAME, player.getUsername());
+        mGameSocket.on(Challenge.REQUEST, onRequestListener);
+        mGameSocket.on(Game.PLAY, onPlayListener);
     }
 
     private void updateUserInformation() {
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void continueVisibility() {
-        if (mCurrentScore == 0 && mCurrentLevel == 0) {
+        if (mCurrentScore == 0 && mCurrentLevel < 2) {
             mContinueOption.setVisibility(View.GONE);
         } else {
             mContinueOption.setVisibility(View.VISIBLE);
@@ -107,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
     public void challengeActivity(View view) {
         Intent intent = new Intent(this, ChallengeActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void feedActivity(View view) {
@@ -127,12 +127,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void logoutAction(View view) {
         //TODO : Update Current User Information To Server
+        SynchronizeUtils syncUtils = new SynchronizeUtils(this);
+        syncUtils.syncToServer(player);
+
         PlayerPreferences preferences = new PlayerPreferences(this);
         preferences.deletePlayerInformation();
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void startMultiPlayerGame(String sender, String receiver, Question question) {
+        Intent intent = new Intent(this, MultiPlayActivity.class);
+        intent.putExtra(Game.SENDER, sender);
+        intent.putExtra(Game.RECEIVER, receiver);
+        intent.putExtra(Game.QUESTION, question);
+        startActivity(intent);
     }
 
     private Emitter.Listener onRequestListener = args -> runOnUiThread(() -> {
@@ -142,30 +153,26 @@ public class MainActivity extends AppCompatActivity {
 
         if (receiver.equals(player.getUsername())) {
             switch (state) {
-                case "receive": {
+                case Challenge.RECEIVE: {
                     GameDialog.showRequestDialog(this, sender,
-                            () -> mGameSocket.emit("request", "accept", sender, receiver)
-                            , () -> mGameSocket.emit("request", "refuse", sender, receiver));
+                            () -> mGameSocket.emit(Challenge.REQUEST, Challenge.ACCEPT, sender, receiver)
+                            , () -> mGameSocket.emit(Challenge.REQUEST, Challenge.REFUSE, sender, receiver));
                     break;
                 }
-                case "accept": {
+                case Challenge.ACCEPT: {
                     QuestionGenerator generator = new QuestionGenerator();
                     Question questionObj = generator.generateQuestion(player.getLevel());
 
-                    mGameSocket.emit("play", "start", receiver, sender, gson.toJson(questionObj));
+                    mGameSocket.emit(Game.PLAY, Game.START, receiver, sender, gson.toJson(questionObj));
 
-                    Intent intent = new Intent(this, MultiPlayActivity.class);
-                    intent.putExtra("sender", sender);
-                    intent.putExtra("receiver", receiver);
-                    intent.putExtra("question", questionObj);
-                    startActivity(intent);
+                    startMultiPlayerGame(sender, receiver, questionObj);
 
-                    mGameSocket.off("request");
+                    mGameSocket.off(Challenge.REQUEST);
                     finish();
                     break;
                 }
-                case "refuse": {
-                    mGameSocket.emit("request", "refuse", sender, receiver);
+                case Challenge.REFUSE: {
+                    mGameSocket.emit(Challenge.REQUEST, Challenge.REFUSE, sender, receiver);
                     break;
                 }
             }
@@ -179,20 +186,15 @@ public class MainActivity extends AppCompatActivity {
         final String question = args[3].toString();
 
         if (receiver.equals(player.getUsername())) {
-            if (state.equals("start")) {
+            if (state.equals( Game.START)) {
                 //Convert Question From JSON to Object
-                Type questionType = new TypeToken<Question>() {
-                }.getType();
+                Type questionType = new TypeToken<Question>() {}.getType();
                 Question questionObj = gson.fromJson(question, questionType);
 
                 //Go to MultiPlayActivity with sender and receiver and question
-                Intent intent = new Intent(this, MultiPlayActivity.class);
-                intent.putExtra("sender", sender);
-                intent.putExtra("receiver", receiver);
-                intent.putExtra("question", questionObj);
-                startActivity(intent);
+                startMultiPlayerGame(sender,receiver,questionObj);
 
-                mGameSocket.off("request");
+                mGameSocket.off(Challenge.REQUEST);
                 finish();
             }
         }

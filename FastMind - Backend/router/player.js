@@ -354,20 +354,20 @@ router.post("/api/player/insert", (req, res) => {
  * Update Player Score and level on database
  */
 router.post("/api/player/sync", (req, res) => {
-    let email = req.query.email
+    let username = req.query.username
     let score = req.query.score
     let level = req.query.level
 
-    let sqlQuery = "UPDATE player SET score = " + score + ", level = " + level + " WHERE email = ?"
+    let sqlQuery = "UPDATE player SET score = " + score + ", level = " + level + " WHERE username = ?"
 
-    database.query(sqlQuery, email, (err, results, rows) => {
+    database.query(sqlQuery, username, (err, results, rows) => {
         if (err) {
             throw err
         }
         if(results.changedRows === 0){
-            res.status(404).end()
+            res.status(404).send("failure").end()
         }
-        res.status(200).end()
+        res.status(200).send("success").end()
     })
 })
 

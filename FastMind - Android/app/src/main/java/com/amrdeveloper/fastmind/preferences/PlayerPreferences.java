@@ -141,4 +141,19 @@ public class PlayerPreferences {
 
         return playerPreference.edit().clear().commit();
     }
+
+
+    /**
+     * @param player : Player With Current Information from server
+     * @return : true if update level and score is done without errors
+     */
+    public boolean updatePlayerInformation(Player player) {
+        SharedPreferences playerPreference = context.getSharedPreferences(
+                PLAYER_PREF_KEY
+                , Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = playerPreference.edit();
+        editor.putInt(LEVEL, player.getLevel());
+        editor.putInt(SCORE, player.getScore());
+        return editor.commit();
+    }
 }

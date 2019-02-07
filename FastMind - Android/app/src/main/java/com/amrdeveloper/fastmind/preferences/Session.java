@@ -29,4 +29,12 @@ public class Session {
     public boolean playerLogOut() {
         return mPlayerPref.deletePlayerInformation();
     }
+
+    /**
+     * @param player : Current Player with current information from server
+     * @return : true if update is done
+     */
+    public boolean playerSync(Player player){
+        return mPlayerPref.updatePlayerInformation(player);
+    }
 }
