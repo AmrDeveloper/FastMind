@@ -13,25 +13,25 @@ router.get('/api/feed', (req, res) => {
     database.query(sqlQuery, (err, results, rows) => {
         if (err) { throw err }
 
-        let playersArray = JSON.stringify(results)
-        playersArray = JSON.parse(playersArray)
+        let feedsArray = JSON.stringify(results)
+        feedsArray = JSON.parse(feedsArray)
 
-        let playersJSONArray = {}
+        let feedsJSONArray = {}
 
-        playersJSONArray.result = {
-            number: playersArray.length,
-            players: playersArray,
+        feedsJSONArray.result = {
+            number: feedsArray.length,
+            feeds : feedsArray,
         }
 
-        res.status(200).json(playersJSONArray)
+        res.status(200).json(feedsJSONArray)
     })
 })
 
 /**
  * Request Type : GET
- * Description  : Get one player in database using username attribute
+ * Description  : Get one feed in database using username attribute
  */
-router.get('/api/player', (req, res) => {
+router.get('/api/feed', (req, res) => {
     let id = req.query.id
 
     let sqlQuery = "SELECT * FROM feed WHERE id = ?"
@@ -39,17 +39,17 @@ router.get('/api/player', (req, res) => {
     database.query(sqlQuery, id, (err, result, rows) => {
         if (err) { throw err }
 
-        let playersArray = JSON.stringify(result)
-        playersArray = JSON.parse(playersArray)
+        let feedsArray = JSON.stringify(result)
+        feedsArray = JSON.parse(feedsArray)
 
-        let playersJSONArray = {}
+        let feedsJSONArray = {}
 
-        playersJSONArray.result = {
-            number: playersArray.length,
-            players: playersArray,
+        feedsJSONArray.result = {
+            number: feedsArray.length,
+            feeds : feedsArray,
         }
 
-        res.status(200).json(playersJSONArray)
+        res.status(200).json(feedsJSONArray)
     })
 })
 
@@ -63,16 +63,16 @@ router.get("/api/feed/sorted/score", (req, res) => {
     database.query(sqlQuery, (err, results, rows) => {
         if (err) { throw err }
 
-        let playersArray = JSON.stringify(results)
-        playersArray = JSON.parse(playersArray)
+        let feedsArray = JSON.stringify(results)
+        feedsArray = JSON.parse(feedsArray)
 
-        let playersJSONArray = {}
+        let feedsJSONArray = {}
 
-        playersJSONArray.result = {
-            number: playersArray.length,
-            players: playersArray,
+        feedsJSONArray.result = {
+            number: feedsArray.length,
+            feeds : feedsArray,
         }
-        res.status(200).json(playersJSONArray)
+        res.status(200).json(feedsJSONArray)
     })
 })
 
@@ -95,7 +95,10 @@ router.post("/api/feed/insert", (req, res) => {
 
     database.query(sqlQuery, [feed], (err, results, rows) => {
         if (err) { throw err }
-        res.status(200).end()
+        if(results.changedRows === 0){
+            res.status(404).send("failure").end()
+        }
+        res.status(200).send("success").end()
     })
 })
 
@@ -113,18 +116,16 @@ router.get("/api/feed/search", (req, res) => {
     database.query(sqlQuery, (err, results, rows) => {
         if (err) { throw err }
 
-        var playersArray = JSON.stringify(results)
-        playersArray = JSON.parse(playersArray)
+        var feedsArray = JSON.stringify(results)
+        feedsArray = JSON.parse(playersArray)
 
-        var playersJSONArray = {}
+        var feedsJSONArray = {}
 
-        playersJSONArray.result = {
-            number: playersArray.length,
-            players: playersArray,
+        feedsJSONArray.result = {
+            number: feedsArray.length,
+            feeds : feedsArray,
         }
-        //playersJSONArray.players = playersArray;
-
-        res.status(200).json(playersJSONArray)
+        res.status(200).json(feedsJSONArray)
     })
 })
 
@@ -140,9 +141,11 @@ router.delete("/api/feed/delete", (req, res) => {
 
     database.query(sqlQuery, email, (err, res, rows) => {
         if (err) { throw err }
+        if(results.changedRows === 0){
+            res.status(404).send("failure").end()
+        }
+        res.status(200).send("success").end()
     })
-    res.status(200).send("Feed Deleted")
-    res.end()
 })
 
 /**
@@ -153,9 +156,11 @@ router.delete("/api/feeds/delete/all", (req, res) => {
     let sqlQuery = "truncate table feed"
     database.query(sqlQuery, (err, result) => {
         if (err) { throw err }
+        if(results.changedRows === 0){
+            res.status(404).send("failure").end()
+        }
+        res.status(200).send("success").end()
     })
-    res.status(200).send("Delete Done")
-    res.end()
 })
 
 //Export Feed Router
