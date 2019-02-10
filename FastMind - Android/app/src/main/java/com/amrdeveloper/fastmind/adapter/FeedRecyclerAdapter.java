@@ -13,11 +13,16 @@ import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.objects.Feed;
 import com.amrdeveloper.fastmind.socket.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapter.FeedViewHolder> {
 
     private List<Feed> mFeedBackList;
+
+    public FeedRecyclerAdapter() {
+        mFeedBackList = new ArrayList<>();
+    }
 
     public FeedRecyclerAdapter(List<Feed> feedList) {
         mFeedBackList = feedList;
@@ -48,6 +53,12 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
         return mFeedBackList.size();
     }
 
+    public void updateFeeds(List<Feed> feedList) {
+        if (feedList != null) {
+            mFeedBackList = feedList;
+            notifyDataSetChanged();
+        }
+    }
 
     class FeedViewHolder extends RecyclerView.ViewHolder {
 

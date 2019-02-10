@@ -7,8 +7,8 @@ const database = require("../database/config.js")
  * Request Type : GET
  * Description  : Get all feeds in database
  */
-router.get('/api/feed', (req, res) => {
-    let sqlQuery = "SELECT * FROM  feed"
+router.get('/api/feeds', (req, res) => {
+    let sqlQuery = "SELECT * FROM feed"
 
     database.query(sqlQuery, (err, results, rows) => {
         if (err) { throw err }

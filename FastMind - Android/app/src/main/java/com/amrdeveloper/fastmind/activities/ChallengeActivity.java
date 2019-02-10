@@ -78,15 +78,15 @@ public class ChallengeActivity extends AppCompatActivity {
     private void getAllPlayerForChallenge(String requestUrl) {
         mChallengeProgress.setVisibility(View.VISIBLE);
         RequestQueue queue = Volley.newRequestQueue(this);
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET,
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(
+                Request.Method.GET,
                 requestUrl, null,
                 response -> {
                     try {
                         JSONObject resultObject = response.getJSONObject("result");
                         JSONArray playersArray = resultObject.getJSONArray("players");
 
-                        Type listType = new TypeToken<List<Player>>() {
-                        }.getType();
+                        Type listType = new TypeToken<List<Player>>() {}.getType();
                         List<Player> playerList = gson.fromJson(playersArray.toString(), listType);
 
                         mChallengeRecyclerAdapter.updateRecyclerData(playerList);
@@ -98,7 +98,7 @@ public class ChallengeActivity extends AppCompatActivity {
                 error -> {
                 }) {
         };
-        queue.add(stringRequest);
+        queue.add(jsonRequest);
     }
 
     @Override
