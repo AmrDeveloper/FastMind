@@ -10,4 +10,7 @@ public class Result {
     public static final String SENDER_PLAYER_WINNER = "1";
     public static final String RECEIVER_PLAYER_WINNER = "2";
 
+    public static final int NO_ONE_WINNER = -1;
+    public static final int FIRST_ONE_WINNER = 1;
+    public static final int SECOND_ONE_WINNER = 2;
 }

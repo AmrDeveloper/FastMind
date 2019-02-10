@@ -4,30 +4,38 @@ import com.google.gson.annotations.SerializedName;
 
 public class Feed {
 
-    @SerializedName("winner")
-    private String mWinnerUser;
+    @SerializedName("player1")
+    private String mFirstPlayer;
 
-    @SerializedName("loser")
-    private String mLoserUser;
+    @SerializedName("player2")
+    private String mSecondPlayer;
 
-    @SerializedName("level")
-    private String mGameLevel;
+    @SuppressWarnings("result")
+    private int mGameResult;
 
-    public Feed(String winner, String loser, String level) {
-        mWinnerUser = winner;
-        mLoserUser = loser;
-        mGameLevel = level;
+    @SerializedName("score")
+    private String mGameScore;
+
+    public Feed(String player1, String player2,int result, String score) {
+        mFirstPlayer = player1;
+        mSecondPlayer = player2;
+        mGameResult = result;
+        mGameScore = score;
     }
 
-    public String getWinnerName(){
-        return mWinnerUser;
+    public String getFirstPlayer(){
+        return mFirstPlayer;
     }
 
-    public String getLoserName(){
-        return mLoserUser;
+    public String getSecondPlayer(){
+        return mSecondPlayer;
     }
 
-    public String getGameLevel(){
-        return mGameLevel;
+    public String getGameScore(){
+        return mGameScore;
+    }
+
+    public int getGameResult(){
+        return mGameResult;
     }
 }

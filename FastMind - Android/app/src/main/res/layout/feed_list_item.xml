@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/winnerTextView"
+            android:id="@+id/firstPlayerTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
@@ -28,7 +28,7 @@
             tools:text="AmrDeveloper" />
 
         <TextView
-            android:id="@+id/loserTextView"
+            android:id="@+id/secondPlayerTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
@@ -38,7 +38,7 @@
             tools:text="AmrDeveloper" />
 
         <TextView
-            android:id="@+id/gameLevel"
+            android:id="@+id/gameScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

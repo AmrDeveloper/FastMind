@@ -1,6 +1,7 @@
 package com.amrdeveloper.fastmind.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,14 +11,15 @@ import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.objects.Feed;
+import com.amrdeveloper.fastmind.socket.Result;
 
 import java.util.List;
 
-public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapter.FeedViewHolder>{
+public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapter.FeedViewHolder> {
 
     private List<Feed> mFeedBackList;
 
-    public FeedRecyclerAdapter(List<Feed> feedList){
+    public FeedRecyclerAdapter(List<Feed> feedList) {
         mFeedBackList = feedList;
     }
 
@@ -47,27 +49,43 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
     }
 
 
-    class FeedViewHolder extends RecyclerView.ViewHolder{
+    class FeedViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mWinnerUser;
-        private TextView mLoserUser;
-        private TextView mGameLevel;
+        private TextView mFirstPlayer;
+        private TextView mSecondPlayer;
+        private TextView mgameScore;
 
-        public FeedViewHolder(View itemView) {
+        FeedViewHolder(View itemView) {
             super(itemView);
             initView(itemView);
         }
 
-        private void initView(View view){
-            mWinnerUser = view.findViewById(R.id.winnerTextView);
-            mLoserUser = view.findViewById(R.id.loserTextView);
-            mGameLevel = view.findViewById(R.id.gameLevel);
+        private void initView(View view) {
+            mFirstPlayer = view.findViewById(R.id.firstPlayerTxt);
+            mSecondPlayer = view.findViewById(R.id.secondPlayerTxt);
+            mgameScore = view.findViewById(R.id.gameScore);
         }
 
-        private void bindView(Feed feedBack){
-            mWinnerUser.setText(feedBack.getWinnerName());
-            mLoserUser.setText(feedBack.getLoserName());
-            mGameLevel.setText(feedBack.getGameLevel());
+        private void bindView(Feed feedBack) {
+            mFirstPlayer.setText(feedBack.getFirstPlayer());
+            mSecondPlayer.setText(feedBack.getSecondPlayer());
+            mgameScore.setText(feedBack.getGameScore());
+            final int gameResult = feedBack.getGameResult();
+            switch (gameResult) {
+                case Result.NO_ONE_WINNER:
+                    mFirstPlayer.setTextColor(Color.RED);
+                    mSecondPlayer.setTextColor(Color.RED);
+                    break;
+                case Result.FIRST_ONE_WINNER:
+                    mFirstPlayer.setTextColor(Color.GREEN);
+                    mSecondPlayer.setTextColor(Color.RED);
+                    break;
+                case Result.SECOND_ONE_WINNER:
+                    mFirstPlayer.setTextColor(Color.RED);
+                    mSecondPlayer.setTextColor(Color.GREEN);
+                    break;
+            }
+
         }
     }
 }

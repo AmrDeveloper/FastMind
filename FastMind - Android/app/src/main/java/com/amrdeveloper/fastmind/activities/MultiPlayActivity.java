@@ -231,14 +231,6 @@ public class MultiPlayActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //Save Current Question as Parcelable Type
-        outState.putParcelable(QUESTION, mQuestion);
-        outState.putInt(TIMER, mCurrentTimerValue);
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         finish();
@@ -248,6 +240,14 @@ public class MultiPlayActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //Save Current Question as Parcelable Type
+        outState.putParcelable(QUESTION, mQuestion);
+        outState.putInt(TIMER, mCurrentTimerValue);
     }
 
     private Emitter.Listener onPlayListener = args -> runOnUiThread(() -> {

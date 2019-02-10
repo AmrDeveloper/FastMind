@@ -54,7 +54,7 @@ public class ChallengeActivity extends AppCompatActivity {
         recyclerDefaultSettings();
     }
 
-    private void loadPlayerList(){
+    private void loadPlayerList() {
         String requestUrl = generateUrlRequest();
         getAllPlayerForChallenge(requestUrl);
     }
@@ -85,7 +85,8 @@ public class ChallengeActivity extends AppCompatActivity {
                         JSONObject resultObject = response.getJSONObject("result");
                         JSONArray playersArray = resultObject.getJSONArray("players");
 
-                        Type listType = new TypeToken<List<Player>>(){}.getType();
+                        Type listType = new TypeToken<List<Player>>() {
+                        }.getType();
                         List<Player> playerList = gson.fromJson(playersArray.toString(), listType);
 
                         mChallengeRecyclerAdapter.updateRecyclerData(playerList);
