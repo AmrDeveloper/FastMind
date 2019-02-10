@@ -1,18 +1,11 @@
 package com.amrdeveloper.fastmind.activities;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.objects.Player;
@@ -161,9 +154,11 @@ public class MainActivity extends AppCompatActivity {
         if (receiver.equals(player.getUsername())) {
             switch (state) {
                 case Challenge.RECEIVE: {
-                    GameDialog.showRequestDialog(MainActivity.this, sender,
-                            () -> mGameSocket.emit(Challenge.REQUEST, Challenge.ACCEPT, sender, receiver)
-                            , () -> mGameSocket.emit(Challenge.REQUEST, Challenge.REFUSE, sender, receiver));
+                    if (!MainActivity.this.isFinishing()) {
+                        GameDialog.showRequestDialog(MainActivity.this, sender,
+                                () -> mGameSocket.emit(Challenge.REQUEST, Challenge.ACCEPT, sender, receiver)
+                                , () -> mGameSocket.emit(Challenge.REQUEST, Challenge.REFUSE, sender, receiver));
+                    }
                     break;
                 }
 
