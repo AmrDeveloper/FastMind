@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.objects.Question;
+import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
 import com.amrdeveloper.fastmind.socket.Game;
 import com.amrdeveloper.fastmind.socket.GameSocket;
 import com.amrdeveloper.fastmind.socket.Result;
@@ -153,6 +154,8 @@ public class MultiPlayActivity extends AppCompatActivity {
                     } else {
                         onGameStopTimer();
                         if(mGameWaitDialog != null)mGameWaitDialog.dismiss();
+                        //TODO : Implement User Lose State
+                        //TODO : Score = score -  current level
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -255,6 +258,7 @@ public class MultiPlayActivity extends AppCompatActivity {
 
         if (receiver.equals(username)) {
             if(mGameWaitDialog != null)mGameWaitDialog.dismiss();
+            final PlayerPreferences playerPreferences = new PlayerPreferences(this);
             switch (state) {
                 case Game.ANSWER: {
                     //Update Booleans
@@ -284,15 +288,19 @@ public class MultiPlayActivity extends AppCompatActivity {
                 case Game.END: {
                     switch (message) {
                         case Result.TWO_PLAYERS_WINNER:
+                            playerPreferences.playerScoreUp(mGameLevel);
                             GameDialog.showWinnerDialog(CONTEXT, mGameLevel, this::backToMainMenu);
                             break;
                         case Result.TWO_PLAYERS_LOSER:
+                            playerPreferences.playerScoreDown(mGameLevel);
                             GameDialog.showLoserDialog(CONTEXT, mGameLevel, this::backToMainMenu);
                             break;
                         case Result.SENDER_PLAYER_WINNER:
+                            playerPreferences.playerScoreDown(mGameLevel);
                             GameDialog.showLoserDialog(CONTEXT, mGameLevel, this::backToMainMenu);
                             break;
                         case Result.RECEIVER_PLAYER_WINNER:
+                            playerPreferences.playerScoreUp(mGameLevel);
                             GameDialog.showWinnerDialog(CONTEXT, mGameLevel, this::backToMainMenu);
                             break;
                     }
