@@ -37,6 +37,7 @@ public class MultiPlayActivity extends AppCompatActivity {
     private RadioGroup mGameAnswersGroup;
     private TextView mGameTimerCounter;
     private Button mSubmitButton;
+    private Dialog mGameWaitDialog;
 
     private String player;
     private String username;
@@ -51,14 +52,14 @@ public class MultiPlayActivity extends AppCompatActivity {
     private Question mQuestion;
     private Handler mTimerHandler;
     private Runnable mTimerRunnable;
-
     private Socket mGameSocket;
     private final Gson gson = new Gson();
+
     private final Context CONTEXT = MultiPlayActivity.this;
 
-    private final static int GAME_TIME = 10;
-    private final static String QUESTION = "question";
-    private final static String TIMER = "timer";
+    private static final int GAME_TIME = 10;
+    private static final String QUESTION = "question";
+    private static final String TIMER = "timer";
     private static final String DEBUGGING = SinglePlayActivity.class.getClass().getSimpleName();
 
     @Override
@@ -96,8 +97,10 @@ public class MultiPlayActivity extends AppCompatActivity {
     }
 
     private void updateGameUI() {
-        mGamePlayersInfo.setText(username + " VS " + player);
-        mGameLevelInfo.setText("Level : " + mGameLevel);
+        String gameInformation = username + " VS " + player;
+        String gameLevel = "Level : " + mGameLevel;
+        mGamePlayersInfo.setText(gameInformation);
+        mGameLevelInfo.setText(gameLevel);
 
         //Update Question
         mGameQuestionBody.setText(mQuestion.getQuestionBody());
@@ -166,7 +169,6 @@ public class MultiPlayActivity extends AppCompatActivity {
         }
     }
 
-    private Dialog mGameWaitDialog;
     private void onGameSubmitButton() {
         int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
         if (checkedId != -1) {
@@ -197,7 +199,6 @@ public class MultiPlayActivity extends AppCompatActivity {
                     }
                 } else {
                     mGameSocket.emit(Game.PLAY, Game.ANSWER, username, player, Result.VALID_RESULT);
-                    Toast.makeText(this, "Wait", Toast.LENGTH_SHORT).show();
                     mGameWaitDialog = GameDialog.showWaitDialog(this);
                 }
             } else {
@@ -212,7 +213,6 @@ public class MultiPlayActivity extends AppCompatActivity {
                     }
                 } else {
                     mGameSocket.emit(Game.PLAY, Game.ANSWER, username, player, Result.INVALID_RESULT);
-                    Toast.makeText(this, "Wait", Toast.LENGTH_SHORT).show();
                     mGameWaitDialog = GameDialog.showWaitDialog(this);
                 }
             }

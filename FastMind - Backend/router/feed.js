@@ -97,8 +97,9 @@ router.post("/api/feed/insert", (req, res) => {
         if (err) { throw err }
         if(results.changedRows === 0){
             res.status(404).send("failure").end()
+        }else{
+            res.status(200).send("success").end()
         }
-        res.status(200).send("success").end()
     })
 })
 
@@ -143,8 +144,9 @@ router.delete("/api/feed/delete", (req, res) => {
         if (err) { throw err }
         if(results.changedRows === 0){
             res.status(404).send("failure").end()
+        }else{
+            res.status(200).send("success").end()
         }
-        res.status(200).send("success").end()
     })
 })
 
@@ -158,8 +160,9 @@ router.delete("/api/feeds/delete/all", (req, res) => {
         if (err) { throw err }
         if(results.changedRows === 0){
             res.status(404).send("failure").end()
+        }else{
+            res.status(200).send("success").end()
         }
-        res.status(200).send("success").end()
     })
 })
 

@@ -54,9 +54,9 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton.setOnClickListener(onLoginClickListener);
     }
 
-    private void isPlayerLogined(){
+    private void isPlayerLogined() {
         PlayerPreferences preferences = new PlayerPreferences(this);
-        if(preferences.isPlayerLogined()){
+        if (preferences.isPlayerLogined()) {
             goToMainActivity();
             finish();
         }
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         //Get Player Information From Server
                         Gson gson = new Gson();
-                        Player player = gson.fromJson(response,Player.class);
+                        Player player = gson.fromJson(response, Player.class);
 
                         //Save Current Player Session
                         Session session = new Session(getApplicationContext());
@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     }
                 },
-                error -> Toast.makeText(LoginActivity.this, "Invalid Challenge", Toast.LENGTH_SHORT).show()) {
+                error -> Toast.makeText(LoginActivity.this, "Invalid Login", Toast.LENGTH_SHORT).show()) {
         };
         queue.add(stringRequest);
     }

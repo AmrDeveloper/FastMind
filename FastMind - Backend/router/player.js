@@ -345,7 +345,11 @@ router.post("/api/player/insert", (req, res) => {
 
     database.query(sqlQuery, [player], (err, results, rows) => {
         if (err) { throw err }
-        res.status(200).end()
+        if(results.changedRows === 0){
+            res.status(404).send("failure").end()
+        }else{
+            res.status(200).send("success").end()
+        }
     })
 })
 
@@ -364,10 +368,11 @@ router.post("/api/player/sync", (req, res) => {
         if (err) {
             throw err
         }
-        if(results.changedRows === 0){
+        if (results.changedRows === 0) {
             res.status(404).send("failure").end()
+        } else {
+            res.status(200).send("success").end()
         }
-        res.status(200).send("success").end()
     })
 })
 
@@ -385,10 +390,11 @@ router.post("/api/player/update/pass", (req, res) => {
         if (err) {
             throw err
         }
-        if(results.changedRows === 0){
-            res.status(404).end()
+        if (results.changedRows === 0) {
+            res.status(404).send("failure").end()
+        } else {
+            res.status(200).send("success").end()
         }
-        res.status(200).end()
     })
 })
 
@@ -403,9 +409,12 @@ router.delete("/api/player/delete", (req, res) => {
 
     database.query(sqlQuery, email, (err, res, rows) => {
         if (err) { throw err }
+        if (results.changedRows === 0) {
+            res.status(404).send("failure").end()
+        } else {
+            res.status(200).send("success").end()
+        }
     })
-    res.status(200).send("User Deleted")
-    res.end()
 })
 
 /**
@@ -416,9 +425,12 @@ router.delete("/api/players/delete/all", (req, res) => {
     let sqlQuery = "truncate table player"
     database.query(sqlQuery, (err, result) => {
         if (err) { throw err }
+        if (results.changedRows === 0) {
+            res.status(404).send("failure").end()
+        } else {
+            res.status(200).send("success").end()
+        }
     })
-    res.status(200).send("Delete Done")
-    res.end()
 })
 
 //Export Player Router

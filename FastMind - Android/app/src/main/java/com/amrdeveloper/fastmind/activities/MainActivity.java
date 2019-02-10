@@ -1,11 +1,18 @@
 package com.amrdeveloper.fastmind.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.objects.Player;
@@ -126,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logoutAction(View view) {
-        //TODO : Update Current User Information To Server
+        //Update Current User Information To Server
         SynchronizeUtils syncUtils = new SynchronizeUtils(this);
         syncUtils.syncToServer(player);
 
@@ -154,19 +161,17 @@ public class MainActivity extends AppCompatActivity {
         if (receiver.equals(player.getUsername())) {
             switch (state) {
                 case Challenge.RECEIVE: {
-                    GameDialog.showRequestDialog(this, sender,
+                    GameDialog.showRequestDialog(MainActivity.this, sender,
                             () -> mGameSocket.emit(Challenge.REQUEST, Challenge.ACCEPT, sender, receiver)
                             , () -> mGameSocket.emit(Challenge.REQUEST, Challenge.REFUSE, sender, receiver));
                     break;
                 }
+
                 case Challenge.ACCEPT: {
                     QuestionGenerator generator = new QuestionGenerator();
                     Question questionObj = generator.generateQuestion(player.getLevel());
-
                     mGameSocket.emit(Game.PLAY, Game.START, receiver, sender, gson.toJson(questionObj));
-
                     startMultiPlayerGame(sender, receiver, questionObj);
-
                     mGameSocket.off(Challenge.REQUEST);
                     finish();
                     break;
@@ -186,13 +191,14 @@ public class MainActivity extends AppCompatActivity {
         final String question = args[3].toString();
 
         if (receiver.equals(player.getUsername())) {
-            if (state.equals( Game.START)) {
+            if (state.equals(Game.START)) {
                 //Convert Question From JSON to Object
-                Type questionType = new TypeToken<Question>() {}.getType();
+                Type questionType = new TypeToken<Question>() {
+                }.getType();
                 Question questionObj = gson.fromJson(question, questionType);
 
                 //Go to MultiPlayActivity with sender and receiver and question
-                startMultiPlayerGame(sender,receiver,questionObj);
+                startMultiPlayerGame(sender, receiver, questionObj);
 
                 mGameSocket.off(Challenge.REQUEST);
                 finish();
