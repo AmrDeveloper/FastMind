@@ -20,7 +20,7 @@ import java.util.List;
 
 public class FeedRecyclerAdapter
         extends RecyclerView.Adapter<FeedRecyclerAdapter.FeedViewHolder>
-        implements Filterable{
+        implements Filterable {
 
     private List<Feed> mFeedBackList;
     private List<Feed> mFilteredFeedList;
@@ -74,13 +74,13 @@ public class FeedRecyclerAdapter
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 String keyword = constraint.toString();
-                if(keyword.isEmpty()){
+                if (keyword.isEmpty()) {
                     mFilteredFeedList = mFeedBackList;
-                }else{
+                } else {
                     List<Feed> filteredList = new ArrayList<>();
-                    for(Feed feed : mFeedBackList){
-                        if(feed.getFirstPlayer().contains(keyword)
-                                || feed.getSecondPlayer().contains(keyword)){
+                    for (Feed feed : mFeedBackList) {
+                        if (feed.getFirstPlayer().equalsIgnoreCase(keyword)
+                                || feed.getSecondPlayer().equalsIgnoreCase(keyword)) {
                             filteredList.add(feed);
                         }
                     }
@@ -103,7 +103,7 @@ public class FeedRecyclerAdapter
 
         private TextView mFirstPlayer;
         private TextView mSecondPlayer;
-        private TextView mgameScore;
+        private TextView mGameScore;
 
         FeedViewHolder(View itemView) {
             super(itemView);
@@ -113,13 +113,15 @@ public class FeedRecyclerAdapter
         private void initView(View view) {
             mFirstPlayer = view.findViewById(R.id.firstPlayerTxt);
             mSecondPlayer = view.findViewById(R.id.secondPlayerTxt);
-            mgameScore = view.findViewById(R.id.gameScore);
+            mGameScore = view.findViewById(R.id.gameScore);
         }
 
         private void bindView(Feed feedBack) {
+            String gameScore = "Score : " + feedBack.getGameScore();
+
             mFirstPlayer.setText(feedBack.getFirstPlayer());
             mSecondPlayer.setText(feedBack.getSecondPlayer());
-            mgameScore.setText(feedBack.getGameScore());
+            mGameScore.setText(gameScore);
             final int gameResult = feedBack.getGameResult();
             switch (gameResult) {
                 case Result.NO_ONE_WINNER:
