@@ -29,7 +29,6 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.util.List;
 
-
 public class ChallengeActivity extends AppCompatActivity {
 
     private ProgressBar mChallengeProgress;
@@ -112,16 +111,6 @@ public class ChallengeActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(mSearchTextListener);
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     private final SearchView.OnQueryTextListener mSearchTextListener = new SearchView.OnQueryTextListener() {

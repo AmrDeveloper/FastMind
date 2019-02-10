@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.R;
@@ -16,16 +18,21 @@ import com.amrdeveloper.fastmind.socket.Result;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapter.FeedViewHolder> {
+public class FeedRecyclerAdapter
+        extends RecyclerView.Adapter<FeedRecyclerAdapter.FeedViewHolder>
+        implements Filterable{
 
     private List<Feed> mFeedBackList;
+    private List<Feed> mFilteredFeedList;
 
     public FeedRecyclerAdapter() {
         mFeedBackList = new ArrayList<>();
+        mFilteredFeedList = new ArrayList<>();
     }
 
     public FeedRecyclerAdapter(List<Feed> feedList) {
         mFeedBackList = feedList;
+        mFilteredFeedList = feedList;
     }
 
     @NonNull
@@ -43,21 +50,53 @@ public class FeedRecyclerAdapter extends RecyclerView.Adapter<FeedRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull FeedViewHolder holder, int position) {
-        Feed feedBack = mFeedBackList.get(position);
+        Feed feedBack = mFilteredFeedList.get(position);
         holder.bindView(feedBack);
 
     }
 
     @Override
     public int getItemCount() {
-        return mFeedBackList.size();
+        return mFilteredFeedList.size();
     }
 
     public void updateFeeds(List<Feed> feedList) {
         if (feedList != null) {
             mFeedBackList = feedList;
+            mFilteredFeedList = feedList;
             notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String keyword = constraint.toString();
+                if(keyword.isEmpty()){
+                    mFilteredFeedList = mFeedBackList;
+                }else{
+                    List<Feed> filteredList = new ArrayList<>();
+                    for(Feed feed : mFeedBackList){
+                        if(feed.getFirstPlayer().contains(keyword)
+                                || feed.getSecondPlayer().contains(keyword)){
+                            filteredList.add(feed);
+                        }
+                    }
+                    mFilteredFeedList = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mFilteredFeedList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                mFilteredFeedList = (ArrayList<Feed>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     class FeedViewHolder extends RecyclerView.ViewHolder {

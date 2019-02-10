@@ -20,7 +20,9 @@ import com.github.nkzawa.socketio.client.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChallengeRecyclerAdapter extends RecyclerView.Adapter<ChallengeRecyclerAdapter.ChallengeViewHolder> implements Filterable {
+public class ChallengeRecyclerAdapter
+        extends RecyclerView.Adapter<ChallengeRecyclerAdapter.ChallengeViewHolder>
+        implements Filterable {
 
     private List<Player> mPlayerList;
     private List<Player> mFilteredPlayerList;
