@@ -21,7 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 
-public class SigninActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     private TextInputLayout mUsernameInputLayout;
     private TextInputEditText mUsernameEditText;
@@ -39,7 +39,7 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin);
+        setContentView(R.layout.activity_register);
 
         initializeViews();
     }
@@ -61,7 +61,7 @@ public class SigninActivity extends AppCompatActivity {
     }
 
     public void goToLoginActivity(View view) {
-        Intent intent = new Intent(SigninActivity.this, LoginActivity.class);
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }

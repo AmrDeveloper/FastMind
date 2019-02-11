@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/darkGrey"
     android:orientation="vertical"
-    tools:context=".activities.SigninActivity">
+    tools:context=".activities.RegisterActivity">
 
     <!-- Login progress -->
     <ProgressBar

@@ -35,7 +35,7 @@
             android:label="@string/multi_player_game" />
         <activity android:name=".activities.RankActivity" />
         <activity
-            android:name=".activities.SigninActivity"
+            android:name=".activities.RegisterActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".activities.ChallengeActivity" />
         <activity android:name=".activities.FeedActivity" />
