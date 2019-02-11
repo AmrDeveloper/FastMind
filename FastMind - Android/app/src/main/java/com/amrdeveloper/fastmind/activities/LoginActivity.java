@@ -86,7 +86,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void sendLoginRequest(String requestUrl) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET,
                 requestUrl,
                 response -> {
                     if (response.length() == 0) {

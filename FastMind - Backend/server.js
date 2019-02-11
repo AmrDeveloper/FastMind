@@ -15,10 +15,9 @@ app.use(feedRouter)
 game.runSocket(socketIO)
 
 //Server PORT
-const hostname = '192.168.1.9'
 const port = 3000
 
 //Listen for 3000 port
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
+server.listen(port, () => {
+    console.log(`Server running at PORT ${port}`);
 })

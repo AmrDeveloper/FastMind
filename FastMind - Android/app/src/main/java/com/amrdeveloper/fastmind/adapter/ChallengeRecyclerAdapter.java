@@ -28,7 +28,6 @@ public class ChallengeRecyclerAdapter
     private List<Player> mFilteredPlayerList;
 
     private Socket mGameSocket;
-
     private Player mCurrentPlayer;
 
     public ChallengeRecyclerAdapter(Context context) {

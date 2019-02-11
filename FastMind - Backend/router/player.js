@@ -345,7 +345,9 @@ router.post("/api/player/insert", (req, res) => {
 
     database.query(sqlQuery, [player], (err, results, rows) => {
         if (err) { throw err }
-        if(results.changedRows === 0){
+        console.log(results)
+        console.log(rows)
+        if(results.insertId === 0){
             res.status(404).send("failure").end()
         }else{
             res.status(200).send("success").end()
