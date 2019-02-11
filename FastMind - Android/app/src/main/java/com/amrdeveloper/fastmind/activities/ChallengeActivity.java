@@ -79,7 +79,8 @@ public class ChallengeActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                requestUrl, null,
+                requestUrl,
+                null,
                 response -> {
                     try {
                         JSONObject resultObject = response.getJSONObject("result");

@@ -126,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logoutAction(View view) {
+        mGameSocket.disconnect();
+
         //Update Current User Information To Server
         SynchronizeUtils syncUtils = new SynchronizeUtils(this);
         syncUtils.syncToServer(player);
