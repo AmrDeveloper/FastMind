@@ -20,7 +20,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-
 public class RegisterActivity extends AppCompatActivity {
 
     private TextInputLayout mUsernameInputLayout;
@@ -32,9 +31,9 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout mPassWordInputLayout;
     private TextInputEditText mPassWordEditText;
 
-    private ProgressBar mLoginProgressBar;
+    private ProgressBar mRegisterProgressBar;
 
-    private Button mSigninButton;
+    private Button mRegisterButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +53,10 @@ public class RegisterActivity extends AppCompatActivity {
         mPassWordInputLayout = findViewById(R.id.passWordInputLayout);
         mPassWordEditText = findViewById(R.id.passWordEditText);
 
-        mLoginProgressBar = findViewById(R.id.loginProgressBar);
+        mRegisterProgressBar = findViewById(R.id.registerProgressBar);
 
-        mSigninButton = findViewById(R.id.signinButton);
-        mSigninButton.setOnClickListener(onSignInClickListener);
+        mRegisterButton = findViewById(R.id.registerButton);
+        mRegisterButton.setOnClickListener(onSignInClickListener);
     }
 
     public void goToLoginActivity(View view) {
@@ -84,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void sendRegisterRequest(String username, String email, String pass) {
+        mRegisterProgressBar.setVisibility(View.VISIBLE);
         String requestUrl = generateUrlRequest(username, email, pass);
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(
@@ -93,6 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (response.length() == 0 || response.equals("failure")) {
                         Toast.makeText(this, "Invalid Information", Toast.LENGTH_SHORT).show();
                     } else if (response.equals("success")) {
+                        mRegisterProgressBar.setVisibility(View.GONE);
                         //Create New Player
                         Player player = new Player(username, email, pass, 1, 0);
 
@@ -108,6 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 },
                 error -> {
+                    mRegisterProgressBar.setVisibility(View.GONE);
                     Toast.makeText(this, "Invalid Request", Toast.LENGTH_SHORT).show();
                 }
         );

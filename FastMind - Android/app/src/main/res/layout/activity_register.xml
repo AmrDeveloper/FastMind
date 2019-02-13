@@ -10,7 +10,7 @@
 
     <!-- Login progress -->
     <ProgressBar
-        android:id="@+id/loginProgressBar"
+        android:id="@+id/registerProgressBar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/signinButton"
+                android:id="@+id/registerButton"
                 style="?android:textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
