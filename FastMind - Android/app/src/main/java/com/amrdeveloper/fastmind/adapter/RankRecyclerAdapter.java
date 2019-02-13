@@ -16,17 +16,21 @@ import com.amrdeveloper.fastmind.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapter.RankViewHolder> implements Filterable{
+public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapter.RankViewHolder> implements Filterable {
 
     private List<Player> rankedPlayerList;
     private List<Player> rankPlayerFiltered;
 
-    public RankRecyclerAdapter(){
+    private static final String USERNAME_FORMAT = "Username : %s";
+    private static final String SCORE_FORMAT = "Score : %d";
+    private static final String STATE_FORMAT = "State : %s";
+
+    public RankRecyclerAdapter() {
         this.rankedPlayerList = new ArrayList<>();
         this.rankPlayerFiltered = new ArrayList<>();
     }
 
-    public RankRecyclerAdapter(List<Player> rankedPlayerList){
+    public RankRecyclerAdapter(List<Player> rankedPlayerList) {
         this.rankedPlayerList = rankedPlayerList;
         this.rankPlayerFiltered = rankedPlayerList;
     }
@@ -56,8 +60,8 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
     }
 
 
-    public void updateRecyclerData(List<Player> playerList){
-        if(playerList != null){
+    public void updateRecyclerData(List<Player> playerList) {
+        if (playerList != null) {
             rankedPlayerList = playerList;
             rankPlayerFiltered = playerList;
             notifyDataSetChanged();
@@ -75,7 +79,7 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
                 } else {
                     List<Player> filteredList = new ArrayList<>();
                     for (Player player : rankedPlayerList) {
-                        if(player.getUsername().contains(keyword) || player.getEmail().contains(keyword)){
+                        if (player.getUsername().contains(keyword) || player.getEmail().contains(keyword)) {
                             filteredList.add(player);
                         }
                     }
@@ -94,7 +98,7 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
         };
     }
 
-    class RankViewHolder extends RecyclerView.ViewHolder{
+    class RankViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mRankUserName;
         private TextView mRankUserScore;
@@ -106,16 +110,20 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
             itemView.setOnClickListener(onClickListener);
         }
 
-        private void initViews(View view){
+        private void initViews(View view) {
             mRankUserName = view.findViewById(R.id.rankUserTxt);
             mRankUserScore = view.findViewById(R.id.rankScoreTxt);
             mRankStateTxt = view.findViewById(R.id.rankStateTxt);
         }
 
-        private void bindView(Player player){
-            mRankUserName.setText(player.getUsername());
-            mRankUserScore.setText(String.valueOf(player.getScore()));
-            mRankStateTxt.setText(player.getState());
+        private void bindView(Player player) {
+            String username = String.format(USERNAME_FORMAT, player.getUsername());
+            String score = String.format(SCORE_FORMAT, player.getScore());
+            String state = String.format(STATE_FORMAT, player.getState());
+
+            mRankUserName.setText(username);
+            mRankUserScore.setText(score);
+            mRankStateTxt.setText(state);
         }
 
         private final View.OnClickListener onClickListener = view -> {

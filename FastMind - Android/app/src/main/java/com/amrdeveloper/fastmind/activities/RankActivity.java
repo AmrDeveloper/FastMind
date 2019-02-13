@@ -13,7 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.amrdeveloper.fastmind.R;
-import com.amrdeveloper.fastmind.adapter.ChallengeRecyclerAdapter;
 import com.amrdeveloper.fastmind.adapter.RankRecyclerAdapter;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.android.volley.Request;
@@ -99,7 +98,7 @@ public class RankActivity extends AppCompatActivity {
                     }
                 },
                 error -> {
-
+                    mRankIndicator.setVisibility(View.GONE);
                 }
         );
         queue.add(jsonRequest);
