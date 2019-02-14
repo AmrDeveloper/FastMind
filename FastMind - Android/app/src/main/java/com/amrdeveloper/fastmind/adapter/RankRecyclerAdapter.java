@@ -125,12 +125,13 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
             String score = String.format(SCORE_FORMAT, player.getScore());
             String state = String.format(STATE_FORMAT, player.getState());
             int avatarIndex = player.getAvatarID();
-            int avatarId = Avatar.AVATARS[avatarIndex];
 
             mRankUserName.setText(username);
             mRankUserScore.setText(score);
             mRankStateTxt.setText(state);
-            if (avatarId != 0) {
+
+            if (avatarIndex != 0) {
+                int avatarId = Avatar.AVATARS[avatarIndex];
                 mRankAvatarImg.setImageResource(avatarId);
             }
         }

@@ -9,9 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.objects.Avatar;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.socket.Challenge;
 import com.amrdeveloper.fastmind.socket.GameSocket;
@@ -110,6 +112,7 @@ public class ChallengeRecyclerAdapter
 
         private TextView mUsernameTxt;
         private TextView mUserScoreTxt;
+        private ImageView mUserAvatarImg;
         private ImageButton mChallengeAction;
 
         private ChallengeViewHolder(View itemView) {
@@ -121,13 +124,21 @@ public class ChallengeRecyclerAdapter
         private void initView(View view) {
             mUsernameTxt = view.findViewById(R.id.usernameTxt);
             mUserScoreTxt = view.findViewById(R.id.userScoreTxt);
+            mUserAvatarImg = view.findViewById(R.id.playerAvatar);
             mChallengeAction = view.findViewById(R.id.challengeImgButton);
+
             mChallengeAction.setOnClickListener(onChallengeRequest);
         }
 
         private void bingView(Player player) {
             mUsernameTxt.setText(player.getUsername());
             mUserScoreTxt.setText(player.getState());
+            int avatarIndex = player.getAvatarID();
+
+            if (avatarIndex != 0) {
+                int avatarResId = Avatar.AVATARS[avatarIndex];
+                mUserAvatarImg.setImageResource(avatarResId);
+            }
         }
 
         private View.OnClickListener onChallengeRequest = view -> {
