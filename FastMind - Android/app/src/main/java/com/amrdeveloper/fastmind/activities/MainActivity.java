@@ -12,6 +12,7 @@ import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.objects.Question;
 import com.amrdeveloper.fastmind.preferences.PlayerChanger;
 import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
+import com.amrdeveloper.fastmind.preferences.Session;
 import com.amrdeveloper.fastmind.socket.Challenge;
 import com.amrdeveloper.fastmind.socket.Game;
 import com.amrdeveloper.fastmind.socket.GameSocket;
@@ -132,9 +133,9 @@ public class MainActivity extends AppCompatActivity {
         SynchronizeUtils syncUtils = new SynchronizeUtils(this);
         syncUtils.syncToServer(player);
 
-        //TODO : Replace PlayerPreferences by Session to be more readable
-        PlayerPreferences preferences = new PlayerPreferences(this);
-        preferences.deletePlayerInformation();
+        //Remove all player local information
+        Session session = new Session(this);
+        session.playerLogOut();
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
