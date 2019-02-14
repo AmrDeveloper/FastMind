@@ -25,6 +25,15 @@ public class Player {
     @SerializedName("playing")
     private int playing;
 
+    @SerializedName("winNum")
+    private int winNumber;
+
+    @SerializedName("loseNum")
+    private int loseNumber;
+
+    @SerializedName("avatarID")
+    private int avatarID;
+
     public Player(String username, String email, String password, int level, int score) {
         this.username = username;
         this.email = email;
@@ -32,17 +41,25 @@ public class Player {
         this.level = level;
         this.score = score;
         this.state = 1;
-        this.playing = 1;
+        this.playing = 0;
+        this.winNumber = 0;
+        this.loseNumber = 0;
+        this.avatarID = 0;
     }
 
-    public Player(String username, String email, String password, int level, int score, int state, int playing) {
+    public Player(String username, String email, String pass,
+                  int level, int score, int state, int playing,
+                  int winNum, int loseNum, int avatarId) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        this.password = pass;
         this.level = level;
         this.score = score;
         this.state = state;
         this.playing = playing;
+        this.winNumber = winNum;
+        this.winNumber = loseNum;
+        this.winNumber = avatarId;
     }
 
     public String getUsername() {
@@ -103,6 +120,30 @@ public class Player {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public int getWinNumber() {
+        return winNumber;
+    }
+
+    public void setWinNumber(int winNumber) {
+        this.winNumber = winNumber;
+    }
+
+    public int getLoseNumber() {
+        return loseNumber;
+    }
+
+    public void setLoseNumber(int loseNumber) {
+        this.loseNumber = loseNumber;
+    }
+
+    public int getAvatarID() {
+        return avatarID;
+    }
+
+    public void setAvatarID(int avatarID) {
+        this.avatarID = avatarID;
     }
 
     @Override

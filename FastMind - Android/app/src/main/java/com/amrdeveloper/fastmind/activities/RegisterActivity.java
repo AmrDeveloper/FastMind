@@ -130,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
             sendRegisterRequest(username, email, password);
         } else {
             if (!isNameValid)
-                mUsernameEditText.setError(getString(R.string.invalid_username));
+                mUsernameInputLayout.setError(getString(R.string.invalid_username));
             if (!isEmailValid)
                 mEmailInputLayout.setError(getString(R.string.invalid_Email));
             if (!isPasswordValid)

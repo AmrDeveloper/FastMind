@@ -21,7 +21,6 @@
             android:layout_height="@dimen/dimen38sp"
             android:layout_marginBottom="@dimen/dimen10dp"
             android:layout_marginTop="@dimen/dimen10dp"
-            android:fontFamily="cursive"
             android:gravity="center"
             android:lines="1"
             android:text="@string/go_next_level"

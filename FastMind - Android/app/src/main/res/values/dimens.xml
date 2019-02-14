@@ -6,6 +6,8 @@
     <dimen name="dimen8dp">8dp</dimen>
     <dimen name="dimen10dp">10dp</dimen>
     <dimen name="dimen15dp">15dp</dimen>
+    <dimen name="dimen75dp">75dp</dimen>
+    <dimen name="dimen80dp">80dp</dimen>
     <dimen name="dimen200dp">200dp</dimen>
     <dimen name="dimen280dp">280dp</dimen>
 

@@ -336,12 +336,15 @@ router.post("/api/player/insert", (req, res) => {
     let level = 1
     let online = 1
     let playing = 0
+    let winNumber = 0
+    let loseNumber = 0
+    let avatarId = 0
 
     let player = [
-        [username, email, password, score, level, online, playing]
+        [username, email, password, score, level, online, playing,winNumber,loseNumber,avatarId]
     ]
 
-    let sqlQuery = "INSERT INTO  player(username,email,password,score,level,online,playing) VALUES ?"
+    let sqlQuery = "INSERT INTO  player(username,email,password,score,level,online,playing,winNum,loseNum,avatarID) VALUES ?"
 
     database.query(sqlQuery, [player], (err, results, rows) => {
         if (err) { throw err }

@@ -10,15 +10,24 @@
     app:cardUseCompatPadding="true"
     app:elevation="0dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/playerAvatar"
+            android:layout_width="@dimen/dimen75dp"
+            android:layout_height="@dimen/dimen80dp"
+            android:contentDescription="@string/player_avatar"
+            android:src="@drawable/ic_avatar0" />
 
         <TextView
             android:id="@+id/rankUserTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/playerAvatar"
+            android:layout_toRightOf="@id/playerAvatar"
             android:fontFamily="monospace"
             android:padding="@dimen/dimen5dp"
             android:textStyle="italic|bold"
@@ -28,6 +37,9 @@
             android:id="@+id/rankScoreTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/rankUserTxt"
+            android:layout_toEndOf="@id/playerAvatar"
+            android:layout_toRightOf="@id/playerAvatar"
             android:fontFamily="monospace"
             android:padding="@dimen/dimen5dp"
             android:textStyle="italic"
@@ -37,9 +49,12 @@
             android:id="@+id/rankStateTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/rankScoreTxt"
+            android:layout_toEndOf="@id/playerAvatar"
+            android:layout_toRightOf="@id/playerAvatar"
             android:fontFamily="monospace"
             android:padding="@dimen/dimen5dp"
             android:textStyle="italic"
             tools:text="State : Online" />
-    </LinearLayout>
+    </RelativeLayout>
 </android.support.v7.widget.CardView>

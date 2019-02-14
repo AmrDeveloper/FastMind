@@ -61,4 +61,5 @@
     <string name="challenge_request">Challenge Request</string>
     <string name="go_next_level">Go to next Level ?</string>
     <string name="waiting">Waiting....</string>
+    <string name="player_avatar">Player Avatar</string>
 </resources>

@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amrdeveloper.fastmind.objects.Avatar;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.R;
 
@@ -103,6 +105,7 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
         private TextView mRankUserName;
         private TextView mRankUserScore;
         private TextView mRankStateTxt;
+        private ImageView mRankAvatarImg;
 
         private RankViewHolder(View itemView) {
             super(itemView);
@@ -114,16 +117,22 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
             mRankUserName = view.findViewById(R.id.rankUserTxt);
             mRankUserScore = view.findViewById(R.id.rankScoreTxt);
             mRankStateTxt = view.findViewById(R.id.rankStateTxt);
+            mRankAvatarImg = view.findViewById(R.id.playerAvatar);
         }
 
         private void bindView(Player player) {
             String username = String.format(USERNAME_FORMAT, player.getUsername());
             String score = String.format(SCORE_FORMAT, player.getScore());
             String state = String.format(STATE_FORMAT, player.getState());
+            int avatarIndex = player.getAvatarID();
+            int avatarId = Avatar.AVATARS[avatarIndex];
 
             mRankUserName.setText(username);
             mRankUserScore.setText(score);
             mRankStateTxt.setText(state);
+            if (avatarId != 0) {
+                mRankAvatarImg.setImageResource(avatarId);
+            }
         }
 
         private final View.OnClickListener onClickListener = view -> {
