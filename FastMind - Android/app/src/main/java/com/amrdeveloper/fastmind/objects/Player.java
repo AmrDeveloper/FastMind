@@ -150,4 +150,13 @@ public class Player {
     public String toString() {
         return username;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Player){
+            Player player = (Player)obj;
+            return username.equals(player.getUsername());
+        }
+        return false;
+    }
 }

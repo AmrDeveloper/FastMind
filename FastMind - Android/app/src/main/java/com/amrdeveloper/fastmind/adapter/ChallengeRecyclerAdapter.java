@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.objects.Avatar;
 import com.amrdeveloper.fastmind.objects.Player;
+import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
 import com.amrdeveloper.fastmind.socket.Challenge;
 import com.amrdeveloper.fastmind.socket.GameSocket;
 import com.github.nkzawa.socketio.client.Socket;
@@ -29,18 +30,21 @@ public class ChallengeRecyclerAdapter
     private List<Player> mPlayerList;
     private List<Player> mFilteredPlayerList;
 
+    private Context mContext;
     private Socket mGameSocket;
-    private Player mCurrentPlayer;
 
     public ChallengeRecyclerAdapter(Context context) {
         mPlayerList = new ArrayList<>();
         mFilteredPlayerList = new ArrayList<>();
+        mContext = context;
         connectToServer(context);
     }
 
     public ChallengeRecyclerAdapter(Context context, List<Player> players) {
         mPlayerList = players;
         mFilteredPlayerList = players;
+        mContext = context;
+        removeCurrentPlayer();
         connectToServer(context);
     }
 
@@ -96,10 +100,18 @@ public class ChallengeRecyclerAdapter
         };
     }
 
+    private void removeCurrentPlayer(){
+        PlayerPreferences preferences = new PlayerPreferences(mContext);
+        Player currentPlayer = preferences.queryPlayerInformation();
+        mPlayerList.remove(currentPlayer);
+        mFilteredPlayerList.remove(currentPlayer);
+    }
+
     public void updateRecyclerData(List<Player> playerList) {
         if (playerList != null) {
             mPlayerList = playerList;
             mFilteredPlayerList = playerList;
+            removeCurrentPlayer();
             notifyDataSetChanged();
         }
     }

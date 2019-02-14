@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         SynchronizeUtils syncUtils = new SynchronizeUtils(this);
         syncUtils.syncToServer(player);
 
+        //TODO : Replace PlayerPreferences by Session to be more readable
         PlayerPreferences preferences = new PlayerPreferences(this);
         preferences.deletePlayerInformation();
 
