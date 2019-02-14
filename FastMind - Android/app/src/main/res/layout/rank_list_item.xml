@@ -13,6 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/darkGrey"
         android:orientation="vertical">
 
         <ImageView
@@ -30,6 +31,7 @@
             android:layout_toRightOf="@id/playerAvatar"
             android:fontFamily="monospace"
             android:padding="@dimen/dimen5dp"
+            android:textColor="@color/gray"
             android:textStyle="italic|bold"
             tools:text="Username : AmrDeveloper" />
 
@@ -42,6 +44,7 @@
             android:layout_toRightOf="@id/playerAvatar"
             android:fontFamily="monospace"
             android:padding="@dimen/dimen5dp"
+            android:textColor="@color/gray"
             android:textStyle="italic"
             tools:text="Score : 500" />
 
@@ -54,6 +57,7 @@
             android:layout_toRightOf="@id/playerAvatar"
             android:fontFamily="monospace"
             android:padding="@dimen/dimen5dp"
+            android:textColor="@color/gray"
             android:textStyle="italic"
             tools:text="State : Online" />
     </RelativeLayout>

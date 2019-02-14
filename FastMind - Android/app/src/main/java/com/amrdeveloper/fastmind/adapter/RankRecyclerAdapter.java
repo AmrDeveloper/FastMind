@@ -1,6 +1,7 @@
 package com.amrdeveloper.fastmind.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -133,6 +134,12 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
             if (avatarIndex != 0) {
                 int avatarId = Avatar.AVATARS[avatarIndex];
                 mRankAvatarImg.setImageResource(avatarId);
+            }
+
+            if(player.getStateInt() == 0){
+                mRankStateTxt.setTextColor(Color.RED);
+            }else{
+                mRankStateTxt.setTextColor(Color.GREEN);
             }
         }
 
