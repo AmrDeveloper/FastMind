@@ -132,9 +132,10 @@ public class ChallengeRecyclerAdapter
 
         private void bingView(Player player) {
             mUsernameTxt.setText(player.getUsername());
-            mUserScoreTxt.setText(player.getState());
-            int avatarIndex = player.getAvatarID();
+            String userScore = String.format("Score : %d",player.getScore());
+            mUserScoreTxt.setText(userScore);
 
+            int avatarIndex = player.getAvatarID();
             if (avatarIndex != 0) {
                 int avatarResId = Avatar.AVATARS[avatarIndex];
                 mUserAvatarImg.setImageResource(avatarResId);

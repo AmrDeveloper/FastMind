@@ -1,7 +1,5 @@
 package com.amrdeveloper.fastmind.activities;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -206,7 +204,6 @@ public class SinglePlayActivity extends AppCompatActivity {
             handler.removeCallbacks(runnable);
         }
     }
-
 
     /**
      * First make Submit Button un Clickable
