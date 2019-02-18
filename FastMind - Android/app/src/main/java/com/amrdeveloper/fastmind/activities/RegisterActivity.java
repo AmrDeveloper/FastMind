@@ -1,17 +1,15 @@
 package com.amrdeveloper.fastmind.activities;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.databinding.ActivityRegisterBinding;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.preferences.Session;
 import com.amrdeveloper.fastmind.utils.DataValidation;
@@ -20,43 +18,18 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.Objects;
+
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextInputLayout mUsernameInputLayout;
-    private TextInputEditText mUsernameEditText;
-
-    private TextInputLayout mEmailInputLayout;
-    private TextInputEditText mEmailEditText;
-
-    private TextInputLayout mPassWordInputLayout;
-    private TextInputEditText mPassWordEditText;
-
-    private ProgressBar mRegisterProgressBar;
-
-    private Button mRegisterButton;
+    private ActivityRegisterBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
 
-        initializeViews();
-    }
-
-    private void initializeViews() {
-        mUsernameInputLayout = findViewById(R.id.usernameInputLayout);
-        mUsernameEditText = findViewById(R.id.usernameEditText);
-
-        mEmailInputLayout = findViewById(R.id.emailInputLayout);
-        mEmailEditText = findViewById(R.id.emailEditText);
-
-        mPassWordInputLayout = findViewById(R.id.passWordInputLayout);
-        mPassWordEditText = findViewById(R.id.passWordEditText);
-
-        mRegisterProgressBar = findViewById(R.id.registerProgressBar);
-
-        mRegisterButton = findViewById(R.id.registerButton);
-        mRegisterButton.setOnClickListener(onSignInClickListener);
+        binding.registerButton.setOnClickListener(onSignInClickListener);
     }
 
     public void goToLoginActivity(View view) {
@@ -83,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void sendRegisterRequest(String username, String email, String pass) {
-        mRegisterProgressBar.setVisibility(View.VISIBLE);
+        binding.registerProgressBar.setVisibility(View.VISIBLE);
         String requestUrl = generateUrlRequest(username, email, pass);
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(
@@ -93,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (response.length() == 0 || response.equals("failure")) {
                         Toast.makeText(this, "Invalid Information", Toast.LENGTH_SHORT).show();
                     } else if (response.equals("success")) {
-                        mRegisterProgressBar.setVisibility(View.GONE);
+                        binding.registerProgressBar.setVisibility(View.GONE);
                         //Create New Player
                         Player player = new Player(username, email, pass, 1, 0);
 
@@ -109,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 },
                 error -> {
-                    mRegisterProgressBar.setVisibility(View.GONE);
+                    binding.registerProgressBar.setVisibility(View.GONE);
                     Toast.makeText(this, "Invalid Request", Toast.LENGTH_SHORT).show();
                 }
         );
@@ -117,9 +90,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private final View.OnClickListener onSignInClickListener = view -> {
-        String username = mUsernameEditText.getText().toString().trim();
-        String email = mEmailEditText.getText().toString().trim();
-        String password = mPassWordEditText.getText().toString().trim();
+        String username = Objects.requireNonNull(binding.usernameEditText.getText()).toString().trim();
+        String email = Objects.requireNonNull(binding.emailEditText.getText()).toString().trim();
+        String password = Objects.requireNonNull(binding.passWordEditText.getText()).toString().trim();
 
         boolean isNameValid = DataValidation.isUsernameValid(username);
         boolean isEmailValid = DataValidation.isEmailValid(email);
@@ -130,11 +103,11 @@ public class RegisterActivity extends AppCompatActivity {
             sendRegisterRequest(username, email, password);
         } else {
             if (!isNameValid)
-                mUsernameInputLayout.setError(getString(R.string.invalid_username));
+                binding.usernameInputLayout.setError(getString(R.string.invalid_username));
             if (!isEmailValid)
-                mEmailInputLayout.setError(getString(R.string.invalid_Email));
+                binding.emailInputLayout.setError(getString(R.string.invalid_Email));
             if (!isPasswordValid)
-                mPassWordInputLayout.setError(getString(R.string.invalid_password));
+                binding.passWordInputLayout.setError(getString(R.string.invalid_password));
         }
     };
 }
