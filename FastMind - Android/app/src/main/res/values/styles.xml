@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -37,5 +36,4 @@
         <!--dialog background-->
         <item name="android:windowBackground">@color/black</item>
     </style>
-
 </resources>
