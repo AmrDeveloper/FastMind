@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activities.SettingsActivity">
+    android:background="@color/darkGrey">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".activities.SettingsActivity">
+
+        <ImageView
+            android:id="@+id/playerCurrentAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen200dp"
+            android:contentDescription="@string/player_avatar"
+            android:src="@drawable/ic_avatar1" />
+
+        <Button
+            android:id="@+id/changeAvatarButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dimen2dp"
+            android:padding="@dimen/dimen15dp"
+            android:text="@string/change_avatar"
+            android:textAllCaps="false"
+            tools:text="Change Avatar" />
+
+        <Button
+            android:id="@+id/changeUsernameButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dimen2dp"
+            android:padding="@dimen/dimen15dp"
+            android:text="@string/change_username"
+            android:textAllCaps="false"
+            tools:text="Change Username" />
+
+        <Button
+            android:id="@+id/changeEmailButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dimen2dp"
+            android:padding="@dimen/dimen15dp"
+            android:text="@string/change_email"
+            android:textAllCaps="false"
+            tools:text="Change Email" />
+
+        <Button
+            android:id="@+id/changePassButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dimen2dp"
+            android:padding="@dimen/dimen15dp"
+            android:text="@string/change_pass"
+            android:textAllCaps="false"
+            tools:text="Change Password" />
+
+        <Button
+            android:id="@+id/deleteAccountButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dimen2dp"
+            android:padding="@dimen/dimen15dp"
+            android:text="@string/delete_account"
+            android:textAllCaps="false"
+            tools:text="Delete Account" />
+    </LinearLayout>
+</ScrollView>

@@ -63,4 +63,11 @@
     <string name="waiting">Waiting....</string>
     <string name="player_avatar">Player Avatar</string>
     <string name="challenge_button">Challenge Button</string>
+
+    <!--Settings Actions-->
+    <string name="change_avatar">Change Avatar</string>
+    <string name="change_username">Change Username</string>
+    <string name="change_email">Change Email</string>
+    <string name="change_pass">Change Password</string>
+    <string name="delete_account">Delete Account</string>
 </resources>
