@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.objects.Avatar;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.objects.Question;
 import com.amrdeveloper.fastmind.preferences.PlayerChanger;
@@ -25,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initiateViews();
+        getCurrentPlayerInformation();
         updateUserInformation();
         continueVisibility();
         connectToServer();
@@ -68,14 +71,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUserInformation() {
-        getCurrentPlayerInformation();
-        //Update UI
-        mUsernameInfo.setText(player.getUsername());
-        mLevelInfo.setText("Level : " + player.getLevel());
-        mScoreInfo.setText("Score : " + player.getScore());
         //Update Values
         mCurrentLevel = player.getLevel();
         mCurrentScore = player.getScore();
+
+        String username = player.getUsername();
+        String level = String.format(Locale.getDefault(),"Level : %d",mCurrentLevel);
+        String score = String.format(Locale.getDefault(),"Score : %d",mCurrentScore);
+        int avatarId = Avatar.AVATARS[player.getAvatarID()];
+
+        //Update UI
+        mUsernameInfo.setText(username);
+
+        mLevelInfo.setText(level);
+        mScoreInfo.setText(score);
+        mUsernameInfo.setCompoundDrawablesWithIntrinsicBounds(avatarId, 0, 0, 0);
     }
 
     private void getCurrentPlayerInformation() {
@@ -123,6 +133,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void aboutActivity(View view) {
         Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+    }
+
+    public void settingsActivity(View view){
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
