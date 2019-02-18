@@ -17,15 +17,15 @@
             android:id="@+id/usernameInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableStart="@drawable/ic_avatar0"
+            android:drawableLeft="@drawable/ic_avatar0"
             android:fontFamily="monospace"
             android:gravity="center"
             android:padding="@dimen/dimen10dp"
-            android:drawableStart="@drawable/ic_avatar1"
-            android:drawableLeft="@drawable/ic_avatar1"
             android:textColor="@color/green"
-            android:layout_gravity="center"
             android:textSize="15sp"
-            tools:text= "AmrDeveloper" />
+            tools:text="AmrDeveloper" />
 
         <TextView
             android:id="@+id/levelInfo"
@@ -74,9 +74,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
+            android:onClick="challengeActivity"
             android:text="@string/challenge"
             android:textAllCaps="false"
-            android:onClick="challengeActivity"
             android:textColor="@color/darkPurple" />
 
         <Button
@@ -104,9 +104,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
+            android:onClick="settingsActivity"
             android:text="@string/settings"
             android:textAllCaps="false"
-            android:onClick="settingsActivity"
             android:textColor="@color/darkPurple" />
 
         <Button
