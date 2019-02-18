@@ -2,15 +2,14 @@ package com.amrdeveloper.fastmind.activities;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.databinding.DataBindingUtil;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.databinding.ActivityMainBinding;
 import com.amrdeveloper.fastmind.objects.Avatar;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.objects.Question;
@@ -35,12 +34,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mUsernameInfo;
-    private TextView mLevelInfo;
-    private TextView mScoreInfo;
-
-    private Button mContinueOption;
-
     private int mCurrentLevel;
     private int mCurrentScore;
 
@@ -49,13 +42,15 @@ public class MainActivity extends AppCompatActivity {
     private NetworkReceiver networkReceiver;
     private Gson gson = new Gson();
 
+    private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+
         networkReceiver = new NetworkReceiver(onConnectListener);
 
-        initiateViews();
         getCurrentPlayerInformation();
         updateUserInformation();
         continueVisibility();
@@ -72,13 +67,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         unregisterReceiver(networkReceiver);
-    }
-
-    private void initiateViews() {
-        mUsernameInfo = findViewById(R.id.usernameInfo);
-        mLevelInfo = findViewById(R.id.levelInfo);
-        mScoreInfo = findViewById(R.id.scoreInfo);
-        mContinueOption = findViewById(R.id.continueOption);
     }
 
     private void connectToServer() {
@@ -99,12 +87,10 @@ public class MainActivity extends AppCompatActivity {
         String score = String.format(Locale.getDefault(), "Score : %d", mCurrentScore);
         int avatarId = Avatar.AVATARS[player.getAvatarID()];
 
-        //Update UI
-        mUsernameInfo.setText(username);
-
-        mLevelInfo.setText(level);
-        mScoreInfo.setText(score);
-        mUsernameInfo.setCompoundDrawablesWithIntrinsicBounds(avatarId, 0, 0, 0);
+        binding.usernameInfo.setText(username);
+        binding.levelInfo.setText(level);
+        binding.scoreInfo.setText(score);
+        binding.usernameInfo.setCompoundDrawablesWithIntrinsicBounds(avatarId, 0, 0, 0);
     }
 
     private void getCurrentPlayerInformation() {
@@ -114,10 +100,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void continueVisibility() {
         if (mCurrentScore == 0 && mCurrentLevel < 2) {
-            mContinueOption.setVisibility(View.GONE);
+            binding.continueOption.setVisibility(View.GONE);
         } else {
-            mContinueOption.setVisibility(View.VISIBLE);
+            binding.continueOption.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void showOnlineOptions(){
+        binding.challengeOption.setVisibility(View.VISIBLE);
+        binding.feedOption.setVisibility(View.VISIBLE);
+        binding.rankOption.setVisibility(View.VISIBLE);
+        binding.settingsOption.setVisibility(View.VISIBLE);
+        binding.logoutOption.setVisibility(View.VISIBLE);
+    }
+
+    private void hideOnlineOptions(){
+        binding.challengeOption.setVisibility(View.GONE);
+        binding.feedOption.setVisibility(View.GONE);
+        binding.rankOption.setVisibility(View.GONE);
+        binding.settingsOption.setVisibility(View.GONE);
+        binding.logoutOption.setVisibility(View.GONE);
     }
 
     public void newSingleGame(View view) {
@@ -242,12 +244,12 @@ public class MainActivity extends AppCompatActivity {
     private OnConnectListener onConnectListener = new OnConnectListener() {
         @Override
         public void onConnected() {
-            Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT).show();
+            showOnlineOptions();
         }
 
         @Override
         public void onDisConnected() {
-            Toast.makeText(MainActivity.this, "Dis Connected", Toast.LENGTH_SHORT).show();
+            hideOnlineOptions();
         }
     };
 }

@@ -25,6 +25,9 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/dimen2dp"
             android:padding="@dimen/dimen15dp"
+            android:textColor="@color/darkPurple"
+            android:fontFamily="serif"
+            android:textStyle="italic"
             android:text="@string/change_avatar"
             android:textAllCaps="false"
             tools:text="Change Avatar" />
