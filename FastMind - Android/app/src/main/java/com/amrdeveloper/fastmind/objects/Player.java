@@ -59,7 +59,7 @@ public class Player {
         this.playing = playing;
         this.winNumber = winNum;
         this.winNumber = loseNum;
-        this.winNumber = avatarId;
+        this.avatarID = avatarId;
     }
 
     public String getUsername() {

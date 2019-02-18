@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 public class SynchronizeUtils {
 
     private Context mContext;
-    private  RequestQueue queue;
+    private RequestQueue queue;
     private static final Gson gson = new Gson();
 
     public SynchronizeUtils(Context context){
@@ -61,7 +61,6 @@ public class SynchronizeUtils {
                     if (response.length() == 0) {
                         Toast.makeText(mContext, "Invalid Update", Toast.LENGTH_SHORT).show();
                     }else {
-                        Gson gson = new Gson();
                         Player player = gson.fromJson(response,Player.class);
                         Session session = new Session(mContext);
                         session.playerSync(player);

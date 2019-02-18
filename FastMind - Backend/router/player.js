@@ -404,6 +404,27 @@ router.post("/api/player/update/pass", (req, res) => {
 })
 
 /**
+ * Request Type : POST
+ * Update Player Avatar Index on database
+ */
+router.post("/api/player/update/avatar",(req,res)=>{
+    let email = req.query.email
+    let avatarIndex = req.query.avatar
+
+    let sqlQuery = "UPDATE player SET avatarID = " + avatarIndex + " WHERE email = ?"
+    database.query(sqlQuery, email, (err, results, rows) => {
+        if (err) {
+            throw err
+        }
+        if (results.changedRows === 0) {
+            res.status(404).send("failure").end()
+        } else {
+            res.status(200).send("success").end()
+        }
+    })
+})
+
+/**
  * Request Type : DELETE
  * Description  : Delete one player on database based on email address
  */

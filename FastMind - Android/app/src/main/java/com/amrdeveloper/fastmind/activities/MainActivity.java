@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
     public void settingsActivity(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void logoutAction(View view) {

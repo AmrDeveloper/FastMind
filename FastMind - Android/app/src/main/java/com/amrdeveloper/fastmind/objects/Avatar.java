@@ -4,7 +4,7 @@ import com.amrdeveloper.fastmind.R;
 
 public class Avatar {
 
-    public static final int[] AVATARS = {
+    public static final Integer[] AVATARS = {
             R.drawable.ic_avatar0,
             R.drawable.ic_avatar1,
             R.drawable.ic_avatar2,

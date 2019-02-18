@@ -202,17 +202,16 @@ public class PlayerPreferences {
     }
 
     /**
-     * Update Local Player Avatar ID
-     *
-     * @param avatarId : Avatar Id
+     * Update Local Player Avatar Index
+     * @param avatarIndex : Avatar index in avatars array
      * @return true if edit is done without problems
      */
-    public boolean setPlayerAvatarID(int avatarId) {
+    public boolean setPlayerAvatarIndex(int avatarIndex) {
         SharedPreferences playerPreference = context.getSharedPreferences(
                 PLAYER_PREF_KEY
                 , Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = playerPreference.edit();
-        editor.putInt(AVATAR, avatarId);
+        editor.putInt(AVATAR, avatarIndex);
         return editor.commit();
     }
 

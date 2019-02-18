@@ -48,7 +48,7 @@
     <string name="already_a_member_login">Already a member? Login</string>
 
     <!--Server Information-->
-    <string name="LOCALHOST">http://192.168.1.7:</string>
+    <string name="LOCALHOST">http://192.168.1.10:</string>
     <string name="PORT">3000</string>
 
     <!--UI Default Value-->
