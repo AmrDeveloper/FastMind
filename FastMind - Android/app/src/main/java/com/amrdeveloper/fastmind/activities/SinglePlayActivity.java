@@ -1,16 +1,15 @@
 package com.amrdeveloper.fastmind.activities;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amrdeveloper.fastmind.databinding.ActivitySinglePlayBinding;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.objects.Question;
 import com.amrdeveloper.fastmind.R;
@@ -22,13 +21,6 @@ import java.util.List;
 
 public class SinglePlayActivity extends AppCompatActivity {
 
-    private TextView mPlayerLevel;
-    private TextView mPlayerScore;
-    private TextView mQuestionBody;
-    private TextView mGameTimerCounter;
-    private RadioGroup mGameAnswersGroup;
-    private Button mGameSubmitButton;
-
     private int mCurrentTimerValue;
     private int mQuestionTrueAnswer;
     private int mPlayerCurrentLevel;
@@ -38,37 +30,22 @@ public class SinglePlayActivity extends AppCompatActivity {
     private Handler handler;
     private Runnable runnable;
     private Question mQuestion;
+    private ActivitySinglePlayBinding binding;
 
     private final static int GAME_TIME = 10;
     private final static String QUESTION = "question";
     private final static String TIMER = "timer";
-    private final static String DEBUGGING = SinglePlayActivity.class.getClass().getSimpleName();
+    private final static String DEBUGGING = SinglePlayActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_play);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_single_play);
 
-        initiateViews();
         updatePlayerInformation();
         keepScreenOn();
         onGameActivityStart(savedInstanceState);
-    }
-
-    /**
-     * Initializing All Views in This Activity
-     */
-    private void initiateViews() {
-        mPlayerLevel = findViewById(R.id.levelInfo);
-        mPlayerScore = findViewById(R.id.scoreInfo);
-
-        mQuestionBody = findViewById(R.id.questionBody);
-        mGameTimerCounter = findViewById(R.id.gameTimer);
-
-        mGameAnswersGroup = findViewById(R.id.answersGroup);
-        mGameSubmitButton = findViewById(R.id.gameSubmit);
-
-        mGameSubmitButton.setOnClickListener(v -> onGameCheckResult());
+        binding.gameSubmit.setOnClickListener(v -> onGameCheckResult());
     }
 
     /**
@@ -86,15 +63,15 @@ public class SinglePlayActivity extends AppCompatActivity {
         getCurrentPlayer();
         mPlayerCurrentLevel = mPlayer.getLevel();
         mPlayerCurrentScore = mPlayer.getScore();
-        mPlayerLevel.setText("Level : " + mPlayerCurrentLevel);
-        mPlayerScore.setText("Score : " + mPlayerCurrentScore);
+        binding.levelInfo.setText("Level : " + mPlayerCurrentLevel);
+        binding.scoreInfo.setText("Score : " + mPlayerCurrentScore);
     }
 
     /**
      * Keep Current Activity Active
      */
     private void keepScreenOn() {
-        mGameTimerCounter.setKeepScreenOn(true);
+        binding.gameTimer.setKeepScreenOn(true);
     }
 
     /**
@@ -102,7 +79,7 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     private void updateQuestionUI() {
         //Update Question
-        mQuestionBody.setText(mQuestion.getQuestionBody());
+        binding.questionBody.setText(mQuestion.getQuestionBody());
 
         //Update True Answers
         mQuestionTrueAnswer = mQuestion.getTrueResult();
@@ -111,8 +88,9 @@ public class SinglePlayActivity extends AppCompatActivity {
         List<String> answers = mQuestion.getQuestionAnswers();
 
         //Update UI Radio Buttons
-        for (int i = 0; i < mGameAnswersGroup.getChildCount(); i++) {
-            View item = mGameAnswersGroup.getChildAt(i);
+        //for (int i = 0; i <  binding.answersGroup.getChildCount(); i++) {
+        for (int i = 0; i < 4 ; i++) {
+            View item =  binding.answersGroup.getChildAt(i);
             if (item instanceof RadioButton) {
                 RadioButton answersRadioButton = (RadioButton) item;
                 answersRadioButton.setText(answers.get(i));
@@ -159,8 +137,8 @@ public class SinglePlayActivity extends AppCompatActivity {
      */
     private void onGameCreate() {
         onGameDefaultStyle();
-        mGameAnswersGroup.clearCheck();
-        mGameSubmitButton.setClickable(true);
+        binding.answersGroup.clearCheck();
+        binding.gameSubmit.setClickable(true);
         mCurrentTimerValue = GAME_TIME;
         updatePlayerInformation();
         onGameStopTimer();
@@ -181,7 +159,7 @@ public class SinglePlayActivity extends AppCompatActivity {
                 try {
                     if (mCurrentTimerValue > -1) {
                         final String newTile = "Timer : " + mCurrentTimerValue-- + "s";
-                        mGameTimerCounter.setText(newTile);
+                        binding.gameTimer.setText(newTile);
                     } else {
                         onStop();
                         onGameStopTimer();
@@ -210,9 +188,9 @@ public class SinglePlayActivity extends AppCompatActivity {
      * Then get Checked RadioButton and check if this answer match question true answer
      */
     private void onGameCheckResult() {
-        int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
+        int checkedId = binding.answersGroup.getCheckedRadioButtonId();
         if (checkedId != -1) {
-            mGameSubmitButton.setClickable(false);
+            binding.gameSubmit.setClickable(false);
             onGameStopTimer();
             RadioButton checkedRadioButton = findViewById(checkedId);
             String result = checkedRadioButton.getText().toString();
@@ -237,7 +215,7 @@ public class SinglePlayActivity extends AppCompatActivity {
         final int black = getResources().getColor(R.color.black);
         final int gray = getResources().getColor(R.color.gray);
 
-        int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
+        int checkedId = binding.answersGroup.getCheckedRadioButtonId();
         if (checkedId != -1) {
             RadioButton checkedRadioButton = findViewById(checkedId);
             checkedRadioButton.setBackgroundColor(black);
@@ -287,7 +265,7 @@ public class SinglePlayActivity extends AppCompatActivity {
      * Method run when player lose this game
      */
     private void onGameLoseState() {
-        mGameSubmitButton.setClickable(false);
+        binding.gameSubmit.setClickable(false);
         onGameLostDialog();
     }
 

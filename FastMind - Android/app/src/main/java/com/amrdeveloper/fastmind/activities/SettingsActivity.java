@@ -23,7 +23,6 @@ import java.util.Arrays;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Player player;
     private PlayerPreferences preferences;
     private ActivitySettingsBinding binding;
 
@@ -32,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
         preferences = new PlayerPreferences(this);
-        player = preferences.queryPlayerInformation();
+        Player player = preferences.queryPlayerInformation();
 
         binding.playerCurrentAvatar.setImageResource(Avatar.AVATARS[player.getAvatarID()]);
         binding.changeAvatarButton.setOnClickListener(v -> changePlayerAvatar());
@@ -56,9 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
             //Update Local Player Avatar Id
             preferences.setPlayerAvatarIndex(avatarPosition);
 
-            //Sync Local Information with Server Database Information
-            //SynchronizeUtils syncUtils = new SynchronizeUtils(this);
-            //syncUtils.syncToServer(preferences.queryPlayerInformation());
+            //TODO: Update Player Avatar In Server Database
 
             //Finish Dialog
             dialog.dismiss();

@@ -61,7 +61,7 @@ public class MultiPlayActivity extends AppCompatActivity {
     private static final int GAME_TIME = 10;
     private static final String QUESTION = "question";
     private static final String TIMER = "timer";
-    private static final String DEBUGGING = SinglePlayActivity.class.getClass().getSimpleName();
+    private static final String DEBUGGING = SinglePlayActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
