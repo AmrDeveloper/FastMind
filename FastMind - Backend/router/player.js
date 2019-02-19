@@ -381,15 +381,16 @@ router.post("/api/player/sync", (req, res) => {
     })
 })
 
+
 /**
  * Request Type : POST
- * Update Player Password on database
+ * Update Player avatar id on database
  */
-router.post("/api/player/update/pass", (req, res) => {
+router.post("/api/player/update/avatar", (req, res) => {
     let email = req.query.email
-    let password = req.query.password
+    let avatar = req.query.avatar
 
-    let sqlQuery = "UPDATE player SET password = " + password + " WHERE email = ?"
+    let sqlQuery = "UPDATE player SET avatarID = " + avatar + " WHERE email = ?"
 
     database.query(sqlQuery, email, (err, results, rows) => {
         if (err) {
@@ -402,6 +403,82 @@ router.post("/api/player/update/pass", (req, res) => {
         }
     })
 })
+/**
+ * Request Type : POST
+ * Update Player username on database
+ */
+router.post("/api/player/update/username", (req, res) => {
+    let email = req.query.email
+    let username = req.query.username
+
+    let sqlQuery = "UPDATE player SET username = ? WHERE email = ?"
+
+    let info = [
+        username,email   
+    ]
+
+    database.query(sqlQuery, info, (err, results, rows) => {
+        if (err) {
+            throw err
+        }
+        if (results.changedRows === 0) {
+            res.status(404).send("failure").end()
+        } else {
+            res.status(200).send("success").end()
+        }
+    })
+})
+/**
+ * Request Type : POST
+ * Update Player Password on database
+ */
+router.post("/api/player/update/email", (req, res) => {
+    let email = req.query.email
+    let nemail = req.query.nemail
+
+    let sqlQuery = "UPDATE player SET email = ? WHERE email = ?"
+
+    let info = [
+        nemail,email   
+    ]
+
+    database.query(sqlQuery, info, (err, results, rows) => {
+        if (err) {
+            throw err
+        }
+        if (results.changedRows === 0) {
+            res.status(404).send("failure").end()
+        } else {
+            res.status(200).send("success").end()
+        }
+    })
+})
+/**
+ * Request Type : POST
+ * Update Player Password on database
+ */
+router.post("/api/player/update/pass", (req, res) => {
+    let email = req.query.email
+    let password = req.query.password
+
+    let sqlQuery = "UPDATE player SET password = ? WHERE email = ?"
+
+    let info = [
+        password,email   
+    ]
+
+    database.query(sqlQuery, info, (err, results, rows) => {
+        if (err) {
+            throw err
+        }
+        if (results.changedRows === 0) {
+            res.status(404).send("failure").end()
+        } else {
+            res.status(200).send("success").end()
+        }
+    })
+})
+
 
 /**
  * Request Type : POST
