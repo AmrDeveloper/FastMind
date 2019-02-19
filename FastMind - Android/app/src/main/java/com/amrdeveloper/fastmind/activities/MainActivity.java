@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         networkReceiver = new NetworkReceiver(onConnectListener);
 
@@ -67,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         unregisterReceiver(networkReceiver);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getCurrentPlayerInformation();
+        updateUserInformation();
     }
 
     private void connectToServer() {
@@ -106,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void showOnlineOptions(){
+    private void showOnlineOptions() {
         binding.challengeOption.setVisibility(View.VISIBLE);
         binding.feedOption.setVisibility(View.VISIBLE);
         binding.rankOption.setVisibility(View.VISIBLE);
@@ -114,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         binding.logoutOption.setVisibility(View.VISIBLE);
     }
 
-    private void hideOnlineOptions(){
+    private void hideOnlineOptions() {
         binding.challengeOption.setVisibility(View.GONE);
         binding.feedOption.setVisibility(View.GONE);
         binding.rankOption.setVisibility(View.GONE);
@@ -160,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
     public void settingsActivity(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void logoutAction(View view) {
