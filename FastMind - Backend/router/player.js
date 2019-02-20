@@ -381,7 +381,6 @@ router.post("/api/player/sync", (req, res) => {
     })
 })
 
-
 /**
  * Request Type : POST
  * Update Player avatar id on database
@@ -428,6 +427,7 @@ router.post("/api/player/update/username", (req, res) => {
         }
     })
 })
+
 /**
  * Request Type : POST
  * Update Player Password on database
@@ -453,6 +453,7 @@ router.post("/api/player/update/email", (req, res) => {
         }
     })
 })
+
 /**
  * Request Type : POST
  * Update Player Password on database
@@ -478,7 +479,6 @@ router.post("/api/player/update/pass", (req, res) => {
         }
     })
 })
-
 
 /**
  * Request Type : POST

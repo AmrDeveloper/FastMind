@@ -17,21 +17,27 @@ import com.amrdeveloper.fastmind.databinding.ActivitySettingsBinding;
 import com.amrdeveloper.fastmind.objects.Avatar;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
+import com.amrdeveloper.fastmind.utils.PlayerUpdateUtils;
 import com.amrdeveloper.fastmind.utils.SynchronizeUtils;
 
 import java.util.Arrays;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    private Player player;
     private PlayerPreferences preferences;
     private ActivitySettingsBinding binding;
+    private PlayerUpdateUtils updateUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
+
+        updateUtils = new PlayerUpdateUtils(this);
         preferences = new PlayerPreferences(this);
-        Player player = preferences.queryPlayerInformation();
+
+        player = preferences.queryPlayerInformation();
 
         binding.playerCurrentAvatar.setImageResource(Avatar.AVATARS[player.getAvatarID()]);
         binding.changeAvatarButton.setOnClickListener(v -> changePlayerAvatar());
@@ -55,7 +61,8 @@ public class SettingsActivity extends AppCompatActivity {
             //Update Local Player Avatar Id
             preferences.setPlayerAvatarIndex(avatarPosition);
 
-            //TODO: Update Player Avatar In Server Database
+            //Update Server Player Avatar Id
+            updateUtils.updateAvatar(player.getEmail(),avatarPosition);
 
             //Finish Dialog
             dialog.dismiss();

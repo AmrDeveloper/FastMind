@@ -1,33 +1,189 @@
 package com.amrdeveloper.fastmind.utils;
 
 import android.content.Context;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+
+import com.amrdeveloper.fastmind.R;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PlayerUpdateUtils {
 
     private Context context;
+    private RequestQueue queue;
 
-    public PlayerUpdateUtils(Context context){
+    public PlayerUpdateUtils(Context context) {
         this.context = context;
+        queue = Volley.newRequestQueue(context);
     }
 
-    public void updateAvatar(String email){
+    public boolean updateAvatar(String email, int avatarId) {
+        AtomicBoolean isUpdateDone = new AtomicBoolean(true);
+        String requestUrl = generateUpdateAvatarUrl(email, avatarId);
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                requestUrl,
+                response -> {
+                    if (response.contains("success")) {
+                        isUpdateDone.set(true);
+                    } else {
+                        isUpdateDone.set(false);
+                    }
+                },
+                error -> {
+                    isUpdateDone.set(false);
+                }
+        );
+        queue.add(request);
+        return isUpdateDone.get();
+    }
+
+    public boolean updateUsername(String email, String username) {
+        AtomicBoolean isUpdateDone = new AtomicBoolean(true);
+        String requestUrl = generateUpdateUsernameUrl(email, username);
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                requestUrl,
+                response -> {
+                    if (response.contains("success")) {
+                        isUpdateDone.set(true);
+                    } else {
+                        isUpdateDone.set(false);
+                    }
+                },
+                error -> {
+                    isUpdateDone.set(false);
+                }
+        );
+        queue.add(request);
+        return isUpdateDone.get();
 
     }
 
-    public void updateUsername(String email,String username){
-
+    public boolean updateEmail(String username, String email) {
+        AtomicBoolean isUpdateDone = new AtomicBoolean(true);
+        String requestUrl = generateUpdateEmailUrl(username, email);
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                requestUrl,
+                response -> {
+                    if (response.contains("success")) {
+                        isUpdateDone.set(true);
+                    } else {
+                        isUpdateDone.set(false);
+                    }
+                },
+                error -> {
+                    isUpdateDone.set(false);
+                }
+        );
+        queue.add(request);
+        return isUpdateDone.get();
     }
 
-    public void updateEmail(String username,String email){
-
+    public boolean updatePassword(String email, String pass) {
+        AtomicBoolean isUpdateDone = new AtomicBoolean(true);
+        String requestUrl = generateUpdatePassUrl(email, pass);
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                requestUrl,
+                response -> {
+                    if (response.contains("success")) {
+                        isUpdateDone.set(true);
+                    } else {
+                        isUpdateDone.set(false);
+                    }
+                },
+                error -> {
+                    isUpdateDone.set(false);
+                }
+        );
+        queue.add(request);
+        return isUpdateDone.get();
     }
 
-    //TODO : /api/player/update/pass
-    public void updatePassword(String email,String pass){
-
+    public boolean deleteAccount(String email) {
+        AtomicBoolean isUpdateDone = new AtomicBoolean(true);
+        String requestUrl = generateDeleteAccUrl(email);
+        StringRequest request = new StringRequest(
+                Request.Method.DELETE,
+                requestUrl,
+                response -> {
+                    if (response.contains("success")) {
+                        isUpdateDone.set(true);
+                    } else {
+                        isUpdateDone.set(false);
+                    }
+                },
+                error -> {
+                    isUpdateDone.set(false);
+                }
+        );
+        queue.add(request);
+        return isUpdateDone.get();
     }
 
-    public void deleteAccount(String email){
+    //Router : /api/player/update/avatar
+    @NonNull
+    private String generateUpdateAvatarUrl(String email, int avatarId) {
+        String router = "/api/player/update/avatar";
+        String requestUrl = context.getString(R.string.LOCALHOST) + context.getString(R.string.PORT) + router;
+        Uri baseUri = Uri.parse(requestUrl);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("email", email);
+        uriBuilder.appendQueryParameter("avatar", String.valueOf(avatarId));
+        return uriBuilder.toString();
+    }
 
+    //Router : /api/player/update/username
+    @NonNull
+    private String generateUpdateUsernameUrl(String email, String username) {
+        String router = "/api/player/update/username";
+        String requestUrl = context.getString(R.string.LOCALHOST) + context.getString(R.string.PORT) + router;
+        Uri baseUri = Uri.parse(requestUrl);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("email", email);
+        uriBuilder.appendQueryParameter("username", username);
+        return uriBuilder.toString();
+    }
+
+    //Router : /api/player/update/email
+    @NonNull
+    private String generateUpdateEmailUrl(String username, String email) {
+        String router = "/api/player/update/email";
+        String requestUrl = context.getString(R.string.LOCALHOST) + context.getString(R.string.PORT) + router;
+        Uri baseUri = Uri.parse(requestUrl);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("email", email);
+        uriBuilder.appendQueryParameter("username", username);
+        return uriBuilder.toString();
+    }
+
+    //Router : /api/player/update/pass
+    @NonNull
+    private String generateUpdatePassUrl(String email, String pass) {
+        String router = "/api/player/update/pass";
+        String requestUrl = context.getString(R.string.LOCALHOST) + context.getString(R.string.PORT) + router;
+        Uri baseUri = Uri.parse(requestUrl);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("email", email);
+        uriBuilder.appendQueryParameter("password", pass);
+        return uriBuilder.toString();
+    }
+
+    //Router : /api/player/delete
+    @NonNull
+    private String generateDeleteAccUrl(String email) {
+        String router = "/api/player/delete";
+        String requestUrl = context.getString(R.string.LOCALHOST) + context.getString(R.string.PORT) + router;
+        Uri baseUri = Uri.parse(requestUrl);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("email", email);
+        return uriBuilder.toString();
     }
 }
