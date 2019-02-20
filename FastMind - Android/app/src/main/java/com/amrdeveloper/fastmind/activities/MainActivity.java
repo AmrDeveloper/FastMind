@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Player player;
     private Socket mGameSocket;
-    private NetworkReceiver networkReceiver;
     private Gson gson = new Gson();
+    private NetworkReceiver networkReceiver;
 
     private ActivityMainBinding binding;
 

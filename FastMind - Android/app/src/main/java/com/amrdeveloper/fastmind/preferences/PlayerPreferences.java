@@ -216,6 +216,45 @@ public class PlayerPreferences {
     }
 
     /**
+     * @param username : new Player Email
+     * @return : return true if update is done
+     */
+    public boolean setPlayerUsername(String username){
+        SharedPreferences playerPreference = context.getSharedPreferences(
+                PLAYER_PREF_KEY
+                , Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = playerPreference.edit();
+        editor.putString(USERNAME, username);
+        return editor.commit();
+    }
+
+    /**
+     * @param email : new Player Email
+     * @return : return true if update is done
+     */
+    public boolean setPlayerEmail(String email){
+        SharedPreferences playerPreference = context.getSharedPreferences(
+                PLAYER_PREF_KEY
+                , Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = playerPreference.edit();
+        editor.putString(EMAIL, email);
+        return editor.commit();
+    }
+
+    /**
+     * @param password : New Player Password
+     * @return : return true if update is done
+     */
+    public boolean setPlayerPassword(String password){
+        SharedPreferences playerPreference = context.getSharedPreferences(
+                PLAYER_PREF_KEY
+                , Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = playerPreference.edit();
+        editor.putString(PASSWORD, password);
+        return editor.commit();
+    }
+
+    /**
      * This method will help when implements : Logout Option
      * Delete this user Share Preference
      *
