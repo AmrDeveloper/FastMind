@@ -510,7 +510,7 @@ router.delete("/api/player/delete", (req, res) => {
 
     let sqlQuery = "DELETE FROM player WHERE email = ?"
 
-    database.query(sqlQuery, email, (err, res, rows) => {
+    database.query(sqlQuery, email, (err, results, rows) => {
         if (err) { throw err }
         if (results.changedRows === 0) {
             res.status(404).send("failure").end()
