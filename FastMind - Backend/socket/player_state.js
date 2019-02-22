@@ -12,7 +12,6 @@ const database = require("../database/config.js")
 function makeStateOnLine(username){
     var user = [username]
     var updateQuery = "UPDATE player SET online = 1 WHERE username = ?"
-    var user = [username]
     database.query(updateQuery,user, (err, results, rows) => {
         if (err) {
             throw err
@@ -27,7 +26,6 @@ function makeStateOnLine(username){
 function makeStateOffLine(username){
     var user = [username]
     var updateQuery = "UPDATE player SET online = 0 WHERE username = ?"
-    var user = [username]
     database.query(updateQuery,user, (err, results, rows) => {
         if (err) {
             throw err
