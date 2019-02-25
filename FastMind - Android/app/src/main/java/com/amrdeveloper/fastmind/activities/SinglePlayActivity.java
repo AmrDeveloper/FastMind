@@ -32,6 +32,7 @@ public class SinglePlayActivity extends AppCompatActivity {
     private Question mQuestion;
     private ActivitySinglePlayBinding binding;
 
+    private boolean isGameEnd;
     private final static int GAME_TIME = 10;
     private final static String QUESTION = "question";
     private final static String TIMER = "timer";
@@ -136,6 +137,7 @@ public class SinglePlayActivity extends AppCompatActivity {
      * Generate new Question and update UI
      */
     private void onGameCreate() {
+        isGameEnd = false;
         onGameDefaultStyle();
         binding.answersGroup.clearCheck();
         binding.gameSubmit.setClickable(true);
@@ -163,7 +165,7 @@ public class SinglePlayActivity extends AppCompatActivity {
                     } else {
                         onStop();
                         onGameStopTimer();
-                        onGameLoseState();
+                        if(!isGameEnd) onGameLoseState();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -191,6 +193,7 @@ public class SinglePlayActivity extends AppCompatActivity {
         int checkedId = binding.answersGroup.getCheckedRadioButtonId();
         if (checkedId != -1) {
             binding.gameSubmit.setClickable(false);
+            isGameEnd = true;
             onGameStopTimer();
             RadioButton checkedRadioButton = findViewById(checkedId);
             String result = checkedRadioButton.getText().toString();
