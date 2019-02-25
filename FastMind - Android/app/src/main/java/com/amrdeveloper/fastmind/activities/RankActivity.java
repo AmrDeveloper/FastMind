@@ -1,5 +1,6 @@
 package com.amrdeveloper.fastmind.activities;
 
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.SearchView;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.adapter.RankRecyclerAdapter;
+import com.amrdeveloper.fastmind.databinding.ActivityRankBinding;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,37 +32,27 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class RankActivity extends AppCompatActivity {
-
-    private ProgressBar mRankIndicator;
-    private RecyclerView mRankRecyclerView;
-    private RankRecyclerAdapter mRankRecyclerAdapter;
-
+    
     private final Gson gson = new Gson();
+
+    private ActivityRankBinding binding;
+    private RankRecyclerAdapter mRankRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rank);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_rank);
 
-        initializeViews();
-        loadingRankedPlayer();
-    }
-
-    /**
-     * Initialize All UI Views
-     */
-    private void initializeViews(){
-        mRankIndicator = findViewById(R.id.rankProgressBar);
-        mRankRecyclerView = findViewById(R.id.rankRecyclerView);
         recyclerDefaultSettings();
+        loadingRankedPlayer();
     }
 
     private void recyclerDefaultSettings() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mRankRecyclerView.setLayoutManager(layoutManager);
-        mRankRecyclerView.setHasFixedSize(true);
         mRankRecyclerAdapter = new RankRecyclerAdapter();
-        mRankRecyclerView.setAdapter(mRankRecyclerAdapter);
+        binding.rankRecyclerView.setLayoutManager(layoutManager);
+        binding.rankRecyclerView.setHasFixedSize(true);
+        binding.rankRecyclerView.setAdapter(mRankRecyclerAdapter);
     }
 
     @Override
@@ -92,13 +84,13 @@ public class RankActivity extends AppCompatActivity {
                         List<Player> playerList = gson.fromJson(playersArray.toString(), listType);
 
                         mRankRecyclerAdapter.updateRecyclerData(playerList);
-                        mRankIndicator.setVisibility(View.GONE);
+                        binding.rankProgressBar.setVisibility(View.GONE);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 },
                 error -> {
-                    mRankIndicator.setVisibility(View.GONE);
+                    binding.rankProgressBar.setVisibility(View.GONE);
                 }
         );
         queue.add(jsonRequest);
