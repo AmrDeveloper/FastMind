@@ -4,16 +4,15 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.adapter.ChallengeRecyclerAdapter;
+import com.amrdeveloper.fastmind.databinding.ActivityChallengeBinding;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,26 +30,18 @@ import java.util.List;
 
 public class ChallengeActivity extends AppCompatActivity {
 
-    private ProgressBar mChallengeProgress;
-    private RecyclerView mChallengeRecycler;
-    private ChallengeRecyclerAdapter mChallengeRecyclerAdapter;
-
     private final Gson gson = new Gson();
+
+    private ActivityChallengeBinding binding;
+    private ChallengeRecyclerAdapter mChallengeRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge);
 
-        initiateViews();
-        loadPlayerList();
-    }
-
-    private void initiateViews() {
-        mChallengeProgress = findViewById(R.id.challengeProgress);
-
-        mChallengeRecycler = findViewById(R.id.challengeRecycler);
         recyclerDefaultSettings();
+        loadPlayerList();
     }
 
     private void loadPlayerList() {
@@ -60,10 +51,11 @@ public class ChallengeActivity extends AppCompatActivity {
 
     private void recyclerDefaultSettings() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mChallengeRecycler.setLayoutManager(layoutManager);
-        mChallengeRecycler.setHasFixedSize(true);
         mChallengeRecyclerAdapter = new ChallengeRecyclerAdapter(this);
-        mChallengeRecycler.setAdapter(mChallengeRecyclerAdapter);
+
+        binding.challengeRecycler.setLayoutManager(layoutManager);
+        binding.challengeRecycler.setHasFixedSize(true);
+        binding.challengeRecycler.setAdapter(mChallengeRecyclerAdapter);
     }
 
     private String generateUrlRequest() {
@@ -75,7 +67,7 @@ public class ChallengeActivity extends AppCompatActivity {
     }
 
     private void getAllPlayerForChallenge(String requestUrl) {
-        mChallengeProgress.setVisibility(View.VISIBLE);
+        binding.challengeProgress.setVisibility(View.VISIBLE);
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -90,7 +82,7 @@ public class ChallengeActivity extends AppCompatActivity {
                         List<Player> playerList = gson.fromJson(playersArray.toString(), listType);
 
                         mChallengeRecyclerAdapter.updateRecyclerData(playerList);
-                        mChallengeProgress.setVisibility(View.GONE);
+                        binding.challengeProgress.setVisibility(View.GONE);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
