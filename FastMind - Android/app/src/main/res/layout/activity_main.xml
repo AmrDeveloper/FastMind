@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <ScrollView xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,7 +23,7 @@
                 android:gravity="center"
                 android:padding="@dimen/dimen10dp"
                 android:textColor="@color/green"
-                android:textSize="15sp"
+                android:textSize="@dimen/dimen15sp"
                 tools:text="AmrDeveloper" />
 
             <TextView
@@ -49,83 +50,51 @@
 
             <Button
                 android:id="@+id/continueOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
+                style="@style/ActionButtonStyle"
                 android:onClick="continueSingleGame"
-                android:text="@string/continues"
-                android:textAllCaps="false"
-                android:textColor="@color/darkPurple" />
+                android:text="@string/continues" />
 
             <Button
                 android:id="@+id/startOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
+                style="@style/ActionButtonStyle"
                 android:onClick="newSingleGame"
-                android:text="@string/start_new_game"
-                android:textAllCaps="false"
-                android:textColor="@color/darkPurple" />
+                android:text="@string/start_new_game" />
 
             <Button
                 android:id="@+id/challengeOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
+                style="@style/ActionButtonStyle"
                 android:onClick="challengeActivity"
-                android:text="@string/challenge"
-                android:textAllCaps="false"
-                android:textColor="@color/darkPurple" />
+                android:text="@string/challenge" />
 
             <Button
                 android:id="@+id/feedOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
+                style="@style/ActionButtonStyle"
                 android:onClick="feedActivity"
-                android:text="@string/feed"
-                android:textAllCaps="false"
-                android:textColor="@color/darkPurple" />
+                android:text="@string/feed" />
 
             <Button
                 android:id="@+id/rankOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
+                style="@style/ActionButtonStyle"
                 android:onClick="rankActivity"
-                android:text="@string/rank"
-                android:textAllCaps="false"
-                android:textColor="@color/darkPurple" />
+                android:text="@string/rank" />
 
             <Button
                 android:id="@+id/settingsOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
+                style="@style/ActionButtonStyle"
                 android:onClick="settingsActivity"
-                android:text="@string/settings"
-                android:textAllCaps="false"
-                android:textColor="@color/darkPurple" />
+                android:text="@string/settings" />
 
             <Button
                 android:id="@+id/aboutOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
+                style="@style/ActionButtonStyle"
                 android:onClick="aboutActivity"
-                android:text="@string/about"
-                android:textAllCaps="false"
-                android:textColor="@color/darkPurple" />
+                android:text="@string/about" />
 
             <Button
                 android:id="@+id/logoutOption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
+                style="@style/ActionButtonStyle"
                 android:onClick="logoutAction"
-                android:text="@string/logout"
-                android:textAllCaps="false"
-                android:textColor="@color/darkPurple" />
+                android:text="@string/logout" />
         </LinearLayout>
     </ScrollView>
 </layout>

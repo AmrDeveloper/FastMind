@@ -27,6 +27,19 @@
         <item name="android:fontFamily">monospace</item>
     </style>
 
+    <!--Style Theme for every Action Button on Settings and Main Activity-->
+    <style name="ActionButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">serif</item>
+        <item name="android:padding">@dimen/dimen15dp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_margin">@dimen/dimen2dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/darkPurple</item>
+    </style>
+
     <!--Style Theme for Win and lose Alert Dialog-->
     <style name="StateDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <!--buttons color-->
