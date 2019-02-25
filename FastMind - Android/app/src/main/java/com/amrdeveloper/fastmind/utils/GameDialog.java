@@ -91,7 +91,7 @@ public class GameDialog {
         TextView scorePoints = dialog.findViewById(R.id.scorePoints);
         ImageButton acceptAction = dialog.findViewById(R.id.checkedAction);
 
-        scorePoints.setText("-".concat(String.valueOf(score)));
+        scorePoints.setText(String.valueOf(score));
         acceptAction.setOnClickListener(v -> {
             dialog.dismiss();
             checked.apply();
