@@ -4,8 +4,8 @@ const socketIO = require('socket.io')(server)
 const game = require("./socket/game_socket")
 
 //Get Routers
-const playerRouter = require("./router/player.js")
-const feedRouter = require("./router/feed.js")
+const playerRouter = require("./api/routes/player.js")
+const feedRouter = require("./api/routes/feed.js")
 
 //Use Routers
 app.use(playerRouter)
