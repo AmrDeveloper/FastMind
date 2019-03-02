@@ -47,7 +47,7 @@ public class RankActivity extends AppCompatActivity {
 
     private void recyclerDefaultSettings() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mRankRecyclerAdapter = new RankRecyclerAdapter();
+        mRankRecyclerAdapter = new RankRecyclerAdapter(this);
         binding.rankRecyclerView.setLayoutManager(layoutManager);
         binding.rankRecyclerView.setHasFixedSize(true);
         binding.rankRecyclerView.setAdapter(mRankRecyclerAdapter);

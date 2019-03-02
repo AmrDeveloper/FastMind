@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/darkGrey">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context=".activities.ProfileActivity">
+
+            <ImageView
+                android:id="@+id/playerAvatarImg"
+                android:layout_width="@dimen/dimen200dp"
+                android:layout_height="@dimen/dimen200dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/player_avatar"
+                android:src="@drawable/ic_avatar1" />
+
+            <TextView
+                android:id="@+id/playerUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="@dimen/dimen5dp"
+                android:textColor="@color/green"
+                android:textStyle="bold|italic"
+                android:fontFamily="serif"
+                android:textSize="@dimen/dimen20sp"
+                tools:text="AmrDeveloper" />
+
+            <TextView
+                android:id="@+id/playerScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="@dimen/dimen5dp"
+                android:textColor="@color/purple"
+                tools:text="Score : 100" />
+
+            <TextView
+                android:id="@+id/playerLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="@dimen/dimen5dp"
+                android:textColor="@color/purple"
+                tools:text="Level : 20" />
+
+            <TextView
+                android:id="@+id/playerWinTimes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="@dimen/dimen5dp"
+                android:textColor="@color/purple"
+                tools:text="Win : 10" />
+
+            <TextView
+                android:id="@+id/playerLoseTimes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="@dimen/dimen5dp"
+                android:textColor="@color/purple"
+                tools:text="Lose : 5" />
+
+            <ImageButton
+                android:id="@+id/challengeImgButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/dimen15dp"
+                android:layout_margin="@dimen/dimen5dp"
+                android:background="@color/gray"
+                android:contentDescription="@string/challenge_button"
+                android:src="@drawable/ic_swords" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

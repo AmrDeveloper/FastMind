@@ -1,6 +1,7 @@
 package com.amrdeveloper.fastmind.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,15 +13,18 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amrdeveloper.fastmind.activities.ProfileActivity;
 import com.amrdeveloper.fastmind.objects.Avatar;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.socket.Game;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapter.RankViewHolder> implements Filterable {
 
+    private Context mContext;
     private List<Player> rankedPlayerList;
     private List<Player> rankPlayerFiltered;
 
@@ -28,12 +32,14 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
     private static final String SCORE_FORMAT = "Score : %d";
     private static final String STATE_FORMAT = "State : %s";
 
-    public RankRecyclerAdapter() {
+    public RankRecyclerAdapter(Context context) {
+        mContext = context;
         this.rankedPlayerList = new ArrayList<>();
         this.rankPlayerFiltered = new ArrayList<>();
     }
 
-    public RankRecyclerAdapter(List<Player> rankedPlayerList) {
+    public RankRecyclerAdapter(Context context,List<Player> rankedPlayerList) {
+        mContext = context;
         this.rankedPlayerList = rankedPlayerList;
         this.rankPlayerFiltered = rankedPlayerList;
     }
@@ -128,6 +134,7 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
             int avatarIndex = player.getAvatarID();
 
             mRankUserName.setText(username);
+            mRankUserName.setTag(player.getUsername());
             mRankUserScore.setText(score);
             mRankStateTxt.setText(state);
 
@@ -144,8 +151,10 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
         }
 
         private final View.OnClickListener onClickListener = view -> {
-            //TODO : Open Profile Activity for this username
-            final String username = mRankUserName.getText().toString();
+            final String username = mRankUserName.getTag().toString();
+            Intent intent = new Intent(mContext, ProfileActivity.class);
+            intent.putExtra(Game.USERNAME,username);
+            mContext.startActivity(intent);
         };
     }
 }

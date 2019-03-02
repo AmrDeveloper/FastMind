@@ -1,6 +1,7 @@
 package com.amrdeveloper.fastmind.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,10 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.activities.ProfileActivity;
 import com.amrdeveloper.fastmind.objects.Avatar;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
 import com.amrdeveloper.fastmind.socket.Challenge;
+import com.amrdeveloper.fastmind.socket.Game;
 import com.amrdeveloper.fastmind.socket.GameSocket;
 import com.github.nkzawa.socketio.client.Socket;
 
@@ -162,8 +165,10 @@ public class ChallengeRecyclerAdapter
         };
 
         private final View.OnClickListener onClickListener = view -> {
-            //TODO : Open Profile Activity for this username
             final String username = mUsernameTxt.getText().toString();
+            Intent intent = new Intent(mContext, ProfileActivity.class);
+            intent.putExtra(Game.USERNAME,username);
+            mContext.startActivity(intent);
         };
     }
 }

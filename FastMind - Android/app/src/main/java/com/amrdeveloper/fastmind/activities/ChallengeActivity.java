@@ -1,5 +1,6 @@
 package com.amrdeveloper.fastmind.activities;
 
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,7 +39,7 @@ public class ChallengeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_challenge);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_challenge);
 
         recyclerDefaultSettings();
         loadPlayerList();

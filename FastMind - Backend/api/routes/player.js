@@ -61,7 +61,7 @@ router.get('/api/players', (req, res) => {
 router.get('/api/player', (req, res) => {
     let username = req.query.username
 
-    let sqlQuery = "SELECT * FROM player WHERE username = ?"
+    let sqlQuery = "SELECT * FROM player WHERE username = ? LIMIT 0, 1"
 
     database.query(sqlQuery, username, (err, result, rows) => {
         if (err) { throw err }
@@ -69,14 +69,11 @@ router.get('/api/player', (req, res) => {
         let playersArray = JSON.stringify(result)
         playersArray = JSON.parse(playersArray)
 
-        let playersJSONArray = {}
-
-        playersJSONArray.result = {
-            number: playersArray.length,
-            players: playersArray,
+        if (playersArray) {
+            res.status(200).json(playersArray[0])
+        } else {
+            res.status(404).end()
         }
-
-        res.status(200).json(playersJSONArray)
     })
 })
 
@@ -402,6 +399,7 @@ router.post("/api/player/update/avatar", (req, res) => {
         }
     })
 })
+
 /**
  * Request Type : POST
  * Update Player username on database
