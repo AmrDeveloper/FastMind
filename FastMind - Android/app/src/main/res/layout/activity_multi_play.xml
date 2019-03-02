@@ -1,102 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/darkGrey"
-    android:orientation="vertical"
-    tools:context=".activities.MultiPlayActivity">
-
-    <LinearLayout
+<layout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="@color/darkGrey"
+        android:orientation="vertical"
+        tools:context=".activities.MultiPlayActivity">
 
-        <TextView
-            android:id="@+id/playersInfo"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen5dp"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:padding="@dimen/dimen5dp"
-            android:textColor="@color/yellow"
-            tools:text="Marmora Vs AmrDeveloper" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/levelInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen5dp"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:padding="@dimen/dimen5dp"
-            android:textColor="@color/green"
-            tools:text="Level : 1" />
+            <TextView
+                android:id="@+id/playersInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen5dp"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:padding="@dimen/dimen5dp"
+                android:textColor="@color/yellow"
+                tools:text="Marmora Vs AmrDeveloper" />
 
-        <TextView
-            android:id="@+id/questionBody"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen5dp"
-            android:background="@color/black"
-            android:fontFamily="monospace"
-            android:lines="2"
-            android:padding="@dimen/dimen5dp"
-            android:textColor="@color/purple"
-            android:textSize="@dimen/dimen18sp"
-            tools:text="What is the Multiplication of 2 and 5?" />
+            <TextView
+                android:id="@+id/levelInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen5dp"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:padding="@dimen/dimen5dp"
+                android:textColor="@color/green"
+                tools:text="Level : 1" />
 
-        <RadioGroup
-            android:id="@+id/answersGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/questionBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen5dp"
+                android:background="@color/black"
+                android:fontFamily="monospace"
+                android:lines="2"
+                android:padding="@dimen/dimen5dp"
+                android:textColor="@color/purple"
+                android:textSize="@dimen/dimen18sp"
+                tools:text="What is the Multiplication of 2 and 5?" />
 
-            <RadioButton
-                android:id="@+id/answerOne"
-                style="@style/AnswerRadioButtonStyle"
-                android:theme="@style/AnswerRadioButtonTheme"
-                tools:text="5" />
+            <RadioGroup
+                android:id="@+id/answersGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <RadioButton
-                android:id="@+id/answerTwo"
-                style="@style/AnswerRadioButtonStyle"
-                android:theme="@style/AnswerRadioButtonTheme"
-                tools:text="5" />
+                <RadioButton
+                    android:id="@+id/answerOne"
+                    style="@style/AnswerRadioButtonStyle"
+                    android:theme="@style/AnswerRadioButtonTheme"
+                    tools:text="5" />
 
-            <RadioButton
-                android:id="@+id/answerThree"
-                style="@style/AnswerRadioButtonStyle"
-                android:theme="@style/AnswerRadioButtonTheme"
-                tools:text="5" />
+                <RadioButton
+                    android:id="@+id/answerTwo"
+                    style="@style/AnswerRadioButtonStyle"
+                    android:theme="@style/AnswerRadioButtonTheme"
+                    tools:text="5" />
 
-            <RadioButton
-                android:id="@+id/answerFour"
-                style="@style/AnswerRadioButtonStyle"
-                android:theme="@style/AnswerRadioButtonTheme"
-                tools:text="5" />
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/answerThree"
+                    style="@style/AnswerRadioButtonStyle"
+                    android:theme="@style/AnswerRadioButtonTheme"
+                    tools:text="5" />
 
-        <TextView
-            android:id="@+id/gameTimer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen10dp"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:padding="@dimen/dimen10dp"
-            android:textColor="@color/darkYellow"
-            android:text="@string/timer_starter"
-            tools:text="Time : 50 s" />
+                <RadioButton
+                    android:id="@+id/answerFour"
+                    style="@style/AnswerRadioButtonStyle"
+                    android:theme="@style/AnswerRadioButtonTheme"
+                    tools:text="5" />
+            </RadioGroup>
 
-        <Button
-            android:id="@+id/answerSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/black"
-            android:text="@string/submit"
-            android:textAllCaps="false"
-            android:textColor="@color/purple" />
-    </LinearLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/gameTimer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen10dp"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:padding="@dimen/dimen10dp"
+                android:text="@string/timer_starter"
+                android:textColor="@color/darkYellow"
+                tools:text="Time : 50 s" />
+
+            <Button
+                android:id="@+id/answerSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/black"
+                android:text="@string/submit"
+                android:textAllCaps="false"
+                android:textColor="@color/purple" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

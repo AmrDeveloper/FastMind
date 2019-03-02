@@ -3,6 +3,7 @@ package com.amrdeveloper.fastmind.activities;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.databinding.ActivityMultiPlayBinding;
 import com.amrdeveloper.fastmind.objects.Question;
 import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
 import com.amrdeveloper.fastmind.socket.Game;
@@ -30,16 +32,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class MultiPlayActivity extends AppCompatActivity {
-
-    //Views
-    private TextView mGamePlayersInfo;
-    private TextView mGameLevelInfo;
-    private TextView mGameQuestionBody;
-    private RadioGroup mGameAnswersGroup;
-    private TextView mGameTimerCounter;
-    private Button mSubmitButton;
-    private Dialog mGameWaitDialog;
-
+    
     private String player;
     private String username;
 
@@ -56,6 +49,8 @@ public class MultiPlayActivity extends AppCompatActivity {
     private Socket mGameSocket;
     private final Gson gson = new Gson();
 
+    private Dialog mGameWaitDialog;
+    private ActivityMultiPlayBinding binding;
     private final Context CONTEXT = MultiPlayActivity.this;
 
     private static final int GAME_TIME = 10;
@@ -66,7 +61,7 @@ public class MultiPlayActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_multi_play);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_multi_play);
 
         initiateViews();
         keepScreenOn();
@@ -78,14 +73,7 @@ public class MultiPlayActivity extends AppCompatActivity {
     }
 
     private void initiateViews() {
-        mGamePlayersInfo = findViewById(R.id.playersInfo);
-        mGameLevelInfo = findViewById(R.id.levelInfo);
-        mGameQuestionBody = findViewById(R.id.questionBody);
-        mGameAnswersGroup = findViewById(R.id.answersGroup);
-        mGameTimerCounter = findViewById(R.id.gameTimer);
-
-        mSubmitButton = findViewById(R.id.answerSubmit);
-        mSubmitButton.setOnClickListener(view -> onGameSubmitButton());
+        binding.answerSubmit.setOnClickListener(view -> onGameSubmitButton());
     }
 
     private void getGameInformation() {
@@ -100,11 +88,11 @@ public class MultiPlayActivity extends AppCompatActivity {
     private void updateGameUI() {
         String gameInformation = username + " VS " + player;
         String gameLevel = "Level : " + mGameLevel;
-        mGamePlayersInfo.setText(gameInformation);
-        mGameLevelInfo.setText(gameLevel);
+        binding.playersInfo.setText(gameInformation);
+        binding.levelInfo.setText(gameLevel);
 
         //Update Question
-        mGameQuestionBody.setText(mQuestion.getQuestionBody());
+        binding.questionBody.setText(mQuestion.getQuestionBody());
 
         //Update True Answers
         mQuestionTrueAnswer = mQuestion.getTrueResult();
@@ -113,8 +101,8 @@ public class MultiPlayActivity extends AppCompatActivity {
         List<String> answers = mQuestion.getQuestionAnswers();
 
         //Update UI Radio Buttons
-        for (int i = 0; i < mGameAnswersGroup.getChildCount(); i++) {
-            View item = mGameAnswersGroup.getChildAt(i);
+        for (int i = 0; i < binding.answersGroup.getChildCount(); i++) {
+            View item = binding.answersGroup.getChildAt(i);
             if (item instanceof RadioButton) {
                 RadioButton answersRadioButton = (RadioButton) item;
                 answersRadioButton.setText(answers.get(i));
@@ -123,12 +111,11 @@ public class MultiPlayActivity extends AppCompatActivity {
     }
 
     private void keepScreenOn() {
-        mGameTimerCounter.setKeepScreenOn(true);
+        binding.gameTimer.setKeepScreenOn(true);
     }
 
     private void connectToServer() {
         mGameSocket = GameSocket.getSocket(this);
-        //mGameSocket.on("play", onPlayListener);
         mGameSocket.on(Game.PLAY, onPlayListener);
     }
 
@@ -150,7 +137,7 @@ public class MultiPlayActivity extends AppCompatActivity {
                 try {
                     if (mCurrentTimerValue > -1) {
                         final String newTile = "Timer : " + mCurrentTimerValue-- + "s";
-                        mGameTimerCounter.setText(newTile);
+                        binding.gameTimer.setText(newTile);
                     } else {
                         onGameStopTimer();
                         if(mGameWaitDialog != null)mGameWaitDialog.dismiss();
@@ -173,9 +160,9 @@ public class MultiPlayActivity extends AppCompatActivity {
     }
 
     private void onGameSubmitButton() {
-        int checkedId = mGameAnswersGroup.getCheckedRadioButtonId();
+        int checkedId = binding.answersGroup.getCheckedRadioButtonId();
         if (checkedId != -1) {
-            mSubmitButton.setClickable(false);
+            binding.answerSubmit.setClickable(false);
             onGameStopTimer();
             RadioButton checkedRadioButton = findViewById(checkedId);
             String result = checkedRadioButton.getText().toString();
@@ -187,8 +174,8 @@ public class MultiPlayActivity extends AppCompatActivity {
                         //Return Settings to Default
                         isOtherPlayerTrue = false;
                         isOtherPlayerSubmit = false;
-                        mSubmitButton.setClickable(true);
-                        mGameAnswersGroup.clearCheck();
+                        binding.answerSubmit.setClickable(true);
+                        binding.answersGroup.clearCheck();
                         QuestionGenerator generator = new QuestionGenerator();
                         mQuestion = generator.generateQuestion(mGameLevel);
                         mGameSocket.emit(Game.PLAY, Game.NEXT, username, player, gson.toJson(mQuestion));
@@ -270,11 +257,11 @@ public class MultiPlayActivity extends AppCompatActivity {
                     //Update Level
                     mGameLevel++;
                     //Return Settings to Default
-                    mSubmitButton.setClickable(true);
+                    binding.answerSubmit.setClickable(true);
                     isOtherPlayerTrue = false;
                     isOtherPlayerSubmit = false;
                     //Get Question and Update UI
-                    mGameAnswersGroup.clearCheck();
+                    binding.answersGroup.clearCheck();
                     Type questionType = new TypeToken<Question>() {
                     }.getType();
                     mQuestion = gson.fromJson(message, questionType);
