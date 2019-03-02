@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ProfileActivity"></activity>
         <activity
             android:name=".activities.LoginActivity"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -49,6 +48,9 @@
             android:name=".activities.FeedActivity"
             android:label="@string/feed" />
         <activity android:name=".activities.SplashActivity" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:label="@string/profile" />
     </application>
 
 </manifest>

@@ -208,7 +208,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 }
-
                 case Challenge.ACCEPT: {
                     QuestionGenerator generator = new QuestionGenerator();
                     Question questionObj = generator.generateQuestion(player.getLevel());
@@ -235,8 +234,7 @@ public class MainActivity extends AppCompatActivity {
         if (receiver.equals(player.getUsername())) {
             if (state.equals(Game.START)) {
                 //Convert Question From JSON to Object
-                Type questionType = new TypeToken<Question>() {
-                }.getType();
+                Type questionType = new TypeToken<Question>() {}.getType();
                 Question questionObj = gson.fromJson(question, questionType);
 
                 //Go to MultiPlayActivity with sender and receiver and question
