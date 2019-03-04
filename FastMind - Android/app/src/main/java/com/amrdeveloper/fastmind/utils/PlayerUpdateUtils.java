@@ -19,113 +19,102 @@ public class PlayerUpdateUtils {
 
     public PlayerUpdateUtils(Context context) {
         this.context = context;
-        queue = Volley.newRequestQueue(context);
+        this.queue = Volley.newRequestQueue(context);
     }
 
-    public boolean updateAvatar(String email, int avatarId) {
-        AtomicBoolean isUpdateDone = new AtomicBoolean(true);
+    public void updateAvatar(String email, int avatarId) {
         String requestUrl = generateUpdateAvatarUrl(email, avatarId);
         StringRequest request = new StringRequest(
-                Request.Method.POST,
+                Request.Method.PUT,
                 requestUrl,
                 response -> {
                     if (response.contains("success")) {
-                        isUpdateDone.set(true);
+                        //TODO : Make Action for Update Success
                     } else {
-                        isUpdateDone.set(false);
+                        //TODO : Make Action for Update Un Success
                     }
                 },
                 error -> {
-                    isUpdateDone.set(false);
+                    //TODO : Make Action for Update Un Success
                 }
         );
         queue.add(request);
-        return isUpdateDone.get();
     }
 
-    public boolean updateUsername(String email, String username) {
-        AtomicBoolean isUpdateDone = new AtomicBoolean(true);
+    public void updateUsername(String email, String username) {
         String requestUrl = generateUpdateUsernameUrl(email, username);
         StringRequest request = new StringRequest(
                 Request.Method.POST,
                 requestUrl,
                 response -> {
                     if (response.contains("success")) {
-                        isUpdateDone.set(true);
+                        //TODO : Make Action for Update Success
                     } else {
-                        isUpdateDone.set(false);
+                        //TODO : Make Action for Update Un Success
                     }
                 },
                 error -> {
-                    isUpdateDone.set(false);
+                    //TODO : Make Action for Update Un Success
                 }
         );
         queue.add(request);
-        return isUpdateDone.get();
-
     }
 
-    public boolean updateEmail(String username, String email) {
-        AtomicBoolean isUpdateDone = new AtomicBoolean(true);
+    public void updateEmail(String username, String email) {
         String requestUrl = generateUpdateEmailUrl(username, email);
         StringRequest request = new StringRequest(
-                Request.Method.POST,
+                Request.Method.PUT,
                 requestUrl,
                 response -> {
                     if (response.contains("success")) {
-                        isUpdateDone.set(true);
+                        //TODO : Make Action for Update Success
                     } else {
-                        isUpdateDone.set(false);
+                        //TODO : Make Action for Update Un Success
                     }
                 },
                 error -> {
-                    isUpdateDone.set(false);
+                    //TODO : Make Action for Update Un Success
                 }
         );
         queue.add(request);
-        return isUpdateDone.get();
     }
 
-    public boolean updatePassword(String email, String pass) {
-        AtomicBoolean isUpdateDone = new AtomicBoolean(true);
+    public void updatePassword(String email, String pass) {
         String requestUrl = generateUpdatePassUrl(email, pass);
         StringRequest request = new StringRequest(
-                Request.Method.POST,
+                Request.Method.PUT,
                 requestUrl,
                 response -> {
                     if (response.contains("success")) {
-                        isUpdateDone.set(true);
+                        //TODO : Make Action for Update Success
                     } else {
-                        isUpdateDone.set(false);
+                        //TODO : Make Action for Update Un Success
                     }
                 },
                 error -> {
-                    isUpdateDone.set(false);
+                    //TODO : Make Action for Update Un Success
                 }
         );
         queue.add(request);
-        return isUpdateDone.get();
     }
 
-    public boolean deleteAccount(String email) {
-        AtomicBoolean isUpdateDone = new AtomicBoolean(true);
+    public void deleteAccount(String email) {
         String requestUrl = generateDeleteAccUrl(email);
         StringRequest request = new StringRequest(
                 Request.Method.DELETE,
                 requestUrl,
                 response -> {
                     if (response.contains("success")) {
-                        isUpdateDone.set(true);
+                        //TODO : Make Action for Update Success
                     } else {
-                        isUpdateDone.set(false);
+                        //TODO : Make Action for Update Un Success
                     }
                 },
                 error -> {
-                    isUpdateDone.set(false);
+                    //TODO : Make Action for Update Un Success
                 }
         );
         queue.add(request);
-        return isUpdateDone.get();
     }
 
     //Router : /api/player/update/avatar

@@ -32,7 +32,7 @@ public class SynchronizeUtils {
     public void syncToServer(Player player){
         String requestURL = generateRequestURL(player);
         StringRequest request = new StringRequest(
-                Request.Method.POST,
+                Request.Method.PUT,
                 requestURL,
                 response -> {
                     if(response.isEmpty() || response.equals("failure")){
