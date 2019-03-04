@@ -356,10 +356,10 @@ router.post("/api/player/insert", (req, res) => {
 })
 
 /**
- * Request Type : POST
+ * Request Type : put
  * Update Player Score and level on database
  */
-router.post("/api/player/sync", (req, res) => {
+router.put("/api/player/sync", (req, res) => {
     let username = req.query.username
     let score = req.query.score
     let level = req.query.level
@@ -379,10 +379,10 @@ router.post("/api/player/sync", (req, res) => {
 })
 
 /**
- * Request Type : POST
+ * Request Type : put
  * Update Player avatar id on database
  */
-router.post("/api/player/update/avatar", (req, res) => {
+router.put("/api/player/update/avatar", (req, res) => {
     let email = req.query.email
     let avatar = req.query.avatar
 
@@ -401,10 +401,10 @@ router.post("/api/player/update/avatar", (req, res) => {
 })
 
 /**
- * Request Type : POST
+ * Request Type : put
  * Update Player username on database
  */
-router.post("/api/player/update/username", (req, res) => {
+router.put("/api/player/update/username", (req, res) => {
     let email = req.query.email
     let username = req.query.username
 
@@ -427,10 +427,10 @@ router.post("/api/player/update/username", (req, res) => {
 })
 
 /**
- * Request Type : POST
+ * Request Type : put
  * Update Player Password on database
  */
-router.post("/api/player/update/email", (req, res) => {
+router.put("/api/player/update/email", (req, res) => {
     let email = req.query.email
     let nemail = req.query.nemail
 
@@ -453,10 +453,10 @@ router.post("/api/player/update/email", (req, res) => {
 })
 
 /**
- * Request Type : POST
+ * Request Type : put
  * Update Player Password on database
  */
-router.post("/api/player/update/pass", (req, res) => {
+router.put("/api/player/update/pass", (req, res) => {
     let email = req.query.email
     let password = req.query.password
 
@@ -479,10 +479,10 @@ router.post("/api/player/update/pass", (req, res) => {
 })
 
 /**
- * Request Type : POST
+ * Request Type : put
  * Update Player Avatar Index on database
  */
-router.post("/api/player/update/avatar",(req,res)=>{
+router.put("/api/player/update/avatar",(req,res)=>{
     let email = req.query.email
     let avatarIndex = req.query.avatar
 
