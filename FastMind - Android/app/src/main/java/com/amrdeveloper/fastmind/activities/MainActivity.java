@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         updateUserInformation();
         continueVisibility();
         connectToServer();
+        setOptionsActions();
     }
 
     @Override
@@ -129,47 +130,27 @@ public class MainActivity extends AppCompatActivity {
         binding.logoutOption.setVisibility(View.GONE);
     }
 
-    public void newSingleGame(View view) {
+    private void setOptionsActions() {
+        binding.continueOption.setOnClickListener(v -> launchActivity(SinglePlayActivity.class));
+        binding.startOption.setOnClickListener(v -> newSingleGameAction());
+        binding.challengeOption.setOnClickListener(v -> launchActivity(ChallengeActivity.class));
+        binding.feedOption.setOnClickListener(v -> launchActivity(FeedActivity.class));
+        binding.rankOption.setOnClickListener(v -> launchActivity(RankActivity.class));
+        binding.settingsOption.setOnClickListener(v -> launchActivity(SettingsActivity.class));
+        binding.aboutOption.setOnClickListener(v -> launchActivity(AboutActivity.class));
+        binding.logoutOption.setOnClickListener(v -> logoutAction());
+    }
+
+    public void newSingleGameAction() {
         //Reset Score and level to zero
         PlayerChanger playerChanger = new PlayerChanger(this);
         playerChanger.newGameMode();
         //Go to Single Play Activity
-        Intent intent = new Intent(this, SinglePlayActivity.class);
-        startActivity(intent);
+        launchActivity(SinglePlayActivity.class);
         finish();
     }
 
-    public void continueSingleGame(View view) {
-        Intent intent = new Intent(this, SinglePlayActivity.class);
-        startActivity(intent);
-    }
-
-    public void challengeActivity(View view) {
-        Intent intent = new Intent(this, ChallengeActivity.class);
-        startActivity(intent);
-    }
-
-    public void feedActivity(View view) {
-        Intent intent = new Intent(this, FeedActivity.class);
-        startActivity(intent);
-    }
-
-    public void rankActivity(View view) {
-        Intent intent = new Intent(this, RankActivity.class);
-        startActivity(intent);
-    }
-
-    public void aboutActivity(View view) {
-        Intent intent = new Intent(this, AboutActivity.class);
-        startActivity(intent);
-    }
-
-    public void settingsActivity(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-    }
-
-    public void logoutAction(View view) {
+    private void logoutAction() {
         mGameSocket.disconnect();
 
         //Update Current User Information To Server
@@ -180,9 +161,13 @@ public class MainActivity extends AppCompatActivity {
         Session session = new Session(this);
         session.playerLogOut();
 
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        launchActivity(LoginActivity.class);
         finish();
+    }
+
+    public void launchActivity(Class activity) {
+        Intent intent = new Intent(this, activity);
+        startActivity(intent);
     }
 
     private void startMultiPlayerGame(String sender, String receiver, Question question) {
@@ -234,7 +219,8 @@ public class MainActivity extends AppCompatActivity {
         if (receiver.equals(player.getUsername())) {
             if (state.equals(Game.START)) {
                 //Convert Question From JSON to Object
-                Type questionType = new TypeToken<Question>() {}.getType();
+                Type questionType = new TypeToken<Question>() {
+                }.getType();
                 Question questionObj = gson.fromJson(question, questionType);
 
                 //Go to MultiPlayActivity with sender and receiver and question

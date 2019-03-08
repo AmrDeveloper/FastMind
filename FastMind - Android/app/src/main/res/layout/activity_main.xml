@@ -51,49 +51,41 @@
             <Button
                 android:id="@+id/continueOption"
                 style="@style/ActionButtonStyle"
-                android:onClick="continueSingleGame"
                 android:text="@string/continues" />
 
             <Button
                 android:id="@+id/startOption"
                 style="@style/ActionButtonStyle"
-                android:onClick="newSingleGame"
                 android:text="@string/start_new_game" />
 
             <Button
                 android:id="@+id/challengeOption"
                 style="@style/ActionButtonStyle"
-                android:onClick="challengeActivity"
                 android:text="@string/challenge" />
 
             <Button
                 android:id="@+id/feedOption"
                 style="@style/ActionButtonStyle"
-                android:onClick="feedActivity"
                 android:text="@string/feed" />
 
             <Button
                 android:id="@+id/rankOption"
                 style="@style/ActionButtonStyle"
-                android:onClick="rankActivity"
                 android:text="@string/rank" />
 
             <Button
                 android:id="@+id/settingsOption"
                 style="@style/ActionButtonStyle"
-                android:onClick="settingsActivity"
                 android:text="@string/settings" />
 
             <Button
                 android:id="@+id/aboutOption"
                 style="@style/ActionButtonStyle"
-                android:onClick="aboutActivity"
                 android:text="@string/about" />
 
             <Button
                 android:id="@+id/logoutOption"
                 style="@style/ActionButtonStyle"
-                android:onClick="logoutAction"
                 android:text="@string/logout" />
         </LinearLayout>
     </ScrollView>
