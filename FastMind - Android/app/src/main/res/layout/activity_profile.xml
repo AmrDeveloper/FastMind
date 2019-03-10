@@ -62,25 +62,29 @@
                 android:textStyle="bold|italic"
                 android:fontFamily="serif"
                 android:textSize="@dimen/dimen25sp"
-                tools:text="AmrDeveloper" />
-
-            <TextView
-                android:id="@+id/playerScore"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_margin="@dimen/dimen5dp"
-                android:textColor="@color/purple"
-                tools:text="Score : 100" />
+                tools:text="\@\AmrDeveloper" />
 
             <TextView
                 android:id="@+id/playerLevel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:padding="@dimen/dimen10dp"
                 android:layout_margin="@dimen/dimen5dp"
+                android:textSize="@dimen/dimen20sp"
                 android:textColor="@color/purple"
                 tools:text="Level : 20" />
+
+            <TextView
+                android:id="@+id/playerScore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/dimen20sp"
+                android:padding="@dimen/dimen10dp"
+                android:layout_margin="@dimen/dimen5dp"
+                android:textColor="@color/purple"
+                tools:text="Score : 100" />
 
             <ImageButton
                 android:id="@+id/challengeImgButton"
@@ -89,7 +93,7 @@
                 android:layout_gravity="center"
                 android:padding="@dimen/dimen15dp"
                 android:layout_margin="@dimen/dimen5dp"
-                android:background="@color/gray"
+                android:background="@color/darkGrey"
                 android:contentDescription="@string/challenge_button"
                 android:src="@drawable/ic_swords" />
         </LinearLayout>
