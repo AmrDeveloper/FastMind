@@ -13,13 +13,44 @@
             android:orientation="vertical"
             tools:context=".activities.ProfileActivity">
 
-            <ImageView
-                android:id="@+id/playerAvatarImg"
-                android:layout_width="@dimen/dimen200dp"
-                android:layout_height="@dimen/dimen200dp"
+            <FrameLayout
                 android:layout_gravity="center"
-                android:contentDescription="@string/player_avatar"
-                android:src="@drawable/ic_avatar1" />
+                android:layout_width="match_parent"
+                android:background="@color/black"
+                android:layout_height="@dimen/dimen200dp">
+
+                <ImageView
+                    android:id="@+id/playerAvatarImg"
+                    android:layout_width="@dimen/dimen200dp"
+                    android:layout_height="@dimen/dimen200dp"
+                    android:layout_gravity="center|top"
+                    android:contentDescription="@string/player_avatar"
+                    android:src="@drawable/ic_avatar1" />
+
+                <TextView
+                    android:id="@+id/playerWinTimes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:padding="@dimen/dimen5dp"
+                    android:layout_gravity="bottom|start"
+                    android:layout_margin="@dimen/dimen5dp"
+                    android:textColor="@color/green"
+                    tools:text="Win : 10" />
+
+                <TextView
+                    android:id="@+id/playerLoseTimes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:padding="@dimen/dimen5dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="@dimen/dimen5dp"
+                    android:textColor="@color/red"
+                    tools:text="Lose : 5" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/playerUsername"
@@ -30,7 +61,7 @@
                 android:textColor="@color/green"
                 android:textStyle="bold|italic"
                 android:fontFamily="serif"
-                android:textSize="@dimen/dimen20sp"
+                android:textSize="@dimen/dimen25sp"
                 tools:text="AmrDeveloper" />
 
             <TextView
@@ -50,24 +81,6 @@
                 android:layout_margin="@dimen/dimen5dp"
                 android:textColor="@color/purple"
                 tools:text="Level : 20" />
-
-            <TextView
-                android:id="@+id/playerWinTimes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_margin="@dimen/dimen5dp"
-                android:textColor="@color/purple"
-                tools:text="Win : 10" />
-
-            <TextView
-                android:id="@+id/playerLoseTimes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_margin="@dimen/dimen5dp"
-                android:textColor="@color/purple"
-                tools:text="Lose : 5" />
 
             <ImageButton
                 android:id="@+id/challengeImgButton"
