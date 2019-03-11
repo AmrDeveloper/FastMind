@@ -14,8 +14,13 @@ public class PlayerChanger {
         mPlayerPref = new PlayerPreferences(context);
     }
 
+    /**
+     * Reset All changeable information to default information
+     */
     public void newGameMode(){
         mPlayerPref.setPlayerLevel(1);
         mPlayerPref.setPlayerScore(0);
+        mPlayerPref.setPlayerWinNum(0);
+        mPlayerPref.setPlayerLoseNum(0);
     }
 }
