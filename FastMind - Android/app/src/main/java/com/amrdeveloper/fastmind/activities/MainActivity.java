@@ -145,13 +145,7 @@ public class MainActivity extends AppCompatActivity {
         //Reset Score and level to zero
         PlayerChanger playerChanger = new PlayerChanger(this);
         playerChanger.newGameMode();
-
-        //Update Current Object
-        player.setLevel(1);
-        player.setScore(0);
-        player.setWinNumber(0);
-        player.setLoseNumber(0);
-
+        
         //Go to Single Play Activity
         launchActivity(SinglePlayActivity.class);
         finish();
