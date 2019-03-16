@@ -48,17 +48,18 @@ public class MultiPlayActivity extends AppCompatActivity {
 
     private Dialog mGameWaitDialog;
     private ActivityMultiPlayBinding binding;
-    private final Context CONTEXT = MultiPlayActivity.this;
 
-    private static final int GAME_TIME = 10;
-    private static final String QUESTION = "question";
-    private static final String TIMER = "timer";
-    private static final String DEBUGGING = SinglePlayActivity.class.getSimpleName();
+    private final int GAME_TIME = 10;
+    private final int numberOfRadioButtons = 4;
+    private final String QUESTION = "question";
+    private final String TIMER = "timer";
+    private final Context CONTEXT = MultiPlayActivity.this;
+    private final String DEBUGGING = SinglePlayActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_multi_play);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_multi_play);
 
         keepScreenOn();
         onGameActivityStart(savedInstanceState);
@@ -94,7 +95,7 @@ public class MultiPlayActivity extends AppCompatActivity {
         List<String> answers = mQuestion.getQuestionAnswers();
 
         //Update UI Radio Buttons
-        for (int i = 0; i < binding.answersGroup.getChildCount(); i++) {
+        for (int i = 0; i < numberOfRadioButtons; i++) {
             View item = binding.answersGroup.getChildAt(i);
             if (item instanceof RadioButton) {
                 RadioButton answersRadioButton = (RadioButton) item;
@@ -133,7 +134,7 @@ public class MultiPlayActivity extends AppCompatActivity {
                         binding.gameTimer.setText(newTile);
                     } else {
                         onGameStopTimer();
-                        if(mGameWaitDialog != null)mGameWaitDialog.dismiss();
+                        if (mGameWaitDialog != null) mGameWaitDialog.dismiss();
                         //TODO : Implement User Lose State
                         //TODO : Score = score -  current level
                     }
@@ -161,7 +162,7 @@ public class MultiPlayActivity extends AppCompatActivity {
             String result = checkedRadioButton.getText().toString();
             if (result.equals(String.valueOf(mQuestionTrueAnswer))) {
                 if (isOtherPlayerSubmit) {
-                    if(mGameWaitDialog != null)mGameWaitDialog.dismiss();
+                    if (mGameWaitDialog != null) mGameWaitDialog.dismiss();
                     if (isOtherPlayerTrue) {
                         mGameLevel++;
                         //Return Settings to Default
@@ -186,7 +187,7 @@ public class MultiPlayActivity extends AppCompatActivity {
                 }
             } else {
                 if (isOtherPlayerSubmit) {
-                    if(mGameWaitDialog != null)mGameWaitDialog.dismiss();
+                    if (mGameWaitDialog != null) mGameWaitDialog.dismiss();
                     if (isOtherPlayerTrue) {
                         mGameSocket.emit(Game.PLAY, Game.END, username, player, Result.RECEIVER_PLAYER_WINNER);
                         GameDialog.showLoserDialog(this, mGameLevel, this::backToMainMenu);
@@ -237,7 +238,7 @@ public class MultiPlayActivity extends AppCompatActivity {
         String message = args[3].toString();
 
         if (receiver.equals(username)) {
-            if(mGameWaitDialog != null)mGameWaitDialog.dismiss();
+            if (mGameWaitDialog != null) mGameWaitDialog.dismiss();
             final PlayerPreferences playerPreferences = new PlayerPreferences(this);
             switch (state) {
                 case Game.ANSWER: {
