@@ -57,7 +57,9 @@ public class ChallengeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        registerReceiver(networkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        if(networkReceiver != null){
+            registerReceiver(networkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        }
     }
 
     @Override
@@ -153,6 +155,7 @@ public class ChallengeActivity extends AppCompatActivity {
             Toast.makeText(ChallengeActivity.this, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(ChallengeActivity.this,MainActivity.class);
             startActivity(intent);
+            finish();
         }
     };
 }

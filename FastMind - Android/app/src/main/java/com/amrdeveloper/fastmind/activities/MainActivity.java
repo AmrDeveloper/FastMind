@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
     public void launchActivity(Class activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
+        finish();
     }
 
     private void startMultiPlayerGame(String sender, String receiver, Question question) {
