@@ -14,6 +14,7 @@
     <string name="invalid_Email">Invalid Email</string>
     <string name="invalid_username">Invalid Username</string>
     <string name="invalid_password">Invalid Password</string>
+    <string name="no_internet_connection">Sorry, No Internet Connection</string>
 
     <!--Single word for actions-->
     <string name="login">Login</string>
@@ -49,7 +50,7 @@
     <string name="already_a_member_login">Already a member? Login</string>
 
     <!--Server Information-->
-    <string name="LOCALHOST">http://192.168.1.8:</string>
+    <string name="LOCALHOST">http://192.168.1.11:</string>
     <string name="PORT">3000</string>
 
     <!--UI Default Value-->

@@ -1,6 +1,9 @@
 package com.amrdeveloper.fastmind.activities;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,11 +13,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.adapter.ChallengeRecyclerAdapter;
 import com.amrdeveloper.fastmind.databinding.ActivityChallengeBinding;
 import com.amrdeveloper.fastmind.objects.Player;
+import com.amrdeveloper.fastmind.receiver.NetworkReceiver;
+import com.amrdeveloper.fastmind.receiver.OnConnectListener;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -33,6 +39,7 @@ public class ChallengeActivity extends AppCompatActivity {
 
     private final Gson gson = new Gson();
 
+    private NetworkReceiver networkReceiver;
     private ActivityChallengeBinding binding;
     private ChallengeRecyclerAdapter mChallengeRecyclerAdapter;
 
@@ -41,8 +48,22 @@ public class ChallengeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_challenge);
 
+        networkReceiver = new NetworkReceiver(onConnectListener);
+
         recyclerDefaultSettings();
         loadPlayerList();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(networkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(networkReceiver);
     }
 
     private void loadPlayerList() {
@@ -118,6 +139,20 @@ public class ChallengeActivity extends AppCompatActivity {
         public boolean onQueryTextChange(String keyword) {
             mChallengeRecyclerAdapter.getFilter().filter(keyword);
             return false;
+        }
+    };
+
+    private final OnConnectListener onConnectListener = new OnConnectListener() {
+        @Override
+        public void onConnected() {
+            //TODO : Do No Thing For Now
+        }
+
+        @Override
+        public void onDisConnected() {
+            Toast.makeText(ChallengeActivity.this, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ChallengeActivity.this,MainActivity.class);
+            startActivity(intent);
         }
     };
 }
