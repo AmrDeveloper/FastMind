@@ -80,9 +80,7 @@ public class MultiPlayActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(mNetworkReceiver != null){
-            registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        }
+        registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override

@@ -57,9 +57,7 @@ public class ChallengeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(networkReceiver != null){
-            registerReceiver(networkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-        }
+        registerReceiver(networkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
