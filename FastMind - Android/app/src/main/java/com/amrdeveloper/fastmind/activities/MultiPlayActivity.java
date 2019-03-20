@@ -3,7 +3,9 @@ package com.amrdeveloper.fastmind.activities;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
+import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,8 @@ import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.databinding.ActivityMultiPlayBinding;
 import com.amrdeveloper.fastmind.objects.Question;
 import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
+import com.amrdeveloper.fastmind.receiver.NetworkReceiver;
+import com.amrdeveloper.fastmind.receiver.OnConnectListener;
 import com.amrdeveloper.fastmind.socket.Game;
 import com.amrdeveloper.fastmind.socket.GameSocket;
 import com.amrdeveloper.fastmind.socket.Result;
@@ -41,9 +45,10 @@ public class MultiPlayActivity extends AppCompatActivity {
     private boolean isOtherPlayerSubmit;
 
     private Question mQuestion;
+    private Socket mGameSocket;
     private Handler mTimerHandler;
     private Runnable mTimerRunnable;
-    private Socket mGameSocket;
+    private NetworkReceiver mNetworkReceiver;
     private final Gson gson = new Gson();
 
     private Dialog mGameWaitDialog;
@@ -61,6 +66,8 @@ public class MultiPlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_multi_play);
 
+        mNetworkReceiver = new NetworkReceiver(onConnectListener);
+
         keepScreenOn();
         onGameActivityStart(savedInstanceState);
         connectToServer();
@@ -68,6 +75,26 @@ public class MultiPlayActivity extends AppCompatActivity {
         updateGameUI();
         onGameTimeCounter();
         binding.answerSubmit.setOnClickListener(view -> onGameSubmitButton());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(mNetworkReceiver != null){
+            registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(mNetworkReceiver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 
     private void getGameInformation() {
@@ -212,12 +239,6 @@ public class MultiPlayActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        finish();
-    }
-
-    @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
@@ -290,4 +311,17 @@ public class MultiPlayActivity extends AppCompatActivity {
             }
         }
     });
+
+    private final OnConnectListener onConnectListener = new OnConnectListener() {
+        @Override
+        public void onConnected() {
+            //TODO : Do no thing for now
+        }
+
+        @Override
+        public void onDisConnected() {
+            //TODO : Back to main Activity with lose state and other player is the winner
+            Toast.makeText(CONTEXT, getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
+        }
+    };
 }
