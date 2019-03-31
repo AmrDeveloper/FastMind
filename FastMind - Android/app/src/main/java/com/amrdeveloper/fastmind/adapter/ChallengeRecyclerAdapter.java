@@ -2,6 +2,7 @@ package com.amrdeveloper.fastmind.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,12 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.R;
 import com.amrdeveloper.fastmind.activities.ProfileActivity;
+import com.amrdeveloper.fastmind.databinding.ChallengeListItemBinding;
 import com.amrdeveloper.fastmind.objects.Avatar;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.preferences.PlayerPreferences;
@@ -55,11 +54,11 @@ public class ChallengeRecyclerAdapter
     @Override
     public ChallengeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final Context context = parent.getContext();
-        int layoutIdForListItem = R.layout.challenge_list_item;
+        int layoutID = R.layout.challenge_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         final boolean shouldAttachToParentImmediately = false;
-        View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
-        return new ChallengeRecyclerAdapter.ChallengeViewHolder(view);
+        ChallengeListItemBinding binding = DataBindingUtil.inflate(inflater, layoutID, parent, shouldAttachToParentImmediately);
+        return new ChallengeRecyclerAdapter.ChallengeViewHolder(binding);
     }
 
     @Override
@@ -103,7 +102,7 @@ public class ChallengeRecyclerAdapter
         };
     }
 
-    private void removeCurrentPlayer(){
+    private void removeCurrentPlayer() {
         PlayerPreferences preferences = new PlayerPreferences(mContext);
         Player currentPlayer = preferences.queryPlayerInformation();
         mPlayerList.remove(currentPlayer);
@@ -125,35 +124,24 @@ public class ChallengeRecyclerAdapter
 
     class ChallengeViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mUsernameTxt;
-        private TextView mUserScoreTxt;
-        private ImageView mUserAvatarImg;
-        private ImageButton mChallengeAction;
+        private ChallengeListItemBinding binding;
 
-        private ChallengeViewHolder(View itemView) {
-            super(itemView);
-            initView(itemView);
-            itemView.setOnClickListener(onClickListener);
-        }
-
-        private void initView(View view) {
-            mUsernameTxt = view.findViewById(R.id.usernameTxt);
-            mUserScoreTxt = view.findViewById(R.id.userScoreTxt);
-            mUserAvatarImg = view.findViewById(R.id.playerAvatar);
-            mChallengeAction = view.findViewById(R.id.challengeImgButton);
-
-            mChallengeAction.setOnClickListener(onChallengeRequest);
+        private ChallengeViewHolder(ChallengeListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            binding.challengeCardView.setOnClickListener(onClickListener);
+            binding.challengeImgButton.setOnClickListener(onChallengeRequest);
         }
 
         private void bingView(Player player) {
-            mUsernameTxt.setText(player.getUsername());
-            String userScore = String.format("Score : %d",player.getScore());
-            mUserScoreTxt.setText(userScore);
+            binding.usernameTxt.setText(player.getUsername());
+            String userScore = String.format("Score : %d", player.getScore());
+            binding.userScoreTxt.setText(userScore);
 
             int avatarIndex = player.getAvatarID();
             if (avatarIndex != 0) {
                 int avatarResId = Avatar.AVATARS[avatarIndex];
-                mUserAvatarImg.setImageResource(avatarResId);
+                binding.playerAvatar.setImageResource(avatarResId);
             }
         }
 
@@ -161,13 +149,13 @@ public class ChallengeRecyclerAdapter
             if (!mGameSocket.connected()) {
                 mGameSocket.connect();
             }
-            mGameSocket.emit(Challenge.REQUEST, Challenge.SEND, mUsernameTxt.getText().toString());
+            mGameSocket.emit(Challenge.REQUEST, Challenge.SEND, binding.usernameTxt.getText().toString());
         };
 
         private final View.OnClickListener onClickListener = view -> {
-            final String username = mUsernameTxt.getText().toString();
+            final String username = binding.usernameTxt.getText().toString();
             Intent intent = new Intent(mContext, ProfileActivity.class);
-            intent.putExtra(Game.USERNAME,username);
+            intent.putExtra(Game.USERNAME, username);
             mContext.startActivity(intent);
         };
     }
