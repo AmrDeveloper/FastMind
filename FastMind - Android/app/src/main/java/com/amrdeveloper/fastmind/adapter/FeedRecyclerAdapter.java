@@ -1,17 +1,17 @@
 package com.amrdeveloper.fastmind.adapter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.R;
+import com.amrdeveloper.fastmind.databinding.FeedListItemBinding;
 import com.amrdeveloper.fastmind.objects.Feed;
 import com.amrdeveloper.fastmind.socket.Result;
 
@@ -39,13 +39,11 @@ public class FeedRecyclerAdapter
     @Override
     public FeedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final Context context = parent.getContext();
-        int layoutIdForListItem = R.layout.feed_list_item;
+        int layoutID = R.layout.feed_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         final boolean shouldAttachToParentImmediately = false;
-
-        View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
-
-        return new FeedViewHolder(view);
+        FeedListItemBinding binding = DataBindingUtil.inflate(inflater,layoutID,parent,shouldAttachToParentImmediately);
+        return new FeedViewHolder(binding);
     }
 
     @Override
@@ -58,14 +56,6 @@ public class FeedRecyclerAdapter
     @Override
     public int getItemCount() {
         return mFilteredFeedList.size();
-    }
-
-    public void updateFeeds(List<Feed> feedList) {
-        if (feedList != null) {
-            mFeedBackList = feedList;
-            mFilteredFeedList = feedList;
-            notifyDataSetChanged();
-        }
     }
 
     @Override
@@ -99,45 +89,44 @@ public class FeedRecyclerAdapter
         };
     }
 
+    public void updateFeeds(List<Feed> feedList) {
+        if (feedList != null) {
+            mFeedBackList = feedList;
+            mFilteredFeedList = feedList;
+            notifyDataSetChanged();
+        }
+    }
+
     class FeedViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mFirstPlayer;
-        private TextView mSecondPlayer;
-        private TextView mGameScore;
+        private FeedListItemBinding binding;
 
-        FeedViewHolder(View itemView) {
-            super(itemView);
-            initView(itemView);
-        }
-
-        private void initView(View view) {
-            mFirstPlayer = view.findViewById(R.id.firstPlayerTxt);
-            mSecondPlayer = view.findViewById(R.id.secondPlayerTxt);
-            mGameScore = view.findViewById(R.id.gameScore);
+        private FeedViewHolder(FeedListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         private void bindView(Feed feedBack) {
             String gameScore = "Score : " + feedBack.getGameScore();
 
-            mFirstPlayer.setText(feedBack.getFirstPlayer());
-            mSecondPlayer.setText(feedBack.getSecondPlayer());
-            mGameScore.setText(gameScore);
+            binding.firstPlayerTxt.setText(feedBack.getFirstPlayer());
+            binding.secondPlayerTxt.setText(feedBack.getSecondPlayer());
+            binding.gameScore.setText(gameScore);
             final int gameResult = feedBack.getGameResult();
             switch (gameResult) {
                 case Result.NO_ONE_WINNER:
-                    mFirstPlayer.setTextColor(Color.RED);
-                    mSecondPlayer.setTextColor(Color.RED);
+                    binding.firstPlayerTxt.setTextColor(Color.RED);
+                    binding.secondPlayerTxt.setTextColor(Color.RED);
                     break;
                 case Result.FIRST_ONE_WINNER:
-                    mFirstPlayer.setTextColor(Color.GREEN);
-                    mSecondPlayer.setTextColor(Color.RED);
+                    binding.firstPlayerTxt.setTextColor(Color.GREEN);
+                    binding.secondPlayerTxt.setTextColor(Color.RED);
                     break;
                 case Result.SECOND_ONE_WINNER:
-                    mFirstPlayer.setTextColor(Color.RED);
-                    mSecondPlayer.setTextColor(Color.GREEN);
+                    binding.firstPlayerTxt.setTextColor(Color.RED);
+                    binding.secondPlayerTxt.setTextColor(Color.GREEN);
                     break;
             }
-
         }
     }
 }
