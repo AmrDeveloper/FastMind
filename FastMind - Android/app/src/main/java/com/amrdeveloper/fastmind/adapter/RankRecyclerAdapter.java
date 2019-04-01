@@ -2,6 +2,7 @@ package com.amrdeveloper.fastmind.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.amrdeveloper.fastmind.activities.ProfileActivity;
+import com.amrdeveloper.fastmind.databinding.RankListItemBinding;
 import com.amrdeveloper.fastmind.objects.Avatar;
 import com.amrdeveloper.fastmind.objects.Player;
 import com.amrdeveloper.fastmind.R;
@@ -48,13 +48,11 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
     @Override
     public RankViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        int layoutIdForListItem = R.layout.rank_list_item;
+        int layoutID = R.layout.rank_list_item;
         LayoutInflater inflater = LayoutInflater.from(context);
         final boolean shouldAttachToParentImmediately = false;
-
-        View view = inflater.inflate(layoutIdForListItem, parent, shouldAttachToParentImmediately);
-
-        return new RankViewHolder(view);
+        RankListItemBinding binding = DataBindingUtil.inflate(inflater,layoutID,parent,shouldAttachToParentImmediately);
+        return new RankViewHolder(binding);
     }
 
     @Override
@@ -109,22 +107,12 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
 
     class RankViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mRankUserName;
-        private TextView mRankUserScore;
-        private TextView mRankStateTxt;
-        private ImageView mRankAvatarImg;
+        private RankListItemBinding binding;
 
-        private RankViewHolder(View itemView) {
-            super(itemView);
-            initViews(itemView);
-            itemView.setOnClickListener(onClickListener);
-        }
-
-        private void initViews(View view) {
-            mRankUserName = view.findViewById(R.id.rankUserTxt);
-            mRankUserScore = view.findViewById(R.id.rankScoreTxt);
-            mRankStateTxt = view.findViewById(R.id.rankStateTxt);
-            mRankAvatarImg = view.findViewById(R.id.playerAvatar);
+        private RankViewHolder(RankListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            binding.rankCardView.setOnClickListener(onClickListener);
         }
 
         private void bindView(Player player) {
@@ -133,25 +121,25 @@ public class RankRecyclerAdapter extends RecyclerView.Adapter<RankRecyclerAdapte
             String state = String.format(STATE_FORMAT, player.getState());
             int avatarIndex = player.getAvatarID();
 
-            mRankUserName.setText(username);
-            mRankUserName.setTag(player.getUsername());
-            mRankUserScore.setText(score);
-            mRankStateTxt.setText(state);
+            binding.rankUserTxt.setText(username);
+            binding.rankUserTxt.setTag(player.getUsername());
+            binding.rankScoreTxt.setText(score);
+            binding.rankStateTxt.setText(state);
 
             if (avatarIndex != 0) {
                 int avatarId = Avatar.AVATARS[avatarIndex];
-                mRankAvatarImg.setImageResource(avatarId);
+                binding.playerAvatar.setImageResource(avatarId);
             }
 
             if(player.getStateInt() == 0){
-                mRankStateTxt.setTextColor(Color.RED);
+                binding.rankStateTxt.setTextColor(Color.RED);
             }else{
-                mRankStateTxt.setTextColor(Color.GREEN);
+                binding.rankStateTxt.setTextColor(Color.GREEN);
             }
         }
 
         private final View.OnClickListener onClickListener = view -> {
-            final String username = mRankUserName.getTag().toString();
+            final String username = binding.rankUserTxt.getTag().toString();
             Intent intent = new Intent(mContext, ProfileActivity.class);
             intent.putExtra(Game.USERNAME,username);
             mContext.startActivity(intent);
