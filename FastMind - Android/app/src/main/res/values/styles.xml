@@ -49,4 +49,10 @@
         <!--dialog background-->
         <item name="android:windowBackground">@color/black</item>
     </style>
+
+    <!--Style for dialog animation-->
+    <style name="DialogAnimationSlide">
+        <item name="android:windowEnterAnimation">@anim/side_left</item>
+        <item name="android:windowExitAnimation">@anim/side_right</item>
+    </style>
 </resources>
