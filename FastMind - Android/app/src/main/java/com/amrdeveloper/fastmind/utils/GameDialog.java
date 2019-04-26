@@ -16,6 +16,7 @@ public class GameDialog {
         String challengeMessage = "Challenge Request from : ".concat(player);
         Dialog dialog = new Dialog(context);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationSlide;
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.request_dialog);
         dialog.setCancelable(false);
@@ -41,6 +42,7 @@ public class GameDialog {
     public static Dialog showSingleWinnerDialog(Context context, Action accept, Action refuse) {
         Dialog dialog = new Dialog(context);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationSlide;
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.single_winner_dialog);
         dialog.setCancelable(false);
@@ -64,6 +66,7 @@ public class GameDialog {
     public static Dialog showWinnerDialog(Context context, int score, Action checked) {
         Dialog dialog = new Dialog(context);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationSlide;
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.win_dialog);
         dialog.setCancelable(false);
@@ -84,6 +87,7 @@ public class GameDialog {
     public static Dialog showLoserDialog(Context context, int score, Action checked) {
         Dialog dialog = new Dialog(context);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationSlide;
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.lose_dialog);
         dialog.setCancelable(false);
@@ -104,6 +108,7 @@ public class GameDialog {
     public static Dialog showWaitDialog(Context context) {
         Dialog dialog = new Dialog(context);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimationSlide;
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.waiting_dialog);
         dialog.setCancelable(false);
