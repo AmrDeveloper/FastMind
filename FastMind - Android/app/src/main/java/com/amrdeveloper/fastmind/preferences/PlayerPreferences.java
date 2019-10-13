@@ -70,7 +70,7 @@ public class PlayerPreferences {
         int win = playerPreference.getInt(WIN_NUM, 0);
         int lose = playerPreference.getInt(LOST_NUM, 0);
         int avatarId = playerPreference.getInt(AVATAR, 0);
-        return new Player(username, email, password, level, score, state, playing, win, lose, avatarId);
+        return  Player.success(username, email, password, level, score, state, playing, win, lose, avatarId);
     }
 
     /**

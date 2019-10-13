@@ -34,6 +34,40 @@ public class Player {
     @SerializedName("avatarID")
     private int avatarID;
 
+    private transient Throwable throwable;
+
+
+    private transient State progress;
+
+
+    public static Player success(String username, String email, String pass,
+                                 int level, int score, int state, int playing,
+                                 int winNum, int loseNum, int avatarId) {
+        return new Player(username, email, pass, level, score, state, playing, winNum, loseNum, avatarId, State.SUCCESS, null);
+    }
+
+    public static Player success(Player player) {
+        return new Player(player.getUsername(),
+                player.getEmail(),
+                player.getPassword(),
+                player.getLevel(),
+                player.getScore(),
+                player.getStateInt(),
+                player.getPlayingInt(),
+                player.getWinNumber(),
+                player.getLoseNumber(),
+                player.getAvatarID(), State.SUCCESS, null);
+    }
+
+    public static Player error(Throwable throwable) {
+        return new Player("", "", "", 0, 0, 0, 0, 0, 0, 0, State.ERROR, throwable);
+    }
+
+    public static Player progress() {
+        return new Player("", "", "", 0, 0, 0, 0, 0, 0, 0, State.PROGRESS, null);
+    }
+
+
     public Player(String username, String email, String password, int level, int score) {
         this.username = username;
         this.email = email;
@@ -47,9 +81,9 @@ public class Player {
         this.avatarID = 0;
     }
 
-    public Player(String username, String email, String pass,
-                  int level, int score, int state, int playing,
-                  int winNum, int loseNum, int avatarId) {
+    private Player(String username, String email, String pass,
+                   int level, int score, int state, int playing,
+                   int winNum, int loseNum, int avatarId, State progress, Throwable throwable) {
         this.username = username;
         this.email = email;
         this.password = pass;
@@ -60,6 +94,8 @@ public class Player {
         this.winNumber = winNum;
         this.winNumber = loseNum;
         this.avatarID = avatarId;
+        this.progress = progress;
+        this.throwable = throwable;
     }
 
     public String getUsername() {
@@ -98,52 +134,32 @@ public class Player {
         return (playing == 1);
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public void setState(int state) {
-        this.state = state;
     }
 
     public int getWinNumber() {
         return winNumber;
     }
 
-    public void setWinNumber(int winNumber) {
-        this.winNumber = winNumber;
-    }
-
     public int getLoseNumber() {
         return loseNumber;
-    }
-
-    public void setLoseNumber(int loseNumber) {
-        this.loseNumber = loseNumber;
     }
 
     public int getAvatarID() {
         return avatarID;
     }
 
-    public void setAvatarID(int avatarID) {
-        this.avatarID = avatarID;
+    public int getPlaying() {
+        return playing;
+    }
+
+    public Throwable getThrowable() {
+        return throwable;
+    }
+
+    public State getProgress() {
+        return progress;
     }
 
     @Override
@@ -153,10 +169,11 @@ public class Player {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Player){
-            Player player = (Player)obj;
+        if (obj instanceof Player) {
+            Player player = (Player) obj;
             return username.equals(player.getUsername());
         }
         return false;
     }
+
 }
