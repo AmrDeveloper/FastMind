@@ -2,15 +2,13 @@ package com.amrdeveloper.fastmind.utils;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.amrdeveloper.fastmind.R;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PlayerUpdateUtils {
 
